@@ -44,7 +44,7 @@ var helpers = {
         doubletap: 1,
         doublechomp: 1,
         zombiehero: 2,
-        buffet: 1
+        buffet: 2
     },
 
     getDaChamp: (stats) => {
