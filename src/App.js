@@ -12,7 +12,8 @@ class App extends Component {
 
     this.state = {
       stats: [],
-      season: '28'
+      season: '28',
+      changelog: []
     };
 
     this.onCellChange = this.onCellChange.bind(this);
@@ -21,6 +22,12 @@ class App extends Component {
 
   componentDidMount() {
     this.getData(this.state.season);
+
+    helpers.getChangelog()
+      .then(res => {
+
+        this.setState({changelog: res.data});
+      });
   }
 
   render() {
@@ -86,25 +93,58 @@ class App extends Component {
                 }
             </tbody>
         </table>
+        <table className="table table-bordered collapseBorder">
+            <thead>
+                <tr>
+                  <th>CHANGE</th>
+                  <th>TIMESTAMP</th>
+                </tr>
+            </thead>
+            <tbody>
+                {
+                  this.state.changelog.map((row, changeIndex) => {
+                    return (
+                      <tr key={changeIndex}>
+                          <td>
+                            <div>{row['message']}</div>
+                          </td>
+                          <td>
+                            <div>{row['timestamp']}</div>
+                          </td>
+                      </tr>
+                    );
+                  })
+                }
+            </tbody>
+        </table>
       </div>
     );
   }
 
   onCellChange(index, modifiedColumn, row, newValue) {
+    let stamp = moment().format('YYYY-MM-DD HH:mm:ss');
+    console.log(stamp);
     let oldValue = row[modifiedColumn];
     let newStats = this.state.stats
     newStats[index][modifiedColumn] = newValue;
+    let changeDescription = row['name'] + ':' + row['season'] + ':' + modifiedColumn + ':' + oldValue + ' -> ' + newValue;
+    let ts = moment().format('lll');
     let obj = {
       name: row['name'],
       season: row['season'],
       field: modifiedColumn,
       value: newValue,
-      timestamp: moment().format('lll'),
-      change: row['name'] + ':' + row['season'] + ':' + modifiedColumn + ':' + oldValue + ' -> ' + newValue
+      timestamp: ts,
+      change: changeDescription
     };
     let body = 'data=' + JSON.stringify(obj);
     helpers.updateStats(body);
+
+    let newLog = this.state.changelog;
+    newLog.push({message: changeDescription, timestamp: ts});
+
     this.setState({stats: newStats});
+    this.setState({changelog: newLog});
   }
 
   getData(targetSeason) {
