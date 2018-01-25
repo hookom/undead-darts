@@ -4,12 +4,12 @@ let getUrl = 'http://www.undeaddarts.com/api/get.php';
 let updateUrl = 'http://www.undeaddarts.com/api/update.php';
 
 var helpers = {
-    getAllStats: () => {
-        return axios.get(getUrl);
+    getAllStats: (season) => {
+        return axios.get(getUrl + '?season=' + season);
     },
 
-    updateStats: (rowData) => {
-        return axios.post(updateUrl, rowData);
+    updateStats: (body) => {
+        return axios.post(updateUrl, body);
     },
 
     columns: {
@@ -56,15 +56,15 @@ var helpers = {
                 playerHigh += (parseInt(playerRow[stat], 10) * parseInt(helpers.statValues[stat], 10));
             });
             if (playerHigh > high) {
-                console.log(playerRow['name'] + '\'s total of ' + playerHigh + ' is replacing current high: ' + high + ' of: ', champ)
+                // console.log(playerRow['name'] + '\'s total of ' + playerHigh + ' is replacing current high: ' + high + ' of: ', champ)
                 high = playerHigh;
                 champ = [playerRow['name']];
             } else if (playerHigh === high) {
-                console.log(playerRow['name'] + '\'s total of ' + playerHigh + ' ties the current high: ' + high + ' by: ', champ)
+                // console.log(playerRow['name'] + '\'s total of ' + playerHigh + ' ties the current high: ' + high + ' by: ', champ)
                 champ.push(playerRow['name']);
             }
         });
-        console.log(champ)
+        // console.log(champ)
         return champ;
     }
 };

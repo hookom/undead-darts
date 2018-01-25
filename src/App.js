@@ -10,16 +10,19 @@ class App extends Component {
     super(props);
 
     this.state = {
-      stats: []
+      stats: [],
+      season: '28'
     };
+
+    this.onCellChange = this.onCellChange.bind(this);
+    this.getData = this.getData.bind(this);
   }
 
   componentDidMount() {
-    this.getData();
+    this.getData(this.state.season);
   }
 
   render() {
-    // console.log('STATE', this.state.stats)
     champ = helpers.getDaChamp(this.state.stats);
 
     return (
@@ -28,6 +31,10 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Undead Darts</h1>
         </header>
+        <select value={this.state.season} onChange={(e) => this.getData(e.target.value)}>
+          <option value='28'>28</option>
+          <option value='27'>27</option>
+        </select>
         <table className="table table-bordered collapseBorder">
             <thead>
                 <tr>
@@ -66,7 +73,7 @@ class App extends Component {
                               <input
                                 type={inputType}
                                 value={row[columnName]}
-                                onChange={(e) => this.onAfterCellChange(playerIndex, columnName, row, e.target.value)}
+                                onChange={(e) => this.onCellChange(playerIndex, columnName, row, e.target.value)}
                               />
                             </td>
                           );
@@ -82,10 +89,10 @@ class App extends Component {
     );
   }
 
-  onAfterCellChange(index, modifiedColumn, row, newValue) {
-    let newState = this.state.stats
-    newState[index][modifiedColumn] = newValue
-    this.setState({stats: newState})
+  onCellChange(index, modifiedColumn, row, newValue) {
+    let newStats = this.state.stats
+    newStats[index][modifiedColumn] = newValue
+    this.setState({stats: newStats})
     let obj = {
       name: row['name'],
       season: row['season'],
@@ -96,10 +103,10 @@ class App extends Component {
     helpers.updateStats(body);
   }
 
-  getData() {
-    helpers.getAllStats()
+  getData(targetSeason) {
+    helpers.getAllStats(targetSeason)
       .then(res => {
-        this.setState({stats: res.data});
+        this.setState({stats: res.data, season: targetSeason});
       });
   }
 
