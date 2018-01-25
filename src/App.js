@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import logo from './images/friendly_zombie.jpg';
 import './App.css';
 import helpers from './helpers.js';
@@ -90,17 +91,20 @@ class App extends Component {
   }
 
   onCellChange(index, modifiedColumn, row, newValue) {
+    let oldValue = row[modifiedColumn];
     let newStats = this.state.stats
-    newStats[index][modifiedColumn] = newValue
-    this.setState({stats: newStats})
+    newStats[index][modifiedColumn] = newValue;
     let obj = {
       name: row['name'],
       season: row['season'],
       field: modifiedColumn,
-      value: newValue
+      value: newValue,
+      timestamp: moment().format('lll'),
+      change: row['name'] + ':' + row['season'] + ':' + modifiedColumn + ':' + oldValue + ' -> ' + newValue
     };
     let body = 'data=' + JSON.stringify(obj);
     helpers.updateStats(body);
+    this.setState({stats: newStats});
   }
 
   getData(targetSeason) {

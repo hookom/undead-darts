@@ -6,9 +6,13 @@
     $field = $request->field;
     $value = $request->value;
     $season = $request->season;
+    $timestamp = $request->timestamp;
+    $change = $request->change;
 
-    $querystring = "UPDATE stats SET $field='$value' WHERE name='$name' AND season='$season'";
     $db = new Db();
-    $result = $db -> query($querystring);
+    $updatestring = "UPDATE stats SET $field='$value' WHERE name='$name' AND season='$season'";
+    $result = $db -> query($updatestring);
+    $insertstring = "INSERT INTO changelog VALUES ('$change', '$timestamp')";
+    $result = $db -> query($insertstring);
     echo json_encode($result);
 ?>
