@@ -122,13 +122,12 @@ class App extends Component {
   }
 
   onCellChange(index, modifiedColumn, row, newValue) {
-    let stamp = moment().format('YYYY-MM-DD HH:mm:ss');
-    console.log(stamp);
-    let oldValue = row[modifiedColumn];
     let newStats = this.state.stats
     newStats[index][modifiedColumn] = newValue;
-    let changeDescription = row['name'] + ':' + row['season'] + ':' + modifiedColumn + ':' + oldValue + ' -> ' + newValue;
-    let ts = moment().format('lll');
+
+    let changeDescription = row['name'] + ':' + row['season'] + ':' + modifiedColumn + ':' + newValue;
+    let ts = moment().format('YYYY-MM-DD HH:mm:ss');
+
     let obj = {
       name: row['name'],
       season: row['season'],
@@ -141,7 +140,7 @@ class App extends Component {
     helpers.updateStats(body);
 
     let newLog = this.state.changelog;
-    newLog.push({message: changeDescription, timestamp: ts});
+    newLog.unshift({message: changeDescription, timestamp: ts});
 
     this.setState({stats: newStats});
     this.setState({changelog: newLog});
