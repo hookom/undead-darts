@@ -1,11 +1,24 @@
 var axios = require('axios');
 
-let getStatsUrl = 'http://www.undeaddarts.com/api/getStats.php';
-let getChangelogUrl = 'http://www.undeaddarts.com/api/getChangelog.php';
-let updateUrl = 'http://www.undeaddarts.com/api/update.php';
+const baseUrl = 'http://www.undeaddarts.com/api/';
+let getStatsUrl = baseUrl;
+let getChangelogUrl = baseUrl;
+let updateUrl = baseUrl;
+
+const hostname = window && window.location && window.location.hostname;
+if(hostname === 'localhost') {
+    getStatsUrl += 'getStats-test.php';
+    getChangelogUrl += 'getChangelog-test.php';
+    updateUrl += 'update-test.php';
+} else {
+    getStatsUrl += 'getStats.php';
+    getChangelogUrl += 'getChangelog.php';
+    updateUrl += 'update.php';
+}
 
 var helpers = {
     getAllStats: (season) => {
+        console.log(getStatsUrl)
         return axios.get(getStatsUrl + '?season=' + season);
     },
 
