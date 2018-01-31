@@ -3,6 +3,14 @@ import moment from 'moment';
 import logo from './images/friendly_zombie.jpg';
 import './App.css';
 import helpers from './helpers.js';
+import TextField from 'material-ui/TextField';
+import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import Reboot from 'material-ui/Reboot';
+import Select from 'material-ui/Select';
+import { MenuItem } from 'material-ui/Menu';
+import 'typeface-roboto'
+
+
 
 let champ = [];
 
@@ -35,29 +43,30 @@ class App extends Component {
 
     return (
       <div className="App">
+        <Reboot />
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Undead Darts</h1>
         </header>
-        <select value={this.state.season} onChange={(e) => this.getData(e.target.value)}>
-          <option value='28'>28</option>
-          <option value='27'>27</option>
-        </select>
-        <table className="table table-bordered collapseBorder">
-            <thead>
-                <tr>
+        <Select value={this.state.season} onChange={(e) => this.getData(e.target.value)}>
+          <MenuItem value='28'>28</MenuItem>
+          <MenuItem value='27'>27</MenuItem>
+        </Select>
+        <Table>
+            <TableHead>
+                <TableRow>
                     {Object.values(helpers.columns).map((header, headerIndex) => {
                       return (
-                        <th key={headerIndex}>{header}</th>
+                        <TableCell key={headerIndex}>{header}</TableCell>
                       );
                     })}
-                </tr>
-            </thead>
-            <tbody>
+                </TableRow>
+            </TableHead>
+            <TableBody>
                 {
                   this.state.stats.map((row, playerIndex) => {
                     return (
-                      <tr key={playerIndex}>
+                      <TableRow key={playerIndex}>
                       {
                         Object.keys(helpers.columns).map((columnName, columnIndex) => {
                           var inputType = columnName === 'name' ? 'text' : 'number';
@@ -66,57 +75,59 @@ class App extends Component {
                             || (row['name'] !== 'ZOMBIES' && columnName === 'zombiewins')
                             || (row['name'] === 'ZOMBIES' && columnName !== 'zombiewins')) {
                             return (
-                              <td key={columnIndex}>
-                                <input
+                              <TableCell  key={columnIndex}>
+                                <TextField 
                                   type={inputType}
                                   value={row[columnName]}
                                   readOnly
+                                  fullWidth={ true }
                                   className={this.isDaChamp(row['name']) && columnIndex === 0 ? 'king' : undefined}
                                 />
-                              </td>
+                              </TableCell>
                             );
                           }
                           return (
-                            <td key={columnIndex}>
-                              <input
+                            <TableCell numeric key={columnIndex}>
+                              <TextField
                                 type={inputType}
                                 value={row[columnName]}
+                                fullWidth={ true }
                                 onChange={(e) => this.onCellChange(playerIndex, columnName, row, e.target.value)}
                               />
-                            </td>
+                            </TableCell>
                           );
                         })
                       }
-                      </tr>
+                      </TableRow>
                     );
                   })
                 }
-            </tbody>
-        </table>
-        <table className="table table-bordered collapseBorder">
-            <thead>
-                <tr>
-                  <th>CHANGE</th>
-                  <th>TIMESTAMP</th>
-                </tr>
-            </thead>
-            <tbody>
+            </TableBody>
+        </Table>
+        <Table>
+            <TableHead>
+                <TableRow>
+                  <TableCell>CHANGE</TableCell>
+                  <TableCell>TIMESTAMP</TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
                 {
                   this.state.changelog.map((row, changeIndex) => {
                     return (
-                      <tr key={changeIndex}>
-                          <td>
+                      <TableRow key={changeIndex}>
+                          <TableCell>
                             <div>{row['message']}</div>
-                          </td>
-                          <td>
+                          </TableCell>
+                          <TableCell>
                             <div>{row['timestamp']}</div>
-                          </td>
-                      </tr>
+                          </TableCell>
+                      </TableRow>
                     );
                   })
                 }
-            </tbody>
-        </table>
+            </TableBody>
+        </Table>
       </div>
     );
   }
