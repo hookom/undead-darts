@@ -70,28 +70,29 @@ class App extends Component {
                       {
                         Object.keys(helpers.columns).map((columnName, columnIndex) => {
                           var inputType = columnName === 'name' ? 'text' : 'number';
+                          var cellWidth = columnName === 'name' ? 75 : 50;
                           if ((columnName === 'name')
                             || (columnName === 'season')
                             || (row['name'] !== 'ZOMBIES' && columnName === 'zombiewins')
                             || (row['name'] === 'ZOMBIES' && columnName !== 'zombiewins')) {
                             return (
-                              <TableCell  key={columnIndex}>
+                              <TableCell key={columnIndex}>
                                 <TextField 
                                   type={inputType}
                                   value={row[columnName]}
-                                  readOnly
-                                  fullWidth={ true }
+                                  disabled
+                                  style={{width: cellWidth}}
                                   className={this.isDaChamp(row['name']) && columnIndex === 0 ? 'king' : undefined}
                                 />
                               </TableCell>
                             );
                           }
                           return (
-                            <TableCell numeric key={columnIndex}>
+                            <TableCell key={columnIndex}>
                               <TextField
                                 type={inputType}
                                 value={row[columnName]}
-                                fullWidth={ true }
+                                style={{width: cellWidth}}
                                 onChange={(e) => this.onCellChange(playerIndex, columnName, row, e.target.value)}
                               />
                             </TableCell>

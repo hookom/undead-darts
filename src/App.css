@@ -37,8 +37,8 @@ input {
   border-collapse: collapse;
 }
 
-input.king {
-  background: gold;
+.king {
+  background-color: gold;
 }
 
 input.MuiInput-input-15 {
