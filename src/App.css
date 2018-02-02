@@ -40,3 +40,19 @@ input {
 input.king {
   background: gold;
 }
+
+input.MuiInput-input-15 {
+  width: auto;
+}
+
+th.MuiTableCell-paddingDefault-43 {
+  padding: 4px 6px 4px 6px;
+  width: auto;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+td.MuiTableCell-paddingDefault-43 {
+  padding: 4px 6px 4px 6px;
+  width: auto;
+}
