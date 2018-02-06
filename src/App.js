@@ -9,8 +9,7 @@ import Reboot from 'material-ui/Reboot';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
 import 'typeface-roboto'
-
-
+import ReactTooltip from 'react-tooltip'
 
 let champ = [];
 
@@ -46,14 +45,15 @@ class App extends Component {
         <Reboot />
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Undead Darts</h1>
+          <h1 className="App-title" data-tip="asdf">Undead Darts</h1>
+          <ReactTooltip />
         </header>
         <Select value={this.state.season} onChange={(e) => this.getData(e.target.value)}>
           <MenuItem value='28'>28</MenuItem>
           <MenuItem value='27'>27</MenuItem>
         </Select>
         <Table>
-            <TableHead>
+            <TableHead class="headerStyle">
                 <TableRow>
                     {Object.values(helpers.columns).map((header, headerIndex) => {
                       return (
@@ -76,7 +76,7 @@ class App extends Component {
                             || (row['name'] !== 'ZOMBIES' && columnName === 'zombiewins')
                             || (row['name'] === 'ZOMBIES' && columnName !== 'zombiewins')) {
                             return (
-                              <TableCell key={columnIndex}>
+                              <TableCell key={columnIndex} class="cellStyle">
                                 <TextField 
                                   type={inputType}
                                   value={row[columnName]}
