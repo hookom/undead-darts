@@ -44,17 +44,46 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Undead Darts</h1>
         </header>
-        <Select value={this.state.season} onChange={(e) => this.getData(e.target.value)}>
-          <MenuItem value='28'>28</MenuItem>
-          <MenuItem value='27'>27</MenuItem>
-        </Select>
+        <Table>
+           <TableBody>
+             <TableRow>
+               <TableCell>
+                 <span className="headerStyle">Zombie Wins: </span>
+                {
+                    this.state.stats.map((row, playerIndex) => {
+                      if (row.name === 'ZOMBIES') {
+                         return (<TextField
+                           type='number'
+                           key={playerIndex}
+                          value={row['zombiewins']}
+                          style={{width: 40}}
+                          onChange={(e) => this.onCellChange(playerIndex, 'zombiewins', row, e.target.value)}                                                 
+                        />)
+                      }
+                      return null;
+                    })
+                }
+            </TableCell>
+            <TableCell>
+                 <span className="headerStyle">Season: </span>
+                <Select value={this.state.season} onChange={(e) => this.getData(e.target.value)}>
+                <MenuItem value='28'>28</MenuItem>
+                <MenuItem value='27'>27</MenuItem>
+              </Select>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
         <Table>
             <TableHead className="headerStyle">
                 <TableRow>
                     {Object.values(helpers.columns).map((header, headerIndex) => {
-                      return (
-                        <TableCell key={headerIndex}>{header}</TableCell>
-                      );
+                      if (header !== 'Season' && header !== 'Zombie Wins') {
+                          return (
+                            <TableCell key={headerIndex}>{header}</TableCell>
+                          );
+                      }
+                      return null;
                     })}
                 </TableRow>
             </TableHead>
@@ -62,6 +91,7 @@ class App extends Component {
                 {
                   this.state.stats.sort(function(a, b) { return b.totalPoints - a.totalPoints; })
                     .map((row, playerIndex) => {
+                    if (row.name && row.name !== 'ZOMBIES') {
                       return (
                         <TableRow key={playerIndex}>
                         {
@@ -83,21 +113,7 @@ class App extends Component {
                                   <ReactTooltip />
                                 </TableCell>
                               );
-                            } else if ((columnName === 'season')
-                              || (row['name'] !== 'ZOMBIES' && columnName === 'zombiewins')
-                              || (row['name'] === 'ZOMBIES' && columnName !== 'zombiewins')) {
-
-                              return (
-                                <TableCell key={columnIndex} className="cellStyle">
-                                  <TextField 
-                                    type='number'
-                                    value={row[columnName]}
-                                    disabled
-                                    style={{width: 40}}
-                                  />
-                                </TableCell>
-                              );
-                            } else {
+                            } else if (columnName !== 'zombiewins' && columnName !== 'season' )  {
                               return (
                                 <TableCell key={columnIndex} className="cellStyle">
                                   <TextField
@@ -109,10 +125,14 @@ class App extends Component {
                                 </TableCell>
                               );
                             }
+                            return null;
                           })
                         }
                         </TableRow>
                       );
+                    }
+                    return null;
+
                   })
                 }
             </TableBody>
