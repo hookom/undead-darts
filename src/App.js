@@ -12,6 +12,7 @@ import 'typeface-roboto'
 import ReactTooltip from 'react-tooltip'
 
 let champ = [];
+let zombies = {};
 
 class App extends Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class App extends Component {
 
   render() {
     champ = helpers.getDaChamp(this.state.stats);
+    zombies = this.state.stats.filter(stat => stat.name === "ZOMBIES")
 
     return (
       <div className="App">
@@ -48,10 +50,33 @@ class App extends Component {
           <h1 className="App-title" data-tip="asdf">Undead Darts</h1>
           <ReactTooltip />
         </header>
-        <Select value={this.state.season} onChange={(e) => this.getData(e.target.value)}>
-          <MenuItem value='28'>28</MenuItem>
-          <MenuItem value='27'>27</MenuItem>
-        </Select>
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell>
+                <Select value={this.state.season} onChange={(e) => this.getData(e.target.value)}>
+                  <MenuItem value='28'>28</MenuItem>
+                  <MenuItem value='27'>27</MenuItem>
+                </Select>
+              </TableCell>
+                  <TableCell>
+                    Zombies: &nbsp;&nbsp;
+                    {
+                      this.state.stats.map((row, playerIndex) => {
+                        if (row['name'] === "ZOMBIES") {
+                          return (row && <TextField
+                            type={'number'}
+                            value={row['zombiewins']}
+                            onChange={(e) => this.onCellChange(playerIndex, 'zombiewins', row, e.target.value)}
+                          />
+                        )
+                        }
+                      })
+                    }
+                  </TableCell>
+              </TableRow>
+            </TableBody>
+        </Table>
         <Table>
             <TableHead class="headerStyle">
                 <TableRow>
@@ -65,50 +90,53 @@ class App extends Component {
             <TableBody>
                 {
                   this.state.stats.map((row, playerIndex) => {
-                    return (
-                      <TableRow key={playerIndex}>
-                      {
-                        Object.keys(helpers.columns).map((columnName, columnIndex) => {
-                          var inputType = columnName === 'name' ? 'text' : 'number';
-                          var cellWidth = columnName === 'name' ? 75 : 50;
-                          if ((columnName === 'name')
-                            || (columnName === 'season')
-                            || (row['name'] !== 'ZOMBIES' && columnName === 'zombiewins')
-                            || (row['name'] === 'ZOMBIES' && columnName !== 'zombiewins')) {
-                            
-                            var score = helpers.playerScore(this.state.stats, row['name']);
-                            var champScore = helpers.playerScore(this.state.stats, champ[0]);
-                            var backFromChamp = champScore - score;
-                            var text = row['name'];
-                            if (backFromChamp > 0 && row['name'] !== 'ZOMBIES') {
-                              text += '  -' + backFromChamp;
+                    if (row['name'] != 'ZOMBIES') {
+                      return (
+                        <TableRow key={playerIndex}>
+                        {
+                          Object.keys(helpers.columns).map((columnName, columnIndex) => {
+                            var inputType = columnName === 'name' ? 'text' : 'number';
+                            var cellWidth = columnName === 'name' ? 75 : 50;
+                            if ((columnName === 'name')
+                              || (columnName === 'season')
+                              || (row['name'] !== 'ZOMBIES' && columnName === 'zombiewins')
+                              || (row['name'] === 'ZOMBIES' && columnName !== 'zombiewins')) {
+
+                              var score = helpers.playerScore(this.state.stats, row['name']);
+                              var champScore = helpers.playerScore(this.state.stats, champ[0]);
+                              var backFromChamp = champScore - score;
+                              var text = row['name'];
+                              if (backFromChamp > 0 && row['name'] !== 'ZOMBIES') {
+                                text += '  -' + backFromChamp;
+                              }
+                              return (
+                                <TableCell key={columnIndex} class="cellStyle">
+                                  <TextField
+                                    type={inputType}
+                                    value={text}
+                                    disabled
+                                    style={{width: cellWidth}}
+                                    className={this.isDaChamp(row['name']) && columnIndex === 0 ? 'king' : undefined}
+                                  />
+                                </TableCell>
+                              );
                             }
                             return (
-                              <TableCell key={columnIndex} class="cellStyle">
-                                <TextField 
+                              <TableCell key={columnIndex}>
+                                <TextField
                                   type={inputType}
-                                  value={text}
-                                  disabled
+                                  value={row[columnName]}
                                   style={{width: cellWidth}}
-                                  className={this.isDaChamp(row['name']) && columnIndex === 0 ? 'king' : undefined}
+                                  onChange={(e) => this.onCellChange(playerIndex, columnName, row, e.target.value)}
                                 />
                               </TableCell>
                             );
-                          }
-                          return (
-                            <TableCell key={columnIndex}>
-                              <TextField
-                                type={inputType}
-                                value={row[columnName]}
-                                style={{width: cellWidth}}
-                                onChange={(e) => this.onCellChange(playerIndex, columnName, row, e.target.value)}
-                              />
-                            </TableCell>
-                          );
-                        })
-                      }
-                      </TableRow>
-                    );
+                          })
+                        }
+                        </TableRow>
+                      );
+
+                    }
                   })
                 }
             </TableBody>
