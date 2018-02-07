@@ -60,58 +60,59 @@ class App extends Component {
             </TableHead>
             <TableBody>
                 {
-                  this.state.stats.map((row, playerIndex) => {
-                    return (
-                      <TableRow key={playerIndex}>
-                      {
-                        Object.keys(helpers.columns).map((columnName, columnIndex) => {
-                          if (columnName === 'name') {
-                      
-                            let outOfFirst = (this.state.kingPoints - row['totalPoints']) * -1;
+                  this.state.stats.sort(function(a, b) { return b.totalPoints - a.totalPoints; })
+                    .map((row, playerIndex) => {
+                      return (
+                        <TableRow key={playerIndex}>
+                        {
+                          Object.keys(helpers.columns).map((columnName, columnIndex) => {
+                            if (columnName === 'name') {
+                        
+                              let outOfFirst = (this.state.kingPoints - row['totalPoints']) * -1;
 
-                            return (
-                              <TableCell key={columnIndex} className="cellStyle">
-                                <TextField 
-                                  type='text'
-                                  value={row[columnName]}
-                                  disabled
-                                  style={{width: 75}}
-                                  className={this.isDaKing(row['totalPoints']) && columnIndex === 0 ? 'king' : undefined}
-                                  data-tip={outOfFirst}
-                                />
-                                <ReactTooltip />
-                              </TableCell>
-                            );
-                          } else if ((columnName === 'season')
-                            || (row['name'] !== 'ZOMBIES' && columnName === 'zombiewins')
-                            || (row['name'] === 'ZOMBIES' && columnName !== 'zombiewins')) {
+                              return (
+                                <TableCell key={columnIndex} className="cellStyle">
+                                  <TextField 
+                                    type='text'
+                                    value={row[columnName]}
+                                    disabled
+                                    style={{width: 75}}
+                                    className={this.isDaKing(row['totalPoints']) && columnIndex === 0 ? 'king' : undefined}
+                                    data-tip={outOfFirst}
+                                  />
+                                  <ReactTooltip />
+                                </TableCell>
+                              );
+                            } else if ((columnName === 'season')
+                              || (row['name'] !== 'ZOMBIES' && columnName === 'zombiewins')
+                              || (row['name'] === 'ZOMBIES' && columnName !== 'zombiewins')) {
 
-                            return (
-                              <TableCell key={columnIndex} className="cellStyle">
-                                <TextField 
-                                  type='number'
-                                  value={row[columnName]}
-                                  disabled
-                                  style={{width: 40}}
-                                />
-                              </TableCell>
-                            );
-                          } else {
-                            return (
-                              <TableCell key={columnIndex} className="cellStyle">
-                                <TextField
-                                  type='number'
-                                  value={row[columnName]}
-                                  style={{width: 40}}
-                                  onChange={(e) => this.onCellChange(playerIndex, columnName, row, e.target.value)}
-                                />
-                              </TableCell>
-                            );
-                          }
-                        })
-                      }
-                      </TableRow>
-                    );
+                              return (
+                                <TableCell key={columnIndex} className="cellStyle">
+                                  <TextField 
+                                    type='number'
+                                    value={row[columnName]}
+                                    disabled
+                                    style={{width: 40}}
+                                  />
+                                </TableCell>
+                              );
+                            } else {
+                              return (
+                                <TableCell key={columnIndex} className="cellStyle">
+                                  <TextField
+                                    type='number'
+                                    value={row[columnName]}
+                                    style={{width: 40}}
+                                    onChange={(e) => this.onCellChange(playerIndex, columnName, row, e.target.value)}
+                                  />
+                                </TableCell>
+                              );
+                            }
+                          })
+                        }
+                        </TableRow>
+                      );
                   })
                 }
             </TableBody>
@@ -176,7 +177,7 @@ class App extends Component {
     helpers.getAllStats(targetSeason)
       .then(res => {
         let statsWithTotals = helpers.setTotalPointsForAll(res.data);
-        let highScore = helpers.getKingTotal(res.data);
+        let highScore = helpers.getKingTotal(statsWithTotals);
         this.setState({stats: statsWithTotals, season: targetSeason, kingPoints: highScore});
       });
   }

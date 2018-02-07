@@ -72,7 +72,6 @@ var helpers = {
                 total += (parseInt(playerRow[stat], 10) * parseInt(helpers.statValues[stat], 10));
             });
             playerRow.totalPoints = total;
-            console.log(playerRow.name + ' has ' + total + ' points');
         });
         
         return stats;
