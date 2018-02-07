@@ -36,6 +36,7 @@ class App extends Component {
   }
 
   render() {
+    let tooltipText = ''
 
     return (
       <div className="App">
@@ -53,8 +54,8 @@ class App extends Component {
                     this.state.stats.map((row, playerIndex) => {
                       if (row.name === 'ZOMBIES') {
                          return (<TextField
-                           type='number'
-                           key={playerIndex}
+                          type='number'
+                          key={playerIndex}
                           value={row['zombiewins']}
                           style={{width: 40}}
                           onChange={(e) => this.onCellChange(playerIndex, 'zombiewins', row, e.target.value)}                                                 
@@ -78,10 +79,19 @@ class App extends Component {
             <TableHead className="headerStyle">
                 <TableRow>
                     {Object.values(helpers.columns).map((header, headerIndex) => {
-                      if (header !== 'Season' && header !== 'Zombie Wins') {
-                          return (
-                            <TableCell key={headerIndex}>{header}</TableCell>
-                          );
+                      if (header.header !== 'Season' && header.header !== 'Zombie Wins') {
+                        tooltipText = header.header === 'Name' ? 
+                          tooltipText = header.tooltip :
+                          tooltipText = header.tooltip + '<br />Value:  ' + header.value
+                        return (
+                          <TableCell 
+                            key={headerIndex}
+                            data-multiline={true}
+                            data-tip={tooltipText}
+                          >{header.header}
+                            <ReactTooltip />
+                          </TableCell>
+                        );
                       }
                       return null;
                     })}
