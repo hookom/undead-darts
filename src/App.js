@@ -75,11 +75,19 @@ class App extends Component {
                             || (columnName === 'season')
                             || (row['name'] !== 'ZOMBIES' && columnName === 'zombiewins')
                             || (row['name'] === 'ZOMBIES' && columnName !== 'zombiewins')) {
+                            
+                            var score = helpers.playerScore(this.state.stats, row['name']);
+                            var champScore = helpers.playerScore(this.state.stats, champ[0]);
+                            var backFromChamp = champScore - score;
+                            var text = row['name'];
+                            if (backFromChamp > 0 && row['name'] !== 'ZOMBIES') {
+                              text += '  -' + backFromChamp;
+                            }
                             return (
                               <TableCell key={columnIndex} class="cellStyle">
                                 <TextField 
                                   type={inputType}
-                                  value={row[columnName]}
+                                  value={text}
                                   disabled
                                   style={{width: cellWidth}}
                                   className={this.isDaChamp(row['name']) && columnIndex === 0 ? 'king' : undefined}

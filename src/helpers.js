@@ -65,6 +65,19 @@ var helpers = {
         buffet: 2
     },
 
+    playerScore: (stats, player) => {
+        let score = 0;
+        stats.forEach(playerRow => {
+            if (playerRow.name === player) {
+              Object.keys(helpers.statValues).forEach(stat => {
+                  score += (parseInt(playerRow[stat], 10) * parseInt(helpers.statValues[stat], 10));
+              });
+            }
+        });
+        return score;
+
+    },
+
     getDaChamp: (stats) => {
         let champ = [];
         let high = 0;
