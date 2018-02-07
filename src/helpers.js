@@ -65,38 +65,27 @@ var helpers = {
         buffet: 2
     },
 
-    playerScore: (stats, player) => {
-        let score = 0;
+    setTotalPointsForAll: (stats) => {
         stats.forEach(playerRow => {
-            if (playerRow.name === player) {
-              Object.keys(helpers.statValues).forEach(stat => {
-                  score += (parseInt(playerRow[stat], 10) * parseInt(helpers.statValues[stat], 10));
-              });
-            }
+            let total = 0;
+            Object.keys(helpers.statValues).forEach(stat => {
+                total += (parseInt(playerRow[stat], 10) * parseInt(helpers.statValues[stat], 10));
+            });
+            playerRow.totalPoints = total;
+            console.log(playerRow.name + ' has ' + total + ' points');
         });
-        return score;
-
+        
+        return stats;
     },
 
-    getDaChamp: (stats) => {
-        let champ = [];
-        let high = 0;
-        stats.forEach(playerRow => {
-            let playerHigh = 0;
-            Object.keys(helpers.statValues).forEach(stat => {
-                playerHigh += (parseInt(playerRow[stat], 10) * parseInt(helpers.statValues[stat], 10));
-            });
-            if (playerHigh > high) {
-                // console.log(playerRow['name'] + '\'s total of ' + playerHigh + ' is replacing current high: ' + high + ' of: ', champ)
-                high = playerHigh;
-                champ = [playerRow['name']];
-            } else if (playerHigh === high) {
-                // console.log(playerRow['name'] + '\'s total of ' + playerHigh + ' ties the current high: ' + high + ' by: ', champ)
-                champ.push(playerRow['name']);
+    getKingTotal: (stats) => {
+        let highest = 0;
+        stats.forEach(player => {
+            if (player.totalPoints > highest) {
+                highest = player.totalPoints;
             }
         });
-        // console.log(champ)
-        return champ;
+        return highest;
     }
 };
 

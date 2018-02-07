@@ -8,10 +8,8 @@ import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Ta
 import Reboot from 'material-ui/Reboot';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
-import 'typeface-roboto'
-import ReactTooltip from 'react-tooltip'
-
-let champ = [];
+import 'typeface-roboto';
+import ReactTooltip from 'react-tooltip';
 
 class App extends Component {
   constructor(props) {
@@ -20,7 +18,8 @@ class App extends Component {
     this.state = {
       stats: [],
       season: '28',
-      changelog: []
+      changelog: [],
+      kingPoints: 0
     };
 
     this.onCellChange = this.onCellChange.bind(this);
@@ -32,28 +31,25 @@ class App extends Component {
 
     helpers.getChangelog()
       .then(res => {
-
         this.setState({changelog: res.data});
       });
   }
 
   render() {
-    champ = helpers.getDaChamp(this.state.stats);
 
     return (
       <div className="App">
         <Reboot />
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title" data-tip="asdf">Undead Darts</h1>
-          <ReactTooltip />
+          <h1 className="App-title">Undead Darts</h1>
         </header>
         <Select value={this.state.season} onChange={(e) => this.getData(e.target.value)}>
           <MenuItem value='28'>28</MenuItem>
           <MenuItem value='27'>27</MenuItem>
         </Select>
         <Table>
-            <TableHead class="headerStyle">
+            <TableHead className="headerStyle">
                 <TableRow>
                     {Object.values(helpers.columns).map((header, headerIndex) => {
                       return (
@@ -69,42 +65,49 @@ class App extends Component {
                       <TableRow key={playerIndex}>
                       {
                         Object.keys(helpers.columns).map((columnName, columnIndex) => {
-                          var inputType = columnName === 'name' ? 'text' : 'number';
-                          var cellWidth = columnName === 'name' ? 75 : 50;
-                          if ((columnName === 'name')
-                            || (columnName === 'season')
+                          if (columnName === 'name') {
+                      
+                            let outOfFirst = (this.state.kingPoints - row['totalPoints']) * -1;
+
+                            return (
+                              <TableCell key={columnIndex} className="cellStyle">
+                                <TextField 
+                                  type='text'
+                                  value={row[columnName]}
+                                  disabled
+                                  style={{width: 75}}
+                                  className={this.isDaKing(row['totalPoints']) && columnIndex === 0 ? 'king' : undefined}
+                                  data-tip={outOfFirst}
+                                />
+                                <ReactTooltip />
+                              </TableCell>
+                            );
+                          } else if ((columnName === 'season')
                             || (row['name'] !== 'ZOMBIES' && columnName === 'zombiewins')
                             || (row['name'] === 'ZOMBIES' && columnName !== 'zombiewins')) {
-                            
-                            var score = helpers.playerScore(this.state.stats, row['name']);
-                            var champScore = helpers.playerScore(this.state.stats, champ[0]);
-                            var backFromChamp = champScore - score;
-                            var text = row['name'];
-                            if (backFromChamp > 0 && row['name'] !== 'ZOMBIES') {
-                              text += '  -' + backFromChamp;
-                            }
+
                             return (
-                              <TableCell key={columnIndex} class="cellStyle">
+                              <TableCell key={columnIndex} className="cellStyle">
                                 <TextField 
-                                  type={inputType}
-                                  value={text}
+                                  type='number'
+                                  value={row[columnName]}
                                   disabled
-                                  style={{width: cellWidth}}
-                                  className={this.isDaChamp(row['name']) && columnIndex === 0 ? 'king' : undefined}
+                                  style={{width: 40}}
+                                />
+                              </TableCell>
+                            );
+                          } else {
+                            return (
+                              <TableCell key={columnIndex} className="cellStyle">
+                                <TextField
+                                  type='number'
+                                  value={row[columnName]}
+                                  style={{width: 40}}
+                                  onChange={(e) => this.onCellChange(playerIndex, columnName, row, e.target.value)}
                                 />
                               </TableCell>
                             );
                           }
-                          return (
-                            <TableCell key={columnIndex}>
-                              <TextField
-                                type={inputType}
-                                value={row[columnName]}
-                                style={{width: cellWidth}}
-                                onChange={(e) => this.onCellChange(playerIndex, columnName, row, e.target.value)}
-                              />
-                            </TableCell>
-                          );
                         })
                       }
                       </TableRow>
@@ -162,19 +165,24 @@ class App extends Component {
     let newLog = this.state.changelog;
     newLog.unshift({message: changeDescription, timestamp: ts});
 
-    this.setState({stats: newStats});
-    this.setState({changelog: newLog});
+    // optimization: only update the changed player's totalPoints instead of all
+    let newStatsWithTotals = helpers.setTotalPointsForAll(newStats);
+    let highScore = helpers.getKingTotal(newStatsWithTotals);
+
+    this.setState({stats: newStatsWithTotals, changelog: newLog, kingPoints: highScore});
   }
 
   getData(targetSeason) {
     helpers.getAllStats(targetSeason)
       .then(res => {
-        this.setState({stats: res.data, season: targetSeason});
+        let statsWithTotals = helpers.setTotalPointsForAll(res.data);
+        let highScore = helpers.getKingTotal(res.data);
+        this.setState({stats: statsWithTotals, season: targetSeason, kingPoints: highScore});
       });
   }
 
-  isDaChamp(player) {
-    return champ.includes(player);
+  isDaKing(playersPoints) {
+    return this.state.kingPoints === playersPoints;
   }
 }
 
