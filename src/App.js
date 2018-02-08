@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import logo from './images/friendly_zombie.jpg';
 import './App.css';
 import helpers from './helpers.js';
 import TextField from 'material-ui/TextField';
@@ -10,117 +9,11 @@ import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
 import 'typeface-roboto';
 import ReactTooltip from 'react-tooltip';
-
-class ChangeHistory extends React.Component {
-  render() {
-    return (
-        <Table>
-            <TableHead>
-                <TableRow>
-                  <TableCell>CHANGE</TableCell>
-                  <TableCell>TIMESTAMP</TableCell>
-                </TableRow>
-            </TableHead>
-
-            <TableBody>
-                {
-                  this.props.changelog.map((row, changeIndex) => {
-                    return (
-                      <TableRow key={changeIndex}>
-                          <TableCell>
-                            <div>{row['message']}</div>
-                          </TableCell>
-                          <TableCell>
-                            <div>{row['timestamp']}</div>
-                          </TableCell>
-                      </TableRow>
-                    );
-                  })
-                }
-            </TableBody>
-        </Table>
-    );
-  }
-}
-
-class ColumnHeaders extends React.Component {
-  render() {
-    
-    let tooltipText = '';
-    
-    return (
-        <TableHead className="headerStyle">
-        <TableRow>
-            {Object.values(helpers.columns).map((header, headerIndex) => {
-              if (header.header !== 'Season' && header.header !== 'Zombie Wins') {
-                  tooltipText = header.header === 'Name' ? 
-                    tooltipText = header.tooltip :
-                    tooltipText = header.tooltip + '<br />Value:  ' + header.value
-                  return (
-                    <TableCell 
-                      key={headerIndex}
-                      data-multiline={true}
-                      data-tip={tooltipText}
-                    >{header.header}
-                      <ReactTooltip />
-                    </TableCell>
-                  );
-                }
-              return null;
-            })}
-        </TableRow>
-        </TableHead>
-    );
-  }
-}
-class SeasonSelector extends React.Component {
-  render() {
-    return (
-      <span>
-        <span className="headerStyle">Season: </span>
-        <Select value={this.props.season} onChange={(e) => this.props.getData(e.target.value)}>
-          <MenuItem value='28'>28</MenuItem>
-          <MenuItem value='27'>27</MenuItem>
-        </Select>
-      </span>
-    );
-  }
-}
-
-class ZombieInput extends React.Component {
-  render() {
-    return (
-      <span>
-        <span className="headerStyle">Zombie Wins: </span>
-        {
-          this.props.stats.map((row, playerIndex) => {
-            if (row.name === 'ZOMBIES') {
-               return (<TextField
-                 type='number'
-                 key={playerIndex}
-                value={row['zombiewins']}
-                style={{width: 40}}
-                onChange={(e) => this.props.onCellChange(playerIndex, 'zombiewins', row, e.target.value)}                                                 
-              />)
-            }
-            return null;
-          })
-      }
-    </span>
-    );
-  }
-}
-
-class AppHeader extends React.Component {
-  render() {
-    return (
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Undead Darts</h1>
-        </header>
-    );
-  }
-}
+import ChangeHistory from './ChangeHistory.js';
+import SeasonSelector from './SeasonSelector.js';
+import ZombieInput from './ZombieInput.js';
+import AppHeader from './AppHeader.js';
+import ColumnHeaders from './ColumnHeaders';
 
 class App extends Component {
   constructor(props) {
