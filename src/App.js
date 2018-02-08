@@ -14,6 +14,7 @@ import SeasonSelector from './SeasonSelector.js';
 import ZombieInput from './ZombieInput.js';
 import AppHeader from './AppHeader.js';
 import ColumnHeaders from './ColumnHeaders';
+import PlayerRow from './PlayerRow.js';
 
 class App extends Component {
   constructor(props) {
@@ -65,46 +66,10 @@ class App extends Component {
                     .map((row, playerIndex) => {
                     if (row.name && row.name !== 'ZOMBIES') {
                       return (
-                        <TableRow key={playerIndex}>
-                        {
-                          Object.keys(helpers.columns).map((columnName, columnIndex) => {
-                            if (columnName === 'name') {
-                        
-                              let outOfFirst = (this.state.kingPoints - row['totalPoints']) * -1;
-
-                              return (
-                                <TableCell key={columnIndex} className="cellStyle">
-                                  <TextField 
-                                    type='text'
-                                    value={row[columnName]}
-                                    disabled
-                                    style={{width: 75}}
-                                    className={this.isDaKing(row['totalPoints']) && columnIndex === 0 ? 'king' : undefined}
-                                    data-tip={outOfFirst}
-                                  />
-                                  <ReactTooltip />
-                                </TableCell>
-                              );
-                            } else if (columnName !== 'zombiewins' && columnName !== 'season' )  {
-                              return (
-                                <TableCell key={columnIndex} className="cellStyle">
-                                  <TextField
-                                    type='number'
-                                    value={row[columnName]}
-                                    style={{width: 40}}
-                                    onChange={(e) => this.onCellChange(playerIndex, columnName, row, e.target.value)}
-                                  />
-                                </TableCell>
-                              );
-                            }
-                            return null;
-                          })
-                        }
-                        </TableRow>
+                        <PlayerRow row={row} playerIndex={playerIndex} isDaKing={this.isDaKing(row['totalPoints'])} onCellChange={this.onCellChange} />
                       );
                     }
                     return null;
-
                   })
                 }
             </TableBody>
