@@ -45,15 +45,27 @@ class ChangeHistory extends React.Component {
 
 class ColumnHeaders extends React.Component {
   render() {
+    
+    let tooltipText = '';
+    
     return (
         <TableHead className="headerStyle">
         <TableRow>
             {Object.values(helpers.columns).map((header, headerIndex) => {
-              if (header !== 'Season' && header !== 'Zombie Wins') {
+              if (header.header !== 'Season' && header.header !== 'Zombie Wins') {
+                  tooltipText = header.header === 'Name' ? 
+                    tooltipText = header.tooltip :
+                    tooltipText = header.tooltip + '<br />Value:  ' + header.value
                   return (
-                    <TableCell key={headerIndex}>{header}</TableCell>
+                    <TableCell 
+                      key={headerIndex}
+                      data-multiline={true}
+                      data-tip={tooltipText}
+                    >{header.header}
+                      <ReactTooltip />
+                    </TableCell>
                   );
-              }
+                }
               return null;
             })}
         </TableRow>
@@ -145,10 +157,10 @@ class App extends Component {
              <TableRow>
                <TableCell>
                  <ZombieInput stats={this.state.stats} onCellChange={this.onCellChange}/>
-            </TableCell>
-            <TableCell>
-                <SeasonSelector season={this.state.season} getData={this.getData} />
-            </TableCell>
+               </TableCell>
+               <TableCell>
+                 <SeasonSelector season={this.state.season} getData={this.getData} />
+               </TableCell>
           </TableRow>
         </TableBody>
       </Table>
