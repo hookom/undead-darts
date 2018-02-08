@@ -45,6 +45,9 @@ class ChangeHistory extends React.Component {
 
 class ColumnHeaders extends React.Component {
   render() {
+    
+    let tooltipText = '';
+    
     return (
         <TableHead className="headerStyle">
         <TableRow>
@@ -144,7 +147,6 @@ class App extends Component {
   }
 
   render() {
-    let tooltipText = ''
 
     return (
       <div className="App">
