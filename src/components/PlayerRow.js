@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import '../App.css';
-import helpers from '../lib/helpers.js';
 import TextField from 'material-ui/TextField';
 import { TableCell, TableRow } from 'material-ui/Table';
 import ReactTooltip from 'react-tooltip';
-import ColumnInfo from './ColumnInfo.js';
+import ColumnInfo from '../lib/ColumnInfo.js';
 
 class PlayerRow extends Component {
   render() {

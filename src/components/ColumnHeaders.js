@@ -1,8 +1,7 @@
 import React from 'react';
 import { TableCell, TableHead, TableRow } from 'material-ui/Table';
-import helpers from '../lib/helpers.js';
 import ReactTooltip from 'react-tooltip';
-import ColumnInfo from './ColumnInfo.js';
+import ColumnInfo from '../lib/ColumnInfo.js';
 
 class ColumnHeaders extends React.Component {
   render() {
