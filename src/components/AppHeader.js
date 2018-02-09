@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './images/friendly_zombie.jpg';
+import logo from '../images/friendly_zombie.jpg';
 
 class AppHeader extends React.Component {
   render() {

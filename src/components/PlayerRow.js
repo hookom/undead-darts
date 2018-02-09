@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
-import helpers from './helpers.js';
+import '../App.css';
+import helpers from '../lib/helpers.js';
 import TextField from 'material-ui/TextField';
 import { TableCell, TableRow } from 'material-ui/Table';
 import ReactTooltip from 'react-tooltip';

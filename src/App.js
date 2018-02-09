@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import './App.css';
-import helpers from './helpers.js';
+import helpers from './lib/helpers.js';
 import Table, { TableBody, TableCell, TableRow } from 'material-ui/Table';
 import Reboot from 'material-ui/Reboot';
 import 'typeface-roboto';
-import ChangeHistory from './ChangeHistory.js';
-import SeasonSelector from './SeasonSelector.js';
-import ZombieInput from './ZombieInput.js';
-import AppHeader from './AppHeader.js';
-import ColumnHeaders from './ColumnHeaders';
-import PlayerRow from './PlayerRow.js';
+import ChangeHistory from './components/ChangeHistory.js';
+import SeasonSelector from './components/SeasonSelector.js';
+import ZombieInput from './components/ZombieInput.js';
+import AppHeader from './components/AppHeader.js';
+import ColumnHeaders from './components/ColumnHeaders';
+import PlayerRow from './components/PlayerRow.js';
 
 class App extends Component {
   constructor(props) {
