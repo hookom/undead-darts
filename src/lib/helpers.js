@@ -1,4 +1,4 @@
-var axios = require('axios');
+const axios = require('axios');
 const StatValues = require('./StatValues.js');
 
 const baseUrl = 'http://www.undeaddarts.com/api/';

@@ -1,34 +1,29 @@
 import React from 'react';
 import { TableCell, TableHead, TableRow } from 'material-ui/Table';
 import ReactTooltip from 'react-tooltip';
-import ColumnInfo from '../lib/ColumnInfo.js';
+import TrackedStats from '../lib/TrackedStats.js';
 
 class ColumnHeaders extends React.Component {
   render() {
-    
-    let tooltipText = '';
-    
     return (
         <TableHead className="headerStyle">
-        <TableRow>
-            {Object.values(ColumnInfo).map((header, headerIndex) => {
-              if (header.header !== 'Season' && header.header !== 'Zombie Wins') {
-                  tooltipText = header.header === 'Name' ? 
-                    tooltipText = header.tooltip :
-                    tooltipText = header.tooltip + '<br />Value:  ' + header.value
-                  return (
-                    <TableCell 
-                      key={headerIndex}
-                      data-multiline={true}
-                      data-tip={tooltipText}
-                    >{header.header}
-                      <ReactTooltip />
-                    </TableCell>
-                  );
-                }
-              return null;
-            })}
-        </TableRow>
+          <TableRow>
+            {
+              Object.values(TrackedStats).map((stat, statIndex) => {
+                // Name column does not have a Value
+                let tooltipText = (stat.header === 'Name') ? stat.tooltip : stat.tooltip + '<br />Value:  ' + stat.value;
+                return (
+                  <TableCell 
+                    key={statIndex}
+                    data-multiline={true}
+                    data-tip={tooltipText}
+                  >{stat.header}
+                    <ReactTooltip />
+                  </TableCell>
+                );
+              })
+            }
+          </TableRow>
         </TableHead>
     );
   }

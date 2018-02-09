@@ -6,20 +6,12 @@ class ZombieInput extends React.Component {
     return (
       <span>
         <span className="headerStyle">Zombie Wins: </span>
-        {
-          this.props.stats.map((row, playerIndex) => {
-            if (row.name === 'ZOMBIES') {
-               return (<TextField
-                 type='number'
-                 key={playerIndex}
-                value={row['zombiewins']}
-                style={{width: 40}}
-                onChange={(e) => this.props.onCellChange(playerIndex, 'zombiewins', row, e.target.value)}                                                 
-              />)
-            }
-            return null;
-          })
-      }
+        <TextField
+          type='number'
+          value={this.props.zombiewins}
+          style={{width: 40}}
+          onChange={(e) => this.props.onCellChange('zombiewins', {name: 'ZOMBIES', season: this.props.season}, e.target.value)}                                                 
+        />
     </span>
     );
   }

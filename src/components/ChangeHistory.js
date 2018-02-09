@@ -18,10 +18,10 @@ class ChangeHistory extends React.Component {
                     return (
                       <TableRow key={changeIndex}>
                           <TableCell>
-                            <div>{row['message']}</div>
+                            <div>{row.message}</div>
                           </TableCell>
                           <TableCell>
-                            <div>{row['timestamp']}</div>
+                            <div>{row.timestamp}</div>
                           </TableCell>
                       </TableRow>
                     );

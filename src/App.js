@@ -20,11 +20,13 @@ class App extends Component {
       stats: [],
       season: '28',
       changelog: [],
-      kingPoints: 0
+      kingPoints: 0,
+      zombiewins: 0
     };
 
     this.onCellChange = this.onCellChange.bind(this);
     this.getData = this.getData.bind(this);
+    this.isDaKing = this.isDaKing.bind(this);
   }
 
   componentDidMount() {
@@ -46,7 +48,7 @@ class App extends Component {
            <TableBody>
              <TableRow>
                <TableCell>
-                 <ZombieInput stats={this.state.stats} onCellChange={this.onCellChange}/>
+                 <ZombieInput zombiewins={this.state.zombiewins} onCellChange={this.onCellChange} season={this.state.season} />
                </TableCell>
                <TableCell>
                  <SeasonSelector season={this.state.season} getData={this.getData} />
@@ -60,9 +62,16 @@ class App extends Component {
                 {
                   this.state.stats.sort(function(a, b) { return b.totalPoints - a.totalPoints; })
                     .map((row, playerIndex) => {
-                    if (row.name && row.name !== 'ZOMBIES') {
+                    if (row.name !== 'ZOMBIES') {
                       return (
-                        <PlayerRow key={playerIndex} row={row} playerIndex={playerIndex} kingPoints={this.state.kingPoints} isDaKing={this.isDaKing(row['totalPoints'])} onCellChange={this.onCellChange} />
+                        <PlayerRow
+                          key={playerIndex}
+                          row={row}
+                          playerIndex={playerIndex}
+                          kingPoints={this.state.kingPoints}
+                          isDaKing={this.isDaKing(row.totalPoints)}
+                          onCellChange={this.onCellChange}
+                        />
                       );
                     }
                     return null;
@@ -75,16 +84,16 @@ class App extends Component {
     );
   }
 
-  onCellChange(index, modifiedColumn, row, newValue) {
+  onCellChange(modifiedColumn, row, newValue) {
     let newStats = this.state.stats
-    newStats[index][modifiedColumn] = newValue;
+    newStats.filter(x => x.name === row.name)[0][modifiedColumn] = newValue;
 
-    let changeDescription = row['name'] + ':' + row['season'] + ':' + modifiedColumn + ':' + newValue;
+    let changeDescription = row.name + ':' + row.season + ':' + modifiedColumn + ':' + newValue;
     let ts = moment().format('YYYY-MM-DD HH:mm:ss');
 
     let obj = {
-      name: row['name'],
-      season: row['season'],
+      name: row.name,
+      season: row.season,
       field: modifiedColumn,
       value: newValue,
       timestamp: ts,
@@ -99,8 +108,9 @@ class App extends Component {
     // optimization: only update the changed player's totalPoints instead of all
     let newStatsWithTotals = helpers.setTotalPointsForAll(newStats);
     let highScore = helpers.getKingTotal(newStatsWithTotals);
-
-    this.setState({stats: newStatsWithTotals, changelog: newLog, kingPoints: highScore});
+    let zombiewins = newStatsWithTotals.filter(x => x.name === 'ZOMBIES')[0].zombiewins;
+    
+    this.setState({stats: newStatsWithTotals, changelog: newLog, kingPoints: highScore, zombiewins});
   }
 
   getData(targetSeason) {
@@ -108,7 +118,8 @@ class App extends Component {
       .then(res => {
         let statsWithTotals = helpers.setTotalPointsForAll(res.data);
         let highScore = helpers.getKingTotal(statsWithTotals);
-        this.setState({stats: statsWithTotals, season: targetSeason, kingPoints: highScore});
+        let zwins = statsWithTotals.filter(x => x.name === 'ZOMBIES')[0].zombiewins;
+        this.setState({stats: statsWithTotals, season: targetSeason, kingPoints: highScore, zombiewins: zwins});
       });
   }
 

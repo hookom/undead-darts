@@ -3,14 +3,14 @@ import '../App.css';
 import TextField from 'material-ui/TextField';
 import { TableCell, TableRow } from 'material-ui/Table';
 import ReactTooltip from 'react-tooltip';
-import ColumnInfo from '../lib/ColumnInfo.js';
+import TrackedStats from '../lib/TrackedStats.js';
 
 class PlayerRow extends Component {
   render() {
     return (
         <TableRow key={this.props.playerIndex}>
         {
-          Object.keys(ColumnInfo).map((columnName, columnIndex) => {
+          Object.keys(TrackedStats).map((columnName, columnIndex) => {
             if (columnName === 'name') {
         
               let outOfFirst = (this.props.kingPoints - this.props.row['totalPoints']) * -1;
@@ -28,19 +28,18 @@ class PlayerRow extends Component {
                   <ReactTooltip />
                 </TableCell>
               );
-            } else if (columnName !== 'zombiewins' && columnName !== 'season' )  {
+            } else {
               return (
                 <TableCell key={columnIndex} className="cellStyle">
                   <TextField
                     type='number'
                     value={this.props.row[columnName]}
                     style={{width: 40}}
-                    onChange={(e) => this.props.onCellChange(this.props.playerIndex, columnName, this.props.row, e.target.value)}
+                    onChange={(e) => this.props.onCellChange(columnName, this.props.row, e.target.value)}
                   />
                 </TableCell>
               );
             }
-            return null;
           })
         }
         </TableRow>
