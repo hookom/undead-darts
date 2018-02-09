@@ -34,52 +34,65 @@ class App extends Component {
 
     helpers.getChangelog()
       .then(res => {
-        this.setState({changelog: res.data});
+        this.setState({ changelog: res.data });
       });
+
+    // this.callApi()
   }
+
+  // callApi = async () => {
+  //   const response = await fetch('/api/hello');
+  //   // const response = await fetch('/api/changelog');
+  //   const body = await response.json();
+
+  //   if (response.status !== 200) throw Error(body.message);
+
+  //   console.log(body)
+  //   return body;
+  // };
 
   render() {
 
     return (
       <div className="App">
         <Reboot />
-        <AppHeader/>
+        <AppHeader />
         <Table>
-           <TableBody>
-             <TableRow>
-               <TableCell>
-                 <ZombieInput zombiewins={this.state.zombiewins} onCellChange={this.onCellChange} season={this.state.season} />
-               </TableCell>
-               <TableCell>
-                 <SeasonSelector season={this.state.season} getData={this.getData} />
-               </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-        <Table>
-            <ColumnHeaders />
-            <TableBody>
-                {
-                  this.state.stats.sort(function(a, b) { return b.totalPoints - a.totalPoints; })
-                    .map((row, playerIndex) => {
-                    if (row.name !== 'ZOMBIES') {
-                      return (
-                        <PlayerRow
-                          key={playerIndex}
-                          row={row}
-                          playerIndex={playerIndex}
-                          kingPoints={this.state.kingPoints}
-                          isDaKing={this.isDaKing(row.totalPoints)}
-                          onCellChange={this.onCellChange}
-                        />
-                      );
-                    }
-                    return null;
-                  })
-                }
-            </TableBody>
+          <TableBody>
+            <TableRow>
+              <TableCell>
+                <ZombieInput zombiewins={this.state.zombiewins} onCellChange={this.onCellChange} season={this.state.season} />
+              </TableCell>
+              <TableCell>
+                <SeasonSelector season={this.state.season} getData={this.getData} />
+              </TableCell>
+            </TableRow>
+          </TableBody>
         </Table>
-        <ChangeHistory changelog={this.state.changelog}/>
+        <Table>
+          <ColumnHeaders />
+          <TableBody>
+            {
+              this.state.stats.sort(function (a, b) { return b.totalPoints - a.totalPoints; })
+                .map((row, playerIndex) => {
+                  if (row.name !== 'ZOMBIES') {
+                    return (
+                      <PlayerRow
+                        key={playerIndex}
+                        row={row}
+                        playerIndex={playerIndex}
+                        kingPoints={this.state.kingPoints}
+                        isDaKing={this.isDaKing(row.totalPoints)}
+                        onCellChange={this.onCellChange}
+                      />
+                    );
+                  }
+                  return null;
+                })
+            }
+          </TableBody>
+        </Table>
+        <ChangeHistory changelog={this.state.changelog} />
       </div>
     );
   }
@@ -103,14 +116,14 @@ class App extends Component {
     helpers.updateStats(body);
 
     let newLog = this.state.changelog;
-    newLog.unshift({message: changeDescription, timestamp: ts});
+    newLog.unshift({ message: changeDescription, timestamp: ts });
 
     // optimization: only update the changed player's totalPoints instead of all
     let newStatsWithTotals = helpers.setTotalPointsForAll(newStats);
     let highScore = helpers.getKingTotal(newStatsWithTotals);
     let zombiewins = newStatsWithTotals.filter(x => x.name === 'ZOMBIES')[0].zombiewins;
-    
-    this.setState({stats: newStatsWithTotals, changelog: newLog, kingPoints: highScore, zombiewins});
+
+    this.setState({ stats: newStatsWithTotals, changelog: newLog, kingPoints: highScore, zombiewins });
   }
 
   getData(targetSeason) {
@@ -119,7 +132,7 @@ class App extends Component {
         let statsWithTotals = helpers.setTotalPointsForAll(res.data);
         let highScore = helpers.getKingTotal(statsWithTotals);
         let zwins = statsWithTotals.filter(x => x.name === 'ZOMBIES')[0].zombiewins;
-        this.setState({stats: statsWithTotals, season: targetSeason, kingPoints: highScore, zombiewins: zwins});
+        this.setState({ stats: statsWithTotals, season: targetSeason, kingPoints: highScore, zombiewins: zwins });
       });
   }
 
