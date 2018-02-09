@@ -62,7 +62,7 @@ class App extends Component {
                     .map((row, playerIndex) => {
                     if (row.name && row.name !== 'ZOMBIES') {
                       return (
-                        <PlayerRow key={playerIndex} row={row} playerIndex={playerIndex} isDaKing={this.isDaKing(row['totalPoints'])} onCellChange={this.onCellChange} />
+                        <PlayerRow key={playerIndex} row={row} playerIndex={playerIndex} kingPoints={this.state.kingPoints} isDaKing={this.isDaKing(row['totalPoints'])} onCellChange={this.onCellChange} />
                       );
                     }
                     return null;
