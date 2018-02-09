@@ -1,7 +1,7 @@
 import React from 'react';
 import { TableCell, TableHead, TableRow } from 'material-ui/Table';
-import helpers from '../lib/helpers.js';
 import ReactTooltip from 'react-tooltip';
+import ColumnInfo from '../lib/ColumnInfo.js';
 
 class ColumnHeaders extends React.Component {
   render() {
@@ -11,7 +11,7 @@ class ColumnHeaders extends React.Component {
     return (
         <TableHead className="headerStyle">
         <TableRow>
-            {Object.values(helpers.columns).map((header, headerIndex) => {
+            {Object.values(ColumnInfo).map((header, headerIndex) => {
               if (header.header !== 'Season' && header.header !== 'Zombie Wins') {
                   tooltipText = header.header === 'Name' ? 
                     tooltipText = header.tooltip :
