@@ -4,13 +4,14 @@ import helpers from './helpers.js';
 import TextField from 'material-ui/TextField';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import ReactTooltip from 'react-tooltip';
+import ColumnInfo from './ColumnInfo.js';
 
 class PlayerRow extends Component {
   render() {
     return (
         <TableRow key={this.props.playerIndex}>
         {
-          Object.keys(helpers.columns).map((columnName, columnIndex) => {
+          Object.keys(ColumnInfo).map((columnName, columnIndex) => {
             if (columnName === 'name') {
         
               let outOfFirst = (this.props.kingPoints - this.props.row['totalPoints']) * -1;
