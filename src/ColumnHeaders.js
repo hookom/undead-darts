@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import helpers from './helpers.js';
 import ReactTooltip from 'react-tooltip';
+import ColumnInfo from './ColumnInfo.js';
 
 class ColumnHeaders extends React.Component {
   render() {
@@ -12,7 +13,7 @@ class ColumnHeaders extends React.Component {
     return (
         <TableHead className="headerStyle">
         <TableRow>
-            {Object.values(helpers.columns).map((header, headerIndex) => {
+            {Object.values(ColumnInfo).map((header, headerIndex) => {
               if (header.header !== 'Season' && header.header !== 'Zombie Wins') {
                   tooltipText = header.header === 'Name' ? 
                     tooltipText = header.tooltip :
