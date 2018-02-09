@@ -1,4 +1,5 @@
 var axios = require('axios');
+var StatValues = require('./StatValues.js');
 
 const baseUrl = 'http://www.undeaddarts.com/api/';
 let getStatsUrl = baseUrl;
@@ -113,27 +114,11 @@ var helpers = {
         }
     },
 
-    statValues: {
-        human: 1,
-        survivor: 1,
-        coweringdefeat: -1,
-        resdhuman: 1,
-        lostbulls: -1,
-        catches: 1,
-        firstrdkill: 1,
-        firstrdelim: 2,
-        resdkill: 2,
-        doubletap: 1,
-        doublechomp: 1,
-        zombiehero: 2,
-        buffet: 2
-    },
-
     setTotalPointsForAll: (stats) => {
         stats.forEach(playerRow => {
             let total = 0;
-            Object.keys(helpers.statValues).forEach(stat => {
-                total += (parseInt(playerRow[stat], 10) * parseInt(helpers.statValues[stat], 10));
+            Object.keys(StatValues).forEach(stat => {
+                total += (parseInt(playerRow[stat], 10) * parseInt(StatValues[stat], 10));
             });
             playerRow.totalPoints = total;
         });
