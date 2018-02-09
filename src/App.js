@@ -1,20 +1,16 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import './App.css';
-import helpers from './helpers.js';
-import TextField from 'material-ui/TextField';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import helpers from './lib/helpers.js';
+import Table, { TableBody, TableCell, TableRow } from 'material-ui/Table';
 import Reboot from 'material-ui/Reboot';
-import Select from 'material-ui/Select';
-import { MenuItem } from 'material-ui/Menu';
 import 'typeface-roboto';
-import ReactTooltip from 'react-tooltip';
-import ChangeHistory from './ChangeHistory.js';
-import SeasonSelector from './SeasonSelector.js';
-import ZombieInput from './ZombieInput.js';
-import AppHeader from './AppHeader.js';
-import ColumnHeaders from './ColumnHeaders';
-import PlayerRow from './PlayerRow.js';
+import ChangeHistory from './components/ChangeHistory.js';
+import SeasonSelector from './components/SeasonSelector.js';
+import ZombieInput from './components/ZombieInput.js';
+import AppHeader from './components/AppHeader.js';
+import ColumnHeaders from './components/ColumnHeaders';
+import PlayerRow from './components/PlayerRow.js';
 
 class App extends Component {
   constructor(props) {
@@ -66,7 +62,7 @@ class App extends Component {
                     .map((row, playerIndex) => {
                     if (row.name && row.name !== 'ZOMBIES') {
                       return (
-                        <PlayerRow row={row} playerIndex={playerIndex} isDaKing={this.isDaKing(row['totalPoints'])} onCellChange={this.onCellChange} />
+                        <PlayerRow key={playerIndex} row={row} playerIndex={playerIndex} kingPoints={this.state.kingPoints} isDaKing={this.isDaKing(row['totalPoints'])} onCellChange={this.onCellChange} />
                       );
                     }
                     return null;

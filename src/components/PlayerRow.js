@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
-import helpers from './helpers.js';
+import '../App.css';
+import helpers from '../lib/helpers.js';
 import TextField from 'material-ui/TextField';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import { TableCell, TableRow } from 'material-ui/Table';
 import ReactTooltip from 'react-tooltip';
 import ColumnInfo from './ColumnInfo.js';
 
