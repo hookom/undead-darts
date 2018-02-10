@@ -1,5 +1,5 @@
 const axios = require('axios');
-const StatValues = require('./StatValues.js');
+const TrackedStats = require('./TrackedStats.js');
 
 const baseUrl = 'http://www.undeaddarts.com/api/';
 let getStatsUrl = baseUrl;
@@ -34,8 +34,8 @@ var helpers = {
     setTotalPointsForAll: (stats) => {
         stats.forEach(playerRow => {
             let total = 0;
-            Object.keys(StatValues).forEach(stat => {
-                total += (parseInt(playerRow[stat], 10) * parseInt(StatValues[stat], 10));
+            Object.keys(TrackedStats).forEach(stat => {
+                total += (parseInt(playerRow[stat], 10) * parseInt(TrackedStats[stat].value, 10));
             });
             playerRow.totalPoints = total;
         });

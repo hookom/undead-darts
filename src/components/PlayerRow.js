@@ -7,39 +7,33 @@ import TrackedStats from '../lib/TrackedStats.js';
 
 class PlayerRow extends Component {
   render() {
+    let outOfFirst = (this.props.kingPoints - this.props.row['totalPoints']) * -1;
+
     return (
         <TableRow key={this.props.playerIndex}>
+          <TableCell className="cellStyle">
+            <TextField 
+              type='text'
+              value={this.props.row.name}
+              disabled
+              style={{width: 75}}
+              className={this.props.isDaKing === true ? 'king' : undefined}
+              data-tip={outOfFirst}
+            />
+            <ReactTooltip />
+          </TableCell>
         {
-          Object.keys(TrackedStats).map((columnName, columnIndex) => {
-            if (columnName === 'name') {
-        
-              let outOfFirst = (this.props.kingPoints - this.props.row['totalPoints']) * -1;
-
-              return (
-                <TableCell key={columnIndex} className="cellStyle">
-                  <TextField 
-                    type='text'
-                    value={this.props.row[columnName]}
-                    disabled
-                    style={{width: 75}}
-                    className={this.props.isDaKing === true && columnIndex === 0 ? 'king' : undefined}
-                    data-tip={outOfFirst}
-                  />
-                  <ReactTooltip />
-                </TableCell>
-              );
-            } else {
-              return (
-                <TableCell key={columnIndex} className="cellStyle">
-                  <TextField
-                    type='number'
-                    value={this.props.row[columnName]}
-                    style={{width: 40}}
-                    onChange={(e) => this.props.onCellChange(columnName, this.props.row, e.target.value)}
-                  />
-                </TableCell>
-              );
-            }
+          Object.keys(TrackedStats).map((columnName, index) => {
+            return (
+              <TableCell key={index} className="cellStyle">
+                <TextField
+                  type='number'
+                  value={this.props.row[columnName]}
+                  style={{width: 40}}
+                  onChange={(e) => this.props.onCellChange(columnName, this.props.row, e.target.value)}
+                />
+              </TableCell>
+            );
           })
         }
         </TableRow>
