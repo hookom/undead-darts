@@ -8,16 +8,12 @@ class ColumnHeaders extends React.Component {
     return (
         <TableHead className="headerStyle">
           <TableRow>
+            <TableCell>Player Name</TableCell>
             {
               Object.values(TrackedStats).map((stat, statIndex) => {
-                // Name column does not have a Value
-                let tooltipText = (stat.header === 'Name') ? stat.tooltip : stat.tooltip + '<br />Value:  ' + stat.value;
                 return (
-                  <TableCell 
-                    key={statIndex}
-                    data-multiline={true}
-                    data-tip={tooltipText}
-                  >{stat.header}
+                  <TableCell key={statIndex} data-multiline={true} data-tip={stat.tooltip + '<br />Value:  ' + stat.value}>
+                    {stat.header}
                     <ReactTooltip />
                   </TableCell>
                 );

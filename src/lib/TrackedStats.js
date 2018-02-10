@@ -1,73 +1,72 @@
 const TrackedStats = {
-    name: {
-        header: 'Name',
-        tooltip: 'Player Name',
-        value: ''
-    },
     human: {
         header: 'Human Win',
-        tooltip: 'Kill all zombies as a human',
-        value: 1
+        value: 1,
+        tooltip: 'Eliminate all zombies and humans.'
     },
     survivor: {
         header: 'Survivor',
-        tooltip: 'Only one human left with at least 3 zombies.<br />Must call after turn and zombies must target survivor (no res).<br />If zombies cannot kill human by its next turn, human becomes survivor',
-        value: 1
+        value: 1,
+        tooltip: 'As the last human and with at least 3 zombies.<br />'
+                 + 'Must be called after you throw.<br />'
+                 + 'Zombies have a final round to kill the human.'
     },
     coweringdefeat: {
         header: 'Cowering Defeat',
-        tooltip: 'Human calls survivor but is killed by zombies',
-        value: -1
+        value: -1,
+        tooltip: 'Human calls survivor but is killed by zombies.'
     },
     resdhuman: {
         header: 'Res\'d Human',
-        tooltip: 'Human resurrects and eliminates all zombies',
-        value: 1
+        value: 1,
+        tooltip: 'Human resurrects and eliminates all other players.'
     },
     lostbulls: {
         header: 'Lost Bullseyes',
-        tooltip: 'Thrower did not declare target of the bullseye',
-        value: -1
+        value: -1,
+        tooltip: 'Zombie did not declare target of a bullseye.'
     },
     catches: {
         header: 'Catches',
-        tooltip: 'Catch a dart that bounces out of the board',
-        value: 1
+        value: 1,
+        tooltip: 'Catch a dart that bounces out of the board.'
     },
     firstrdkill: {
         header: 'First Round Kill',
-        tooltip: 'In the throwers first turn, they kill another player',
-        value: 1
+        value: 1,
+        tooltip: 'Kill another player during your first turn.'
     },
     firstrdelim: {
         header: 'First Round Elimination',
-        tooltip: 'In the throwers first turn, they kill another player and hit bullseye to eliminate them',
-        value: 2
+        value: 2,
+        tooltip: 'Kill another player and hit bullseye to eliminate<br />'
+                 + 'them during your first turn.'
     },
     resdkill: {
         header: 'Res\'d Kill',
-        tooltip: 'Ressurect and kill a human in one turn',
-        value: 2
+        value: 2,
+        tooltip: 'Ressurect, become a killer, and kill a human in one turn.'
     },
     doubletap: {
         header: 'Double Tap',
-        tooltip: 'Kill the same human twice as a human',
-        value: 1
+        value: 1,
+        tooltip: 'Kill the same human twice as a killer.'
     },
     doublechomp: {
         header: 'Double Chomp',
-        tooltip: 'Kill the same human twice as a zombie',
-        value: 1
+        value: 1,
+        tooltip: 'Kill the same human twice as a zombie.'
     },
     zombiehero: {
         header: 'Zombie Hero',
-        tooltip: 'Last zombie to throw in a survivor situation kills the human',
-        value: 2
+        value: 2,
+        tooltip: 'A zombie throws 2+ bullseyes in a single turn to prevent<br />'
+                 + 'a human from attaining survivor.'
     },
     buffet: {
         header: 'Buffet',
-        tooltip: 'I have no clue what this one is',
-        value: 2
+        value: 2,
+        tooltip: 'Zombie kills two humans in a single turn.'
     }
 };
 
