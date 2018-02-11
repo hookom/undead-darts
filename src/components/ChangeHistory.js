@@ -1,36 +1,49 @@
 import React from 'react';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 
-class ChangeHistory extends React.Component {
-  render() {
-    return (
+export default ({changelog}) => (
         <Table>
-            <TableHead>
-                <TableRow>
-                  <TableCell>CHANGE</TableCell>
-                  <TableCell>TIMESTAMP</TableCell>
-                </TableRow>
-            </TableHead>
-
+            <ChangeHeader/>
             <TableBody>
-                {
-                  this.props.changelog.map((row, changeIndex) => {
-                    return (
-                      <TableRow key={changeIndex}>
-                          <TableCell>
-                            <div>{row.message}</div>
-                          </TableCell>
-                          <TableCell>
-                            <div>{row.timestamp}</div>
-                          </TableCell>
-                      </TableRow>
-                    );
-                  })
-                }
+              <ChangeRows changelog={changelog}/>
             </TableBody>
         </Table>
-    );
-  }
+
+)
+
+const ChangeRows = ({changelog}) => {
+  return (
+    changelog.map((row, changeIndex) => {
+      return (
+        <ChangeRow 
+          key={changeIndex} 
+          index={changeIndex} changeRow={row}
+        />
+      );
+    })
+  )
 }
 
-export default ChangeHistory;
+const ChangeHeader = () => {
+  return (
+      <TableHead>
+          <TableRow>
+            <TableCell>CHANGE</TableCell>
+            <TableCell>TIMESTAMP</TableCell>
+          </TableRow>
+      </TableHead>
+  )
+}
+
+const ChangeRow = ({index, changeRow}) => {
+  return (
+    <TableRow key={index}>
+      <TableCell>
+        <div>{changeRow.message}</div>
+      </TableCell>
+      <TableCell>
+        <div>{changeRow.timestamp}</div>
+      </TableCell>
+    </TableRow>
+  )
+}

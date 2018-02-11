@@ -1,23 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../App.css';
 import TextField from 'material-ui/TextField';
 import { TableCell, TableRow } from 'material-ui/Table';
 import ReactTooltip from 'react-tooltip';
 import TrackedStats from '../lib/TrackedStats.js';
 
-class PlayerRow extends Component {
-  render() {
-    let outOfFirst = (this.props.kingPoints - this.props.row['totalPoints']) * -1;
-
-    return (
-        <TableRow key={this.props.playerIndex}>
+export default ({playerIndex, isDaKing, kingPoints, row, onCellChange}) => { 
+  let outOfFirst = (kingPoints - row['totalPoints']) * -1;
+  return (
+        <TableRow key={playerIndex}>
           <TableCell className="cellStyle">
             <TextField 
               type='text'
-              value={this.props.row.name}
+              value={row.name}
               disabled
               style={{width: 75}}
-              className={this.props.isDaKing === true ? 'king' : undefined}
+              className={isDaKing === true ? 'king' : undefined}
               data-tip={outOfFirst}
             />
             <ReactTooltip />
@@ -28,9 +26,9 @@ class PlayerRow extends Component {
               <TableCell key={index} className="cellStyle">
                 <TextField
                   type='number'
-                  value={this.props.row[columnName]}
+                  value={row[columnName]}
                   style={{width: 40}}
-                  onChange={(e) => this.props.onCellChange(columnName, this.props.row, e.target.value)}
+                  onChange={(e) => onCellChange(columnName, row, e.target.value)}
                 />
               </TableCell>
             );
@@ -38,8 +36,6 @@ class PlayerRow extends Component {
         }
         </TableRow>
 
-    );
-  }
+  )
 }
 
-export default PlayerRow;
