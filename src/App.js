@@ -84,16 +84,16 @@ class App extends Component {
     );
   }
 
-  onCellChange(modifiedColumn, row, newValue) {
-    let newStats = this.state.stats
-    newStats.filter(x => x.name === row.name)[0][modifiedColumn] = newValue;
+  onCellChange(modifiedColumn, modifiedRow, newValue) {
+    let newStats = this.state.stats;
+    newStats.filter(x => x.name === modifiedRow.name)[0][modifiedColumn] = newValue;
 
-    let changeDescription = row.name + ':' + row.season + ':' + modifiedColumn + ':' + newValue;
+    let changeDescription = modifiedRow.name + ':' + modifiedRow.season + ':' + modifiedColumn + ':' + newValue;
     let ts = moment().format('YYYY-MM-DD HH:mm:ss');
 
     let obj = {
-      name: row.name,
-      season: row.season,
+      name: modifiedRow.name,
+      season: modifiedRow.season,
       field: modifiedColumn,
       value: newValue,
       timestamp: ts,
@@ -105,8 +105,7 @@ class App extends Component {
     let newLog = this.state.changelog;
     newLog.unshift({message: changeDescription, timestamp: ts});
 
-    // optimization: only update the changed player's totalPoints instead of all
-    let newStatsWithTotals = helpers.setTotalPointsForAll(newStats);
+    let newStatsWithTotals = helpers.setTotalPointsFor(newStats, [modifiedRow.name]);
     let highScore = helpers.getKingTotal(newStatsWithTotals);
     let zombiewins = newStatsWithTotals.filter(x => x.name === 'ZOMBIES')[0].zombiewins;
     
@@ -116,7 +115,7 @@ class App extends Component {
   getData(targetSeason) {
     helpers.getAllStats(targetSeason)
       .then(res => {
-        let statsWithTotals = helpers.setTotalPointsForAll(res.data);
+        let statsWithTotals = helpers.setTotalPointsFor(res.data);
         let highScore = helpers.getKingTotal(statsWithTotals);
         let zwins = statsWithTotals.filter(x => x.name === 'ZOMBIES')[0].zombiewins;
         this.setState({stats: statsWithTotals, season: targetSeason, kingPoints: highScore, zombiewins: zwins});
