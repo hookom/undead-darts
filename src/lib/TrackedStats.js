@@ -60,13 +60,30 @@ const TrackedStats = {
     zombiehero: {
         header: 'Zombie Hero',
         value: 2,
-        tooltip: 'A zombie throws 2+ bullseyes in a single turn to prevent<br />'
-                 + 'a human from attaining survivor.'
+        tooltip: 'A zombie throws 2+ bullseyes in a single turn to<br />'
+                 + 'prevent a human from attaining survivor.'
     },
     buffet: {
         header: 'Buffet',
         value: 2,
         tooltip: 'Zombie kills two humans in a single turn.'
+    },
+    retaliation: {
+        header: 'Retaliation',
+        value: 2,
+        tooltip: 'Killed by someone, then you hit 2 bullseyes as a<br />'
+                 + 'zombie to retaliate.'
+    },
+    flawlessfinish: {
+        header: 'Flawless Finish',
+        value: 1,
+        tooltip: 'In a single turn, kill 2 people, then with your<br />'
+                 + 'final dart, bullseye to win.'
+    },
+    multitalented: {
+        header: 'Multi-Talented',
+        value: 1,
+        tooltip: 'Kill the same person as a human and as a zombie.'
     }
 };
 
