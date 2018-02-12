@@ -9,8 +9,7 @@ import ChangeHistory from './components/ChangeHistory.js';
 import SeasonSelector from './components/SeasonSelector.js';
 import ZombieInput from './components/ZombieInput.js';
 import AppHeader from './components/AppHeader.js';
-import ColumnHeaders from './components/ColumnHeaders';
-import PlayerRow from './components/PlayerRow.js';
+import PlayerStats from './components/PlayerStats.js'
 
 class App extends Component {
   constructor(props) {
@@ -56,29 +55,7 @@ class App extends Component {
           </TableRow>
         </TableBody>
       </Table>
-        <Table>
-            <ColumnHeaders />
-            <TableBody>
-                {
-                  this.state.stats.sort(function(a, b) { return b.totalPoints - a.totalPoints; })
-                    .map((row, playerIndex) => {
-                    if (row.name !== 'ZOMBIES') {
-                      return (
-                        <PlayerRow
-                          key={playerIndex}
-                          row={row}
-                          playerIndex={playerIndex}
-                          kingPoints={this.state.kingPoints}
-                          isDaKing={this.isDaKing(row.totalPoints)}
-                          onCellChange={this.onCellChange}
-                        />
-                      );
-                    }
-                    return null;
-                  })
-                }
-            </TableBody>
-        </Table>
+        <PlayerStats stats={this.state.stats} kingPoints={this.state.kingPoints} isDaKing={this.isDaKing} onCellChange={this.onCellChange}/>
         <ChangeHistory changelog={this.state.changelog}/>
       </div>
     );
