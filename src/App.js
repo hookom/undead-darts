@@ -6,10 +6,27 @@ import Table, { TableBody, TableCell, TableRow } from 'material-ui/Table';
 import Reboot from 'material-ui/Reboot';
 import 'typeface-roboto';
 import ChangeHistory from './components/ChangeHistory.js';
+import Collapse from 'material-ui/transitions/Collapse';
+import IconButton from 'material-ui/IconButton';
+import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import SeasonSelector from './components/SeasonSelector.js';
 import ZombieInput from './components/ZombieInput.js';
 import AppHeader from './components/AppHeader.js';
 import PlayerStats from './components/PlayerStats.js'
+import { withStyles } from 'material-ui/styles';
+
+const styles = theme => ({
+  expand: {
+    transform: 'rotate(0deg)',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+    marginLeft: 'auto',
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  }
+});
 
 class App extends Component {
   constructor(props) {
@@ -20,7 +37,12 @@ class App extends Component {
       season: '28',
       changelog: [],
       kingPoints: 0,
-      zombiewins: 0
+      zombiewins: 0,
+      historyExpanded: false
+    };
+
+    this.handleExpandClick = () => {
+      this.setState({ historyExpanded: !this.state.historyExpanded});
     };
 
     this.onCellChange = this.onCellChange.bind(this);
@@ -55,9 +77,15 @@ class App extends Component {
           </TableRow>
         </TableBody>
       </Table>
-        <PlayerStats stats={this.state.stats} kingPoints={this.state.kingPoints} isDaKing={this.isDaKing} onCellChange={this.onCellChange}/>
+      <PlayerStats stats={this.state.stats} kingPoints={this.state.kingPoints} isDaKing={this.isDaKing} onCellChange={this.onCellChange}/>
+      <IconButton onClick={this.handleExpandClick}>
+            <h4>History</h4>
+            <ExpandMoreIcon />
+       </IconButton> 
+      <Collapse in={this.state.historyExpanded} timeout="auto" unmountOnExit>
         <ChangeHistory changelog={this.state.changelog}/>
-      </div>
+      </Collapse>
+    </div>
     );
   }
 
@@ -104,4 +132,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withStyles(styles)(App);
