@@ -1,12 +1,13 @@
 import React from 'react';
 import PlayerRow from './PlayerRow.js';
-import Table, { TableBody } from 'material-ui/Table';
+import Card from 'material-ui/Card';
 import ColumnHeaders from './ColumnHeaders';
 
 export default ({stats, kingPoints, isDaKing, onCellChange}) =>  ( 
-    <Table>
+  <Card>
+    <table id="StatsTable">
         <ColumnHeaders />
-        <TableBody>
+        <tbody>
             {
               stats.sort(function(a, b) { return b.totalPoints - a.totalPoints; })
                 .map((row, playerIndex) => {
@@ -25,6 +26,7 @@ export default ({stats, kingPoints, isDaKing, onCellChange}) =>  (
                 return null;
               })
             }
-        </TableBody>
-    </Table>
+        </tbody>
+    </table>
+  </Card>
 )
