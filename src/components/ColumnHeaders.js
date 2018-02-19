@@ -20,7 +20,7 @@ export default () => (
 const ColumnHeader = ({index, stat}) => {
   return (
     <th 
-      class="mdl-data-table__cell--non-numeric"
+      className="mdl-data-table__cell--non-numeric"
       key={index} 
       data-multiline={true} 
       data-tip={stat.tooltip + '<br />Value:  ' + stat.value}>
