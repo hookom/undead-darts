@@ -29,9 +29,7 @@
 
 tr:nth-child(even) {background-color: #f2f2f2;}
 
-input {
-  width: 60px;
-}
+#StatsTable tr:hover { background: #95b3e2; }
 
 .collapseBorder {
   border-collapse: collapse;
@@ -41,18 +39,14 @@ input {
   background-color: gold;
 }
 
-input.MuiInput-input-15 {
-  width: auto;
-}
-
 .headerStyle {
-  padding: 4px 6px 4px 6px;
-  width: auto;
+  /* padding: 4px 6px 4px 6px; */
+  /* width: auto; */
   font-size: 1rem;
   font-weight: 600;
 }
 
 .cellStyle {
-  padding: 4px 6px 4px 6px;
+  /* padding: 4px 6px 4px 6px; */
   width: 5%;
 }
