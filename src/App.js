@@ -35,6 +35,7 @@ class App extends Component {
     this.state = {
       stats: [],
       season: '28.2',
+      seasons: ['28.2','28.3','27'],
       changelog: [],
       kingPoints: 0,
       zombiewins: 0,
@@ -45,9 +46,11 @@ class App extends Component {
       this.setState({ historyExpanded: !this.state.historyExpanded});
     };
 
+
     this.onCellChange = this.onCellChange.bind(this);
     this.getData = this.getData.bind(this);
     this.isDaKing = this.isDaKing.bind(this);
+    this.saveSeason = this.saveSeason.bind(this);
   }
 
   componentDidMount() {
@@ -72,7 +75,11 @@ class App extends Component {
                  <ZombieInput zombiewins={this.state.zombiewins} onCellChange={this.onCellChange} season={this.state.season} />
                </TableCell>
                <TableCell>
-                 <SeasonSelector season={this.state.season} getData={this.getData} />
+                 <SeasonSelector 
+                  season={this.state.season} 
+                  getData={this.getData}
+                  saveSeason={this.saveSeason}
+                />
                </TableCell>
           </TableRow>
         </TableBody>
@@ -130,6 +137,14 @@ class App extends Component {
   isDaKing(playersPoints) {
     return this.state.kingPoints === playersPoints;
   }
+
+  saveSeason(newSeason) {
+    var seasons = this.state.seasons.slice();
+    seasons.push(newSeason)
+    this.setState({seasons: seasons});
+    helpers.saveSeason(newSeason);
+  }
+
 }
 
 export default withStyles(styles)(App);

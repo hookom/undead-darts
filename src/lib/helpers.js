@@ -5,16 +5,19 @@ const baseUrl = 'http://www.undeaddarts.com/api/';
 let getStatsUrl = baseUrl;
 let getChangelogUrl = baseUrl;
 let updateUrl = baseUrl;
+let addSeasonUrl = baseUrl;
 
 const hostname = window && window.location && window.location.hostname;
 if(hostname === 'localhost') {
     getStatsUrl += 'getStats-test.php';
     getChangelogUrl += 'getChangelog-test.php';
     updateUrl += 'update-test.php';
+    addSeasonUrl += 'add-season-test.php';
 } else {
     getStatsUrl += 'getStats.php';
     getChangelogUrl += 'getChangelog.php';
     updateUrl += 'update.php';
+    addSeasonUrl += 'add-season.php';
 }
 
 var helpers = {
@@ -28,6 +31,10 @@ var helpers = {
 
     updateStats: (body) => {
         return axios.post(updateUrl, body);
+    },
+
+    saveSeason: (season) => {
+      return axios.post(addSeasonUrl, {season: season});
     },
 
     setTotalPointsFor: (stats, names) => {
