@@ -34,7 +34,8 @@ class App extends Component {
 
     this.state = {
       stats: [],
-      season: '28.2',
+      season: '',
+      seasons: [],
       changelog: [],
       kingPoints: 0,
       zombiewins: 0,
@@ -42,20 +43,26 @@ class App extends Component {
     };
 
     this.handleExpandClick = () => {
-      this.setState({ historyExpanded: !this.state.historyExpanded});
+      this.setState({ historyExpanded: !this.state.historyExpanded });
     };
 
     this.onCellChange = this.onCellChange.bind(this);
     this.getData = this.getData.bind(this);
     this.isDaKing = this.isDaKing.bind(this);
+    this.saveSeason = this.saveSeason.bind(this);
   }
 
   componentDidMount() {
-    this.getData(this.state.season);
-
     helpers.getChangelog()
       .then(res => {
         this.setState({changelog: res.data});
+      });
+
+    helpers.getSeasons()
+      .then(res => {
+        this.getData(res.data[res.data.length - 1].season);
+
+        this.setState({seasons: res.data, season: res.data[res.data.length - 1].season});
       });
   }
 
@@ -72,7 +79,12 @@ class App extends Component {
                  <ZombieInput zombiewins={this.state.zombiewins} onCellChange={this.onCellChange} season={this.state.season} />
                </TableCell>
                <TableCell>
-                 <SeasonSelector season={this.state.season} getData={this.getData} />
+                 <SeasonSelector 
+                  season={this.state.season} 
+                  seasons={this.state.seasons}
+                  getData={this.getData}
+                  saveSeason={this.saveSeason}
+                />
                </TableCell>
           </TableRow>
         </TableBody>
@@ -130,6 +142,13 @@ class App extends Component {
   isDaKing(playersPoints) {
     return this.state.kingPoints === playersPoints;
   }
+
+  saveSeason(newSeason) {
+    this.state.seasons.push({season: newSeason})
+    this.setState({seasons: this.state.seasons});
+    helpers.saveSeason(newSeason);
+  }
+
 }
 
 export default withStyles(styles)(App);
