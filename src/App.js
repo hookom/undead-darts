@@ -34,7 +34,7 @@ class App extends Component {
 
     this.state = {
       stats: [],
-      season: '28',
+      season: '28.2',
       changelog: [],
       kingPoints: 0,
       zombiewins: 0,

@@ -8,7 +8,8 @@ class SeasonSelector extends React.Component {
       <span>
         <span className="headerStyle">Season: </span>
         <Select value={this.props.season} onChange={(e) => this.props.getData(e.target.value)}>
-          <MenuItem value='28'>28</MenuItem>
+          <MenuItem value='28.3'>28.3</MenuItem>
+          <MenuItem value='28.2'>28.2</MenuItem>
           <MenuItem value='27'>27</MenuItem>
         </Select>
       </span>
