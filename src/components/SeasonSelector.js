@@ -9,8 +9,8 @@ class SeasonSelector extends React.Component {
     super(props);
     this.state = {
       seasonOpen: false, 
-      newSeason: null, 
-      saveSeason: this.props.saveSeason}
+      newSeason: null
+    }
   }
 
   handleSeasonClick = () => {
@@ -19,18 +19,21 @@ class SeasonSelector extends React.Component {
 
   saveNewSeason = (value) => {
     this.setState({seasonOpen: false, newSeason: value});
-    this.state.saveSeason(value);
+    this.props.saveSeason(value);
   }
-
 
   render() {
     return (
       <span>
         <span className="headerStyle">Season: </span>
         <Select value={this.props.season} onChange={(e) => this.props.getData(e.target.value)}>
-          <MenuItem value='28.3'>28.3</MenuItem>
-          <MenuItem value='28.2'>28.2</MenuItem>
-          <MenuItem value='27'>27</MenuItem>
+          {
+            this.props.seasons.map((id, index) => {
+              return (
+                <MenuItem key={index} value={id.season}>{id.season}</MenuItem>
+              );
+            })
+          }
         </Select>
       <Button onClick={this.handleSeasonClick}>+</Button>
       <SeasonDialog open={this.state.seasonOpen} onSave={this.saveNewSeason}/>

@@ -34,8 +34,8 @@ class App extends Component {
 
     this.state = {
       stats: [],
-      season: '28.2',
-      seasons: ['28.2','28.3','27'],
+      season: '',
+      seasons: [],
       changelog: [],
       kingPoints: 0,
       zombiewins: 0,
@@ -43,9 +43,8 @@ class App extends Component {
     };
 
     this.handleExpandClick = () => {
-      this.setState({ historyExpanded: !this.state.historyExpanded});
+      this.setState({ historyExpanded: !this.state.historyExpanded });
     };
-
 
     this.onCellChange = this.onCellChange.bind(this);
     this.getData = this.getData.bind(this);
@@ -54,11 +53,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getData(this.state.season);
-
     helpers.getChangelog()
       .then(res => {
         this.setState({changelog: res.data});
+      });
+
+    helpers.getSeasons()
+      .then(res => {
+        this.getData(res.data[res.data.length - 1].season);
+
+        this.setState({seasons: res.data, season: res.data[res.data.length - 1].season});
       });
   }
 
@@ -77,6 +81,7 @@ class App extends Component {
                <TableCell>
                  <SeasonSelector 
                   season={this.state.season} 
+                  seasons={this.state.seasons}
                   getData={this.getData}
                   saveSeason={this.saveSeason}
                 />
@@ -139,9 +144,8 @@ class App extends Component {
   }
 
   saveSeason(newSeason) {
-    var seasons = this.state.seasons.slice();
-    seasons.push(newSeason)
-    this.setState({seasons: seasons});
+    this.state.seasons.push({season: newSeason})
+    this.setState({seasons: this.state.seasons});
     helpers.saveSeason(newSeason);
   }
 
