@@ -50,20 +50,11 @@ class App extends Component {
     this.getData = this.getData.bind(this);
     this.isDaKing = this.isDaKing.bind(this);
     this.saveSeason = this.saveSeason.bind(this);
+    this.loadSeasons = this.loadSeasons.bind(this);
   }
 
   componentDidMount() {
-    helpers.getChangelog()
-      .then(res => {
-        this.setState({changelog: res.data});
-      });
-
-    helpers.getSeasons()
-      .then(res => {
-        this.getData(res.data[res.data.length - 1].season);
-
-        this.setState({seasons: res.data, season: res.data[res.data.length - 1].season});
-      });
+    this.loadSeasons();
   }
 
   render() {
@@ -144,9 +135,22 @@ class App extends Component {
   }
 
   saveSeason(newSeason) {
-    this.state.seasons.push({season: newSeason})
-    this.setState({seasons: this.state.seasons});
     helpers.saveSeason(newSeason);
+    this.loadSeasons();
+  }
+
+  loadSeasons() {
+    helpers.getChangelog()
+      .then(res => {
+        this.setState({changelog: res.data});
+      });
+
+    helpers.getSeasons()
+      .then(res => {
+        this.getData(res.data[res.data.length - 1].season);
+
+        this.setState({seasons: res.data, season: res.data[res.data.length - 1].season});
+      });
   }
 
 }
