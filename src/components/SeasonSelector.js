@@ -8,35 +8,34 @@ class SeasonSelector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      seasonOpen: false, 
-      newSeason: null
+      seasonDialogOpen: false
     }
   }
 
   handleSeasonClick = () => {
-    this.setState({seasonOpen: true});
+    this.setState({seasonDialogOpen: true});
   }
 
-  saveNewSeason = (value) => {
-    this.setState({seasonOpen: false, newSeason: value});
-    this.props.saveSeason(value);
+  createNewSeason = (value) => {
+    this.setState({seasonDialogOpen: false, newSeason: value});
+    this.props.create(value);
   }
 
   render() {
     return (
       <span>
         <span className="headerStyle">Season: </span>
-        <Select value={this.props.season} onChange={(e) => this.props.getData(e.target.value)}>
-          {
-            this.props.seasons.map((id, index) => {
-              return (
-                <MenuItem key={index} value={id.season}>{id.season}</MenuItem>
-              );
-            })
-          }
-        </Select>
-      <Button onClick={this.handleSeasonClick}>+</Button>
-      <SeasonDialog open={this.state.seasonOpen} onSave={this.saveNewSeason}/>
+          <Select value={this.props.season} onChange={(e) => this.props.getData(e.target.value)}>
+            {
+              this.props.seasons.map((id, index) => {
+                return (
+                  <MenuItem key={index} value={id.season}>{id.season}</MenuItem>
+                );
+              })
+            }
+          </Select>
+        <Button onClick={this.handleSeasonClick}>+</Button>
+        <SeasonDialog open={this.state.seasonDialogOpen} onSave={this.createNewSeason}/>
       </span>
     );
   }

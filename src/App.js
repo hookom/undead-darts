@@ -15,19 +15,6 @@ import AppHeader from './components/AppHeader.js';
 import PlayerStats from './components/PlayerStats.js'
 import { withStyles } from 'material-ui/styles';
 
-const styles = theme => ({
-  expand: {
-    transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-    marginLeft: 'auto',
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  }
-});
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -49,12 +36,21 @@ class App extends Component {
     this.onCellChange = this.onCellChange.bind(this);
     this.getData = this.getData.bind(this);
     this.isDaKing = this.isDaKing.bind(this);
-    this.saveSeason = this.saveSeason.bind(this);
-    this.loadSeasons = this.loadSeasons.bind(this);
+    this.createNewSeason = this.createNewSeason.bind(this);
   }
 
   componentDidMount() {
-    this.loadSeasons();
+    helpers.getChangelog()
+      .then(res => {
+        this.setState({changelog: res.data});
+      });
+
+    helpers.getSeasons()
+      .then(res => {
+        this.getData(res.data[res.data.length - 1].season);
+
+        this.setState({seasons: res.data, season: res.data[res.data.length - 1].season});
+      });
   }
 
   render() {
@@ -74,7 +70,7 @@ class App extends Component {
                   season={this.state.season} 
                   seasons={this.state.seasons}
                   getData={this.getData}
-                  saveSeason={this.saveSeason}
+                  create={this.createNewSeason}
                 />
                </TableCell>
           </TableRow>
@@ -134,25 +130,44 @@ class App extends Component {
     return this.state.kingPoints === playersPoints;
   }
 
-  saveSeason(newSeason) {
-    helpers.saveSeason(newSeason);
-    this.loadSeasons();
-  }
-
-  loadSeasons() {
-    helpers.getChangelog()
-      .then(res => {
-        this.setState({changelog: res.data});
+  createNewSeason(newSeasonId) {
+    this.state.stats.forEach(row => {
+      Object.keys(row).forEach(key => {
+          if (key === 'season') {
+            row[key] = newSeasonId;
+          }
+          else if (key !== 'name') {
+            row[key] = 0
+          }
       });
+    });
 
-    helpers.getSeasons()
-      .then(res => {
-        this.getData(res.data[res.data.length - 1].season);
+    this.state.seasons.push({season: newSeasonId});
 
-        this.setState({seasons: res.data, season: res.data[res.data.length - 1].season});
-      });
+    helpers.createNewSeason(this.state.stats);
+
+    this.setState({
+      stats: this.state.stats,
+      season: newSeasonId,
+      seasons: this.state.seasons,
+      kingPoints: 0,
+      zombiewins: 0
+    });
   }
 
 }
+
+const styles = theme => ({
+  expand: {
+    transform: 'rotate(0deg)',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+    marginLeft: 'auto',
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  }
+});
 
 export default withStyles(styles)(App);

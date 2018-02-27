@@ -7,18 +7,20 @@ import TextField from 'material-ui/TextField';
 class SeasonDialog extends React.Component {
   constructor(props) {
     super(props);
-    this.saveSeason=props.onSave
-    this.state = {open: this.props.open, season: null};
+
+    this.state = {
+      open: this.props.open,
+      input: ''
+    };
   }
 
   handleButtonClick = () => {
     this.setState({open: false});
-    this.saveSeason(this.state.season);
-
+    this.props.onSave(this.state.input);
   }
 
-  getData = (value) => {
-    this.setState({season: value});
+  handleChange = (value) => {
+    this.setState({input: value});
   }
 
   render() {
@@ -26,13 +28,14 @@ class SeasonDialog extends React.Component {
       margin: '30px'
     }
     return (
-      <Dialog 
-          onClose={this.props.handleClose} 
-          open={this.props.open}
-          >
+      <Dialog onClose={this.props.handleClose} open={this.props.open}>
         <DialogTitle id="dialog-title">Add Season</DialogTitle>
-        <TextField style={inputStyle} id="season" label="Season" value={this.props.season} 
-          onChange={(e) => this.getData(e.target.value)}/>
+        <TextField
+          style={inputStyle}
+          id="season"
+          label="Season"
+          onChange={(e) => this.handleChange(e.target.value)}
+        />
         <Button onClick={this.handleButtonClick}>Save</Button>
       </Dialog>
     );

@@ -40,8 +40,8 @@ var helpers = {
         return axios.get(getSeasonsUrl);
     },
 
-    saveSeason: (newSeason) => {
-        let body = 'data=' + JSON.stringify({season: newSeason});
+    createNewSeason: (newStats) => {
+        let body = 'data=' + JSON.stringify(newStats);
 
         return axios.post(addSeasonUrl, body);
     },
