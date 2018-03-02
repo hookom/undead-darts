@@ -131,7 +131,11 @@ class App extends Component {
   }
 
   createNewSeason(newSeasonId) {
+    let playerNames = [];
+
     this.state.stats.forEach(row => {
+      playerNames.push(row.name);
+
       Object.keys(row).forEach(key => {
           if (key === 'season') {
             row[key] = newSeasonId;
@@ -144,7 +148,7 @@ class App extends Component {
 
     this.state.seasons.push({season: newSeasonId});
 
-    helpers.createNewSeason(this.state.stats);
+    helpers.createNewSeason(newSeasonId, playerNames.join());
 
     this.setState({
       stats: this.state.stats,

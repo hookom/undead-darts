@@ -1,29 +1,12 @@
 <?php
-
-    function debug_to_console( $data ) {
-        $output = $data;
-        if ( is_array( $output ) )
-            $output = implode( ',', $output);
-    
-        echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
-    }
-
     require_once('db.php');
 
-    $stats = json_decode($_POST['data']);
+    $request = json_decode($_POST['data']);
+    $id = $request->id;
+    $names = $request->names;
 
     $db = new Db();
-    
-    $querystring = "INSERT INTO stats VALUES (";
-
-    foreach($stats as $row) {
-        foreach ($row as $key => $value) {
-            $querystring .= "$value, "
-        }
+    foreach(explode(',', $names) as $name) {
+        $db -> query("INSERT INTO `stats` (name, season) VALUES ('$name', '$id')");
     }
-
-    $querystring .= ")";
-
-    debug_to_console($querystring);
-    // $db -> query($querystring);
 ?>
