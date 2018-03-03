@@ -25,7 +25,10 @@ class SeasonSelector extends React.Component {
     return (
       <span>
         <span className="headerStyle">Season: </span>
-          <Select value={this.props.season} onChange={(e) => this.props.getData(e.target.value)}>
+          <Select
+            value={this.props.selectedSeason}
+            onChange={(e) => this.props.getData(e.target.value)}
+          >
             {
               this.props.seasons.map((id, index) => {
                 return (

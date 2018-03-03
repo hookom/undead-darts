@@ -21,7 +21,8 @@ class App extends Component {
 
     this.state = {
       stats: [],
-      season: '',
+      selectedSeason: '',
+      seasonInProgress: '',
       seasons: [],
       changelog: [],
       kingPoints: 0,
@@ -49,7 +50,11 @@ class App extends Component {
       .then(res => {
         this.getData(res.data[res.data.length - 1].season);
 
-        this.setState({seasons: res.data, season: res.data[res.data.length - 1].season});
+        this.setState({
+          seasons: res.data,
+          selectedSeason: res.data[res.data.length - 1].season,
+          seasonInProgress: res.data[res.data.length - 1].season
+        });
       });
   }
 
@@ -60,31 +65,41 @@ class App extends Component {
         <Reboot />
         <AppHeader/>
         <Table>
-           <TableBody>
-             <TableRow>
-               <TableCell>
-                 <ZombieInput zombiewins={this.state.zombiewins} onCellChange={this.onCellChange} season={this.state.season} />
-               </TableCell>
-               <TableCell>
-                 <SeasonSelector 
-                  season={this.state.season} 
+          <TableBody>
+            <TableRow>
+              <TableCell>
+                <ZombieInput
+                  zombiewins={this.state.zombiewins}
+                  onCellChange={this.onCellChange}
+                  season={this.state.selectedSeason}
+                />
+              </TableCell>
+              <TableCell>
+                <SeasonSelector 
+                  selectedSeason={this.state.selectedSeason} 
                   seasons={this.state.seasons}
                   getData={this.getData}
                   create={this.createNewSeason}
                 />
-               </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-      <PlayerStats stats={this.state.stats} kingPoints={this.state.kingPoints} isDaKing={this.isDaKing} onCellChange={this.onCellChange}/>
-      <IconButton onClick={this.handleExpandClick}>
-            <h4>History</h4>
-            <ExpandMoreIcon />
-       </IconButton> 
-      <Collapse in={this.state.historyExpanded} timeout="auto" unmountOnExit>
-        <ChangeHistory changelog={this.state.changelog}/>
-      </Collapse>
-    </div>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+        <PlayerStats
+          stats={this.state.stats}
+          kingPoints={this.state.kingPoints}
+          isDaKing={this.isDaKing}
+          onCellChange={this.onCellChange}
+          seasonInProgress={this.state.seasonInProgress}
+        />
+        <IconButton onClick={this.handleExpandClick}>
+          <h4>History</h4>
+          <ExpandMoreIcon />
+        </IconButton> 
+        <Collapse in={this.state.historyExpanded} timeout="auto" unmountOnExit>
+          <ChangeHistory changelog={this.state.changelog}/>
+        </Collapse>
+      </div>
     );
   }
 
@@ -92,7 +107,10 @@ class App extends Component {
     let newStats = this.state.stats;
     newStats.filter(x => x.name === modifiedRow.name)[0][modifiedColumn] = newValue;
 
-    let changeDescription = modifiedRow.name + ':' + modifiedRow.season + ':' + modifiedColumn + ':' + newValue;
+    let changeDescription = modifiedRow.name
+                            + ':' + modifiedRow.season
+                            + ':' + modifiedColumn
+                            + ':' + newValue;
     let ts = moment().format('YYYY-MM-DD HH:mm:ss');
 
     let obj = {
@@ -113,7 +131,11 @@ class App extends Component {
     let highScore = helpers.getKingTotal(newStatsWithTotals);
     let zombiewins = newStatsWithTotals.filter(x => x.name === 'ZOMBIES')[0].zombiewins;
     
-    this.setState({stats: newStatsWithTotals, changelog: newLog, kingPoints: highScore, zombiewins});
+    this.setState({
+      stats: newStatsWithTotals,
+      changelog: newLog,
+      kingPoints: highScore,
+      zombiewins});
   }
 
   getData(targetSeason) {
@@ -122,7 +144,11 @@ class App extends Component {
         let statsWithTotals = helpers.setTotalPointsFor(res.data);
         let highScore = helpers.getKingTotal(statsWithTotals);
         let zwins = statsWithTotals.filter(x => x.name === 'ZOMBIES')[0].zombiewins;
-        this.setState({stats: statsWithTotals, season: targetSeason, kingPoints: highScore, zombiewins: zwins});
+        this.setState({
+          stats: statsWithTotals,
+          selectedSeason: targetSeason,
+          kingPoints: highScore,
+          zombiewins: zwins});
       });
   }
 
@@ -152,7 +178,8 @@ class App extends Component {
 
     this.setState({
       stats: this.state.stats,
-      season: newSeasonId,
+      selectedSeason: newSeasonId,
+      seasonInProgress: newSeasonId,
       seasons: this.state.seasons,
       kingPoints: 0,
       zombiewins: 0

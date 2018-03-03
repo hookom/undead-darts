@@ -3,7 +3,7 @@ import PlayerRow from './PlayerRow.js';
 import Card from 'material-ui/Card';
 import ColumnHeaders from './ColumnHeaders';
 
-export default ({stats, kingPoints, isDaKing, onCellChange}) =>  ( 
+export default ({stats, kingPoints, isDaKing, onCellChange, seasonInProgress}) =>  ( 
   <Card>
     <table id="StatsTable">
         <ColumnHeaders />
@@ -20,6 +20,7 @@ export default ({stats, kingPoints, isDaKing, onCellChange}) =>  (
                       kingPoints={kingPoints}
                       isDaKing={isDaKing(row.totalPoints)}
                       onCellChange={onCellChange}
+                      seasonInProgress={seasonInProgress}
                     />
                   );
                 }
