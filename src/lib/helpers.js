@@ -7,6 +7,7 @@ let getChangelogUrl = baseUrl;
 let updateUrl = baseUrl;
 let addSeasonUrl = baseUrl;
 let getSeasonsUrl = baseUrl;
+let addPlayerUrl = baseUrl;
 
 const hostname = window && window.location && window.location.hostname;
 if(hostname === 'localhost') {
@@ -15,12 +16,14 @@ if(hostname === 'localhost') {
     updateUrl += 'update-test.php';
     addSeasonUrl += 'add-season-test.php';
     getSeasonsUrl += 'get-seasons-test.php';
+    addPlayerUrl += 'add-player-test.php';
 } else {
     getStatsUrl += 'get-stats.php';
     getChangelogUrl += 'get-changelog.php';
     updateUrl += 'update.php';
     addSeasonUrl += 'add-season.php';
     getSeasonsUrl += 'get-seasons.php';
+    addPlayerUrl += 'add-player.php';
 }
 
 var helpers = {
@@ -44,6 +47,13 @@ var helpers = {
         let body = 'data=' + JSON.stringify({id: seasonId, names: playerNames});
 
         return axios.post(addSeasonUrl, body);
+    },
+
+    addPlayer: (seasonId, playerName) => {
+        let body = 'data=' + JSON.stringify({season: seasonId, player: playerName});
+
+        console.log('Calling ' + addPlayerUrl + ' with body: ' + body)
+        // return axios.post(addPlayerUrl, body);
     },
 
     setTotalPointsFor: (stats, names) => {

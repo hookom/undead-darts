@@ -14,6 +14,7 @@ import ZombieInput from './components/ZombieInput.js';
 import AppHeader from './components/AppHeader.js';
 import PlayerStats from './components/PlayerStats.js'
 import { withStyles } from 'material-ui/styles';
+import TrackedStats from './lib/TrackedStats.js';
 
 class App extends Component {
   constructor(props) {
@@ -38,6 +39,7 @@ class App extends Component {
     this.getData = this.getData.bind(this);
     this.isDaKing = this.isDaKing.bind(this);
     this.createNewSeason = this.createNewSeason.bind(this);
+    this.addNewPlayer = this.addNewPlayer.bind(this);
   }
 
   componentDidMount() {
@@ -91,6 +93,7 @@ class App extends Component {
           isDaKing={this.isDaKing}
           onCellChange={this.onCellChange}
           seasonInProgress={this.state.seasonInProgress}
+          addPlayer={this.addNewPlayer}
         />
         <IconButton onClick={this.handleExpandClick}>
           <h4>History</h4>
@@ -184,6 +187,27 @@ class App extends Component {
       kingPoints: 0,
       zombiewins: 0
     });
+  }
+
+  addNewPlayer(playerName) {
+    // let playerNames = [];
+
+    let newRow = {
+      name: playerName,
+      season: this.state.selectedSeason,
+      zombiewins: 0,
+      totalPoints: 0
+    };
+
+    Object.values(TrackedStats).map(stat => {
+      newRow.stat = 0;
+    });
+
+    this.state.stats.push(newRow);
+
+    helpers.addPlayer(this.state.selectedSeason, playerName);
+
+    this.setState({ stats: this.state.stats });
   }
 
 }
