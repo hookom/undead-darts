@@ -38,6 +38,7 @@ class App extends Component {
     this.getData = this.getData.bind(this);
     this.isDaKing = this.isDaKing.bind(this);
     this.createNewSeason = this.createNewSeason.bind(this);
+    this.addNewPlayer = this.addNewPlayer.bind(this);
   }
 
   componentDidMount() {
@@ -91,6 +92,7 @@ class App extends Component {
           isDaKing={this.isDaKing}
           onCellChange={this.onCellChange}
           seasonInProgress={this.state.seasonInProgress}
+          addPlayer={this.addNewPlayer}
         />
         <IconButton onClick={this.handleExpandClick}>
           <h4>History</h4>
@@ -184,6 +186,26 @@ class App extends Component {
       kingPoints: 0,
       zombiewins: 0
     });
+  }
+
+  addNewPlayer(playerName) {
+    let newRow = Object.assign({}, this.state.stats[0]);
+    Object.keys(newRow).forEach(key => {
+      if (key === 'season') {
+        newRow[key] = this.state.selectedSeason;
+      }
+      else if (key === 'name') {
+        newRow[key] = playerName;
+      } else {
+        newRow[key] = 0;
+      }
+    });
+
+    this.state.stats.push(newRow);
+
+    helpers.addPlayer(this.state.selectedSeason, playerName);
+
+    this.setState({ stats: this.state.stats });
   }
 
 }

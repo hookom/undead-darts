@@ -4,7 +4,7 @@ import Dialog, { DialogTitle } from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 
 
-class SeasonDialog extends React.Component {
+class InputDialog extends React.Component {
   constructor(props) {
     super(props);
 
@@ -29,11 +29,10 @@ class SeasonDialog extends React.Component {
     }
     return (
       <Dialog onClose={this.props.handleClose} open={this.props.open}>
-        <DialogTitle id="dialog-title">Add Season</DialogTitle>
+        <DialogTitle id="dialog-title">{this.props.title}</DialogTitle>
         <TextField
           style={inputStyle}
-          id="season"
-          label="Season"
+          label="value"
           onChange={(e) => this.handleChange(e.target.value)}
         />
         <Button onClick={this.handleButtonClick}>Save</Button>
@@ -42,4 +41,4 @@ class SeasonDialog extends React.Component {
   };
 }
 
-export default SeasonDialog;
+export default InputDialog;

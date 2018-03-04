@@ -1,7 +1,7 @@
 import React from 'react';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
-import SeasonDialog from './SeasonDialog';
+import InputDialog from './InputDialog';
 import Button from 'material-ui/Button';
 
 class SeasonSelector extends React.Component {
@@ -17,7 +17,7 @@ class SeasonSelector extends React.Component {
   }
 
   createNewSeason = (value) => {
-    this.setState({seasonDialogOpen: false, newSeason: value});
+    this.setState({seasonDialogOpen: false});
     this.props.create(value);
   }
 
@@ -38,7 +38,11 @@ class SeasonSelector extends React.Component {
             }
           </Select>
         <Button onClick={this.handleSeasonClick}>+</Button>
-        <SeasonDialog open={this.state.seasonDialogOpen} onSave={this.createNewSeason}/>
+        <InputDialog
+          open={this.state.seasonDialogOpen}
+          onSave={this.createNewSeason}
+          title='Add Season'
+        />
       </span>
     );
   }
