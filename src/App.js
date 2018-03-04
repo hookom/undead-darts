@@ -14,7 +14,6 @@ import ZombieInput from './components/ZombieInput.js';
 import AppHeader from './components/AppHeader.js';
 import PlayerStats from './components/PlayerStats.js'
 import { withStyles } from 'material-ui/styles';
-import TrackedStats from './lib/TrackedStats.js';
 
 class App extends Component {
   constructor(props) {
@@ -190,17 +189,16 @@ class App extends Component {
   }
 
   addNewPlayer(playerName) {
-    // let playerNames = [];
-
-    let newRow = {
-      name: playerName,
-      season: this.state.selectedSeason,
-      zombiewins: 0,
-      totalPoints: 0
-    };
-
-    Object.values(TrackedStats).map(stat => {
-      newRow.stat = 0;
+    let newRow = Object.assign({}, this.state.stats[0]);
+    Object.keys(newRow).forEach(key => {
+      if (key === 'season') {
+        newRow[key] = this.state.selectedSeason;
+      }
+      else if (key === 'name') {
+        newRow[key] = playerName;
+      } else {
+        newRow[key] = 0;
+      }
     });
 
     this.state.stats.push(newRow);

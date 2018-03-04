@@ -52,8 +52,7 @@ var helpers = {
     addPlayer: (seasonId, playerName) => {
         let body = 'data=' + JSON.stringify({season: seasonId, player: playerName});
 
-        console.log('Calling ' + addPlayerUrl + ' with body: ' + body)
-        // return axios.post(addPlayerUrl, body);
+        return axios.post(addPlayerUrl, body);
     },
 
     setTotalPointsFor: (stats, names) => {

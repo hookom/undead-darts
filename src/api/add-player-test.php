@@ -6,5 +6,5 @@
     $player = $request->player;
 
     $db = new Db();
-    $db -> query("INSERT INTO `stats` (name, season) VALUES ('$player', '$season')");
+    $db -> query("INSERT INTO `stats-test` (name, season) VALUES ('$player', '$season')");
 ?>
