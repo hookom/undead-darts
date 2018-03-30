@@ -14,6 +14,7 @@ import ZombieInput from './components/ZombieInput.js';
 import AppHeader from './components/AppHeader.js';
 import PlayerStats from './components/PlayerStats.js'
 import { withStyles } from 'material-ui/styles';
+import Bracket from './components/Bracket.js'
 
 class App extends Component {
   constructor(props) {
@@ -101,6 +102,7 @@ class App extends Component {
         <Collapse in={this.state.historyExpanded} timeout="auto" unmountOnExit>
           <ChangeHistory changelog={this.state.changelog}/>
         </Collapse>
+        <Bracket />
       </div>
     );
   }
