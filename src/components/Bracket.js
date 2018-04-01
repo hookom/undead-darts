@@ -5,112 +5,142 @@ class Bracket extends React.Component {
   render() {
     return (
         <div>
-            <h1>2013 NCAA Tournament - Midwest Bracket</h1>
             <main id="tournament">
-                <ul class="round round-1">
-                    <li class="spacer">&nbsp;</li>
+                <ul className="round round-1">
+                    <li className="spacer">&nbsp;</li>
                     
-                    <li class="game game-top winner">Lousville <span>79</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">NC AnT <span>48</span></li>
+                    <li className="game game-top">{this.props.players[0]}</li>
+                    <li className="game game-spacer">&nbsp;</li>
+                    <li className="game game-bottom ">{this.props.players[7]}</li>
 
-                    <li class="spacer">&nbsp;</li>
+                    <li className="spacer">&nbsp;</li>
                     
-                    <li class="game game-top winner">Colo St <span>84</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Missouri <span>72</span></li>
+                    <li className="game game-top">{this.props.players[3]}</li>
+                    <li className="game game-spacer">&nbsp;</li>
+                    <li className="game game-bottom ">{this.props.players[4]}</li>
 
-                    <li class="spacer">&nbsp;</li>
+                    <li className="spacer">&nbsp;</li>
                     
-                    <li class="game game-top ">Oklahoma St <span>55</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom winner">Oregon <span>68</span></li>
+                    <li className="game game-top ">{this.props.players[1]}</li>
+                    <li className="game game-spacer">&nbsp;</li>
+                    <li className="game game-bottom">{this.props.players[6]}</li>
 
-                    <li class="spacer">&nbsp;</li>
+                    <li className="spacer">&nbsp;</li>
                     
-                    <li class="game game-top winner">Saint Louis <span>64</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">New Mexico St <span>44</span></li>
+                    <li className="game game-top">{this.props.players[2]}</li>
+                    <li className="game game-spacer">&nbsp;</li>
+                    <li className="game game-bottom ">{this.props.players[5]}</li>
 
-                    <li class="spacer">&nbsp;</li>
-                    
-                    <li class="game game-top winner">Memphis <span>54</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">St Mary's <span>52</span></li>
-
-                    <li class="spacer">&nbsp;</li>
-                    
-                    <li class="game game-top winner">Mich St <span>65</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Valparaiso <span>54</span></li>
-
-                    <li class="spacer">&nbsp;</li>
-                    
-                    <li class="game game-top winner">Creighton <span>67</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Cincinnati <span>63</span></li>
-
-                    <li class="spacer">&nbsp;</li>
-                    
-                    <li class="game game-top winner">Duke <span>73</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Albany <span>61</span></li>
-
-                    <li class="spacer">&nbsp;</li>
+                    <li className="spacer">&nbsp;</li>
                 </ul>
-                <ul class="round round-2">
-                    <li class="spacer">&nbsp;</li>
-                    
-                    <li class="game game-top winner">Lousville <span>82</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Colo St <span>56</span></li>
-
-                    <li class="spacer">&nbsp;</li>
-                    
-                    <li class="game game-top winner">Oregon <span>74</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Saint Louis <span>57</span></li>
-
-                    <li class="spacer">&nbsp;</li>
-                    
-                    <li class="game game-top ">Memphis <span>48</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom winner">Mich St <span>70</span></li>
-
-                    <li class="spacer">&nbsp;</li>
-                    
-                    <li class="game game-top ">Creighton <span>50</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom winner">Duke <span>66</span></li>
-
-                    <li class="spacer">&nbsp;</li>
-                </ul>
-                <ul class="round round-3">
-                    <li class="spacer">&nbsp;</li>
-                    
-                    <li class="game game-top winner">Lousville <span>77</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Oregon <span>69</span></li>
-
-                    <li class="spacer">&nbsp;</li>
-                    
-                    <li class="game game-top ">Mich St <span>61</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom winner">Duke <span>71</span></li>
-
-                    <li class="spacer">&nbsp;</li>
-                </ul>
-                <ul class="round round-4">
-                    <li class="spacer">&nbsp;</li>
-                    
-                    <li class="game game-top winner">Lousville <span>85</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Duke <span>63</span></li>
-                    
-                    <li class="spacer">&nbsp;</li>
-                </ul>		
             </main>
         </div>
+        // <div>
+        //     <main id="tournament">
+        //         <ul className="round round-1">
+        //             <li className="spacer">&nbsp;</li>
+                    
+        //             <li className="game game-top winner">Lousville</li>
+        //             <li className="game game-spacer">&nbsp;</li>
+        //             <li className="game game-bottom ">NC AnT</li>
+
+        //             <li className="spacer">&nbsp;</li>
+                    
+        //             <li className="game game-top winner">Colo St</li>
+        //             <li className="game game-spacer">&nbsp;</li>
+        //             <li className="game game-bottom ">Missouri</li>
+
+        //             <li className="spacer">&nbsp;</li>
+                    
+        //             <li className="game game-top ">Oklahoma St</li>
+        //             <li className="game game-spacer">&nbsp;</li>
+        //             <li className="game game-bottom winner">Oregon</li>
+
+        //             <li className="spacer">&nbsp;</li>
+                    
+        //             <li className="game game-top winner">Saint Louis</li>
+        //             <li className="game game-spacer">&nbsp;</li>
+        //             <li className="game game-bottom ">New Mexico St</li>
+
+        //             <li className="spacer">&nbsp;</li>
+                    
+        //             <li className="game game-top winner">Memphis</li>
+        //             <li className="game game-spacer">&nbsp;</li>
+        //             <li className="game game-bottom ">St Mary's</li>
+
+        //             <li className="spacer">&nbsp;</li>
+                    
+        //             <li className="game game-top winner">Mich St</li>
+        //             <li className="game game-spacer">&nbsp;</li>
+        //             <li className="game game-bottom ">Valparaiso</li>
+
+        //             <li className="spacer">&nbsp;</li>
+                    
+        //             <li className="game game-top winner">Creighton</li>
+        //             <li className="game game-spacer">&nbsp;</li>
+        //             <li className="game game-bottom ">Cincinnati</li>
+
+        //             <li className="spacer">&nbsp;</li>
+                    
+        //             <li className="game game-top winner">Duke</li>
+        //             <li className="game game-spacer">&nbsp;</li>
+        //             <li className="game game-bottom ">Albany</li>
+
+        //             <li className="spacer">&nbsp;</li>
+        //         </ul>
+        //         <ul className="round round-2">
+        //             <li className="spacer">&nbsp;</li>
+                    
+        //             <li className="game game-top winner">Lousville</li>
+        //             <li className="game game-spacer">&nbsp;</li>
+        //             <li className="game game-bottom ">Colo St</li>
+
+        //             <li className="spacer">&nbsp;</li>
+                    
+        //             <li className="game game-top winner">Oregon</li>
+        //             <li className="game game-spacer">&nbsp;</li>
+        //             <li className="game game-bottom ">Saint Louis</li>
+
+        //             <li className="spacer">&nbsp;</li>
+                    
+        //             <li className="game game-top ">Memphis</li>
+        //             <li className="game game-spacer">&nbsp;</li>
+        //             <li className="game game-bottom winner">Mich St</li>
+
+        //             <li className="spacer">&nbsp;</li>
+                    
+        //             <li className="game game-top ">Creighton</li>
+        //             <li className="game game-spacer">&nbsp;</li>
+        //             <li className="game game-bottom winner">Duke</li>
+
+        //             <li className="spacer">&nbsp;</li>
+        //         </ul>
+        //         <ul className="round round-3">
+        //             <li className="spacer">&nbsp;</li>
+                    
+        //             <li className="game game-top winner">Lousville</li>
+        //             <li className="game game-spacer">&nbsp;</li>
+        //             <li className="game game-bottom ">Oregon</li>
+
+        //             <li className="spacer">&nbsp;</li>
+                    
+        //             <li className="game game-top ">Mich St</li>
+        //             <li className="game game-spacer">&nbsp;</li>
+        //             <li className="game game-bottom winner">Duke</li>
+
+        //             <li className="spacer">&nbsp;</li>
+        //         </ul>
+        //         <ul className="round round-4">
+        //             <li className="spacer">&nbsp;</li>
+                    
+        //             <li className="game game-top winner">Lousville</li>
+        //             <li className="game game-spacer">&nbsp;</li>
+        //             <li className="game game-bottom ">Duke</li>
+                    
+        //             <li className="spacer">&nbsp;</li>
+        //         </ul>		
+        //     </main>
+        // </div>
     );
   }
 };

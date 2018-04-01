@@ -40,6 +40,7 @@ class App extends Component {
     this.isDaKing = this.isDaKing.bind(this);
     this.createNewSeason = this.createNewSeason.bind(this);
     this.addNewPlayer = this.addNewPlayer.bind(this);
+    this.getOrderedPlayerNames = this.getOrderedPlayerNames.bind(this);
   }
 
   componentDidMount() {
@@ -61,7 +62,6 @@ class App extends Component {
   }
 
   render() {
-
     return (
       <div className="App">
         <Reboot />
@@ -102,7 +102,7 @@ class App extends Component {
         <Collapse in={this.state.historyExpanded} timeout="auto" unmountOnExit>
           <ChangeHistory changelog={this.state.changelog}/>
         </Collapse>
-        <Bracket />
+        <Bracket players={ this.getOrderedPlayerNames() }/>
       </div>
     );
   }
@@ -208,6 +208,18 @@ class App extends Component {
     helpers.addPlayer(this.state.selectedSeason, playerName);
 
     this.setState({ stats: this.state.stats });
+  }
+
+  getOrderedPlayerNames() {
+    let names = [];
+    this.state.stats
+      .sort(function(a, b) { return b.totalPoints - a.totalPoints; })
+      .forEach((player) => {
+        if (player.name !== 'ZOMBIES') {
+          names.push(player.name);
+        }
+      });
+    return names;
   }
 
 }
