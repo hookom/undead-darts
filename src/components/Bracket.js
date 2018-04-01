@@ -57,6 +57,30 @@ class Bracket extends React.Component {
 
                 <li className="spacer">&nbsp;</li>
             </ul>
+            <ul className="round round-3">
+                <li className="spacer">&nbsp;</li>
+                
+                <li className="game game-top"></li>
+                <li className="game game-spacer">&nbsp;</li>
+                <li className="game game-bottom "></li>
+
+                <li className="spacer">&nbsp;</li>
+                
+                <li className="game game-top"></li>
+                <li className="game game-spacer">&nbsp;</li>
+                <li className="game game-bottom "></li>
+
+                <li className="spacer">&nbsp;</li>
+            </ul>
+            <ul className="round round-4">
+                <li className="spacer">&nbsp;</li>
+                
+                <li className="game game-top"></li>
+                <li className="game game-spacer">&nbsp;</li>
+                <li className="game game-bottom "></li>
+
+                <li className="spacer">&nbsp;</li>
+            </ul>
         </main>
     );
   }
@@ -67,6 +91,30 @@ class Bracket extends React.Component {
             <ul className="round round-1">
                 <li className="spacer">&nbsp;</li>
                 { this.optionTwoMatches() }
+            </ul>
+            <ul className="round round-2">
+                <li className="spacer">&nbsp;</li>
+                
+                <li className="game game-top"></li>
+                <li className="game game-spacer">&nbsp;</li>
+                <li className="game game-bottom "></li>
+
+                <li className="spacer">&nbsp;</li>
+                
+                <li className="game game-top"></li>
+                <li className="game game-spacer">&nbsp;</li>
+                <li className="game game-bottom "></li>
+
+                <li className="spacer">&nbsp;</li>
+            </ul>
+            <ul className="round round-3">
+                <li className="spacer">&nbsp;</li>
+                
+                <li className="game game-top"></li>
+                <li className="game game-spacer">&nbsp;</li>
+                <li className="game game-bottom "></li>
+
+                <li className="spacer">&nbsp;</li>
             </ul>
         </main>
     );
