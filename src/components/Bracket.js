@@ -4,18 +4,75 @@ import './Bracket.css';
 class Bracket extends React.Component {
   render() {
     return (
-        <div>
-            <main id="tournament">
-                <ul className="round round-1">
-                    <li className="spacer">&nbsp;</li>
-                    { this.matches() }
-                </ul>
-            </main>
+        <div className="container">
+            { this.optionOne() }
+            { this.optionTwo() }
         </div>
     );
   }
 
-  matches() {
+  optionOne() {
+    return (
+        <main id="tournament">
+            <ul className="round round-1">
+                <li className="spacer">&nbsp;</li>
+                <li className="spacer">&nbsp;</li>
+                <li className="spacer">&nbsp;</li>
+                <li className="spacer">&nbsp;</li>
+                <li className="spacer">&nbsp;</li>
+                <li className="spacer">&nbsp;</li>
+                
+                <li className="game game-top">{this.props.players[6]} <sup>7</sup></li>
+                <li className="game game-spacer">&nbsp;</li>
+                <li className="game game-bottom ">{this.props.players[7]} <sup>{8}</sup></li>
+
+                <li className="spacer">&nbsp;</li>
+                <li className="spacer">&nbsp;</li>
+            </ul>
+            <ul className="round round-2">
+                <li className="spacer">&nbsp;</li>
+                
+                <li className="game game-top">{this.props.players[0]} <sup>1</sup></li>
+                <li className="game game-spacer">&nbsp;</li>
+                <li className="game game-bottom ">BYE</li>
+
+                <li className="spacer">&nbsp;</li>
+                
+                <li className="game game-top">{this.props.players[3]} <sup>4</sup></li>
+                <li className="game game-spacer">&nbsp;</li>
+                <li className="game game-bottom ">{this.props.players[4]} <sup>5</sup></li>
+
+                <li className="spacer">&nbsp;</li>
+                
+                <li className="game game-top ">{this.props.players[1]} <sup>2</sup></li>
+                <li className="game game-spacer">&nbsp;</li>
+                <li className="game game-spacer">&nbsp;</li>
+                <li className="game game-bottom"></li>
+
+                <li className="spacer">&nbsp;</li>
+                
+                <li className="game game-top ">{this.props.players[2]} <sup>3</sup></li>
+                <li className="game game-spacer">&nbsp;</li>
+                <li className="game game-bottom">{this.props.players[5]} <sup>6</sup></li>
+
+                <li className="spacer">&nbsp;</li>
+            </ul>
+        </main>
+    );
+  }
+
+  optionTwo() {
+    return (
+        <main id="tournament">
+            <ul className="round round-1">
+                <li className="spacer">&nbsp;</li>
+                { this.optionTwoMatches() }
+            </ul>
+        </main>
+    );
+  }
+
+  optionTwoMatches() {
     let matches = [];
     let count = this.props.players.length;
     for (let i = 0; i < (count / 2); i++) {
@@ -32,7 +89,17 @@ class Bracket extends React.Component {
     return matches;
   }
 };
+// 1
+// bye
 
+// 2
+// 7/8
+
+// 3
+// 6
+
+// 4
+// 5
 export default Bracket;
 
 // <div>
