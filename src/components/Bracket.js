@@ -2,15 +2,75 @@ import React from 'react';
 import './Bracket.css';
 
 class Bracket extends React.Component {
+    
   render() {
+    let bracket = '';
+
+    if(this.props.players.length === 8) {
+        bracket = this.bracketForEight();
+    }
+    else if (this.props.players.length === 6 || this.props.players.length === 7) {
+        bracket = this.bracketForSixOrSeven(this.props.players.length);
+    } else if (this.props.players.length > 0) {
+        bracket = 'Number of Players Not Supported';
+    }
+
+    return ( <div className="container"> { bracket } </div> );
+  }
+
+  bracketForSixOrSeven(size) {
+    let twoSeedOpponent = size === 7 ? {name: this.props.players[6], seed: 7} : {name: 'BYE', seed: ''};
+
     return (
-        <div className="container">
-            { this.optionOne() }
-        </div>
+        <main id="tournament">
+            <ul className="round round-1">
+                <li className="spacer">&nbsp;</li>
+                
+                { this.match({name: this.props.players[0], seed: 1}, {name: 'BYE', seed: ''}) }
+
+                <li className="spacer">&nbsp;</li>
+                
+                { this.match({name: this.props.players[3], seed: 4}, {name: this.props.players[4], seed: 5}) }
+
+                <li className="spacer">&nbsp;</li>
+                
+                { this.match({name: this.props.players[1], seed: 2}, twoSeedOpponent) }
+
+                <li className="spacer">&nbsp;</li>
+                
+                { this.match({name: this.props.players[2], seed: 3}, {name: this.props.players[5], seed: 6}) }
+
+                <li className="spacer">&nbsp;</li>
+            </ul>
+            <ul className="round round-2">
+                <li className="spacer">&nbsp;</li>
+                
+                <li className="game game-top"></li>
+                <li className="game game-spacer">&nbsp;</li>
+                <li className="game game-bottom "></li>
+
+                <li className="spacer">&nbsp;</li>
+                
+                <li className="game game-top"></li>
+                <li className="game game-spacer">&nbsp;</li>
+                <li className="game game-bottom "></li>
+
+                <li className="spacer">&nbsp;</li>
+            </ul>
+            <ul className="round round-3">
+                <li className="spacer">&nbsp;</li>
+                
+                <li className="game game-top"></li>
+                <li className="game game-spacer">&nbsp;</li>
+                <li className="game game-bottom "></li>
+
+                <li className="spacer">&nbsp;</li>
+            </ul>
+        </main>
     );
   }
 
-  optionOne() {
+  bracketForEight() {
     return (
         <main id="tournament">
             <ul className="round round-1">
@@ -74,7 +134,7 @@ class Bracket extends React.Component {
     }
     return spacers;
   }
-                
+
   gameSpacers(count) {
     let spacers = [];
     for (let i = 0; i < count; i++) {
