@@ -17,7 +17,7 @@ class Bracket extends React.Component {
   componentWillReceiveProps(props) {
     let count = props.players.length;
     props.players[8] = '??';
-    let players = [props.players, ['??','??','??','??'], ['??','??']];
+    let players = [props.players, ['??','??','??','??'], ['??','??'], ['??']];
     this.setState({players, count});
   }
 
@@ -109,6 +109,9 @@ class Bracket extends React.Component {
                     5) }
 
                 <li className="spacer">&nbsp;</li>
+            </ul>
+            <ul className="round round-4">
+                <li className="game game-top">{this.state.players[3][0]}</li>
             </ul>
         </main>
     );
