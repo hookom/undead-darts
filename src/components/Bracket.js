@@ -15,8 +15,10 @@ class Bracket extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    let players = [props.players, ['','','',''], ['','']];
-    this.setState({players, count: props.players.length});
+    let count = props.players.length;
+    props.players[8] = '??';
+    let players = [props.players, ['??','??','??','??'], ['??','??']];
+    this.setState({players, count});
   }
 
   render() {
@@ -48,6 +50,7 @@ class Bracket extends React.Component {
                     0,
                     0) }
 
+                <li className="spacer">&nbsp;</li>
                 <li className="spacer">&nbsp;</li>
                 
                 { this.match(
@@ -82,7 +85,7 @@ class Bracket extends React.Component {
                     {name: this.state.players[1][1], seed: ''},
                     1,
                     0,
-                    2) }
+                    3) }
 
                 <li className="spacer">&nbsp;</li>
                 
@@ -91,7 +94,7 @@ class Bracket extends React.Component {
                     {name: this.state.players[1][3], seed: ''},
                     1,
                     1,
-                    2) }
+                    3) }
 
                 <li className="spacer">&nbsp;</li>
             </ul>

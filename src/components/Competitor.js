@@ -13,11 +13,13 @@ class Competitor extends React.Component {
   }
 
   handleClick() {
+    if (this.props.player !== 'BYE') {
       if (this.props.round < 2) {
         this.props.updateNextRound(this.props.player, this.props.round, this.props.matchIndex);
       }
 
       this.setState({isWinner: !this.state.isWinner});
+    }
   }
 
   render() {
