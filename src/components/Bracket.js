@@ -139,6 +139,7 @@ class Bracket extends React.Component {
                     0) }
 
                 <li className="spacer">&nbsp;</li>
+                <li className="spacer">&nbsp;</li>
                 
                 { this.match(
                     {name: this.state.players[0][3], seed: 4},
@@ -173,7 +174,7 @@ class Bracket extends React.Component {
                     {name: this.state.players[1][1], seed: ''},
                     1,
                     0,
-                    2) }
+                    3) }
 
                 <li className="spacer">&nbsp;</li>
                 
