@@ -120,7 +120,7 @@ class Bracket extends React.Component {
                 { this.match(
                     {name: this.state.players[0][6], seed: 7},
                     {name: this.state.players[0][7], seed: 8},
-                    'play-in',
+                    0,
                     'play-in',
                     2) }
 
@@ -241,7 +241,11 @@ class Bracket extends React.Component {
 
   updateNextRound(player, currentRound, targetIndex) {
     let players = {...this.state.players}
-    players[currentRound + 1][targetIndex] = player;
+    if (targetIndex === 'play-in') {
+        players[0][8] = player;
+    } else {
+        players[currentRound + 1][targetIndex] = player;
+    }
     this.setState({players});
   }
 };
