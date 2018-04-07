@@ -1,17 +1,33 @@
 import React from 'react';
 import './Bracket.css';
+import Competitor from './Competitor.js';
 
 class Bracket extends React.Component {
-    
+  constructor(props) {
+    super(props);
+
+    this.state = {
+        players: [],
+        count: 0
+    };
+
+    this.updateNextRound = this.updateNextRound.bind(this);
+  }
+
+  componentWillReceiveProps(props) {
+    let players = [props.players, ['','','',''], ['','']];
+    this.setState({players, count: props.players.length});
+  }
+
   render() {
     let bracket = '';
 
-    if(this.props.players.length === 8) {
+    if(this.state.count === 8) {
         bracket = this.bracketForEight();
     }
-    else if (this.props.players.length === 6 || this.props.players.length === 7) {
-        bracket = this.bracketForSixOrSeven(this.props.players.length);
-    } else if (this.props.players.length > 0) {
+    else if (this.state.count === 6 || this.state.count === 7) {
+        bracket = this.bracketForSixOrSeven(this.state.count);
+    } else if (this.state.count > 0) {
         bracket = 'Number of Players Not Supported';
     }
 
@@ -19,50 +35,75 @@ class Bracket extends React.Component {
   }
 
   bracketForSixOrSeven(size) {
-    let twoSeedOpponent = size === 7 ? {name: this.props.players[6], seed: 7} : {name: 'BYE', seed: ''};
+    let twoSeedOpponent = size === 7 ? {name: this.state.players[0][6], seed: 7} : {name: 'BYE', seed: ''};
 
     return (
         <main id="tournament">
             <ul className="round round-1">
                 <li className="spacer">&nbsp;</li>
                 
-                { this.match({name: this.props.players[0], seed: 1}, {name: 'BYE', seed: ''}) }
+                { this.match(
+                    {name: this.state.players[0][0], seed: 1},
+                    {name: 'BYE', seed: ''},
+                    0,
+                    0) }
 
                 <li className="spacer">&nbsp;</li>
                 
-                { this.match({name: this.props.players[3], seed: 4}, {name: this.props.players[4], seed: 5}) }
+                { this.match(
+                    {name: this.state.players[0][3], seed: 4},
+                    {name: this.state.players[0][4], seed: 5},
+                    0,
+                    1) }
 
                 <li className="spacer">&nbsp;</li>
                 
-                { this.match({name: this.props.players[1], seed: 2}, twoSeedOpponent) }
+                { this.match(
+                    {name: this.state.players[0][1], seed: 2},
+                    twoSeedOpponent,
+                    0,
+                    2) }
 
                 <li className="spacer">&nbsp;</li>
                 
-                { this.match({name: this.props.players[2], seed: 3}, {name: this.props.players[5], seed: 6}) }
+                { this.match(
+                    {name: this.state.players[0][2], seed: 3},
+                    {name: this.state.players[0][5], seed: 6},
+                    0,
+                    3) }
 
                 <li className="spacer">&nbsp;</li>
             </ul>
             <ul className="round round-2">
                 <li className="spacer">&nbsp;</li>
                 
-                <li className="game game-top"></li>
-                <li className="game game-spacer">&nbsp;</li>
-                <li className="game game-bottom "></li>
+                { this.match(
+                    {name: this.state.players[1][0], seed: ''},
+                    {name: this.state.players[1][1], seed: ''},
+                    1,
+                    0,
+                    2) }
 
                 <li className="spacer">&nbsp;</li>
                 
-                <li className="game game-top"></li>
-                <li className="game game-spacer">&nbsp;</li>
-                <li className="game game-bottom "></li>
+                { this.match(
+                    {name: this.state.players[1][2], seed: ''},
+                    {name: this.state.players[1][3], seed: ''},
+                    1,
+                    1,
+                    2) }
 
                 <li className="spacer">&nbsp;</li>
             </ul>
             <ul className="round round-3">
                 <li className="spacer">&nbsp;</li>
                 
-                <li className="game game-top"></li>
-                <li className="game game-spacer">&nbsp;</li>
-                <li className="game game-bottom "></li>
+                { this.match(
+                    {name: this.state.players[2][0], seed: ''},
+                    {name: this.state.players[2][1], seed: ''},
+                    2,
+                    0,
+                    5) }
 
                 <li className="spacer">&nbsp;</li>
             </ul>
@@ -76,50 +117,81 @@ class Bracket extends React.Component {
             <ul className="round round-1">
                 {this.spacers(6)}
                 
-                { this.match({name: this.props.players[6], seed: 7}, {name: this.props.players[7], seed: 8}, 2) }
+                { this.match(
+                    {name: this.state.players[0][6], seed: 7},
+                    {name: this.state.players[0][7], seed: 8},
+                    'play-in',
+                    'play-in',
+                    2) }
 
                 {this.spacers(2)}
             </ul>
             <ul className="round round-2">
                 <li className="spacer">&nbsp;</li>
                 
-                { this.match({name: this.props.players[0], seed: 1}, {name: 'BYE', seed: ''}) }
+                { this.match(
+                    {name: this.state.players[0][0], seed: 1},
+                    {name: 'BYE', seed: ''},
+                    0,
+                    0) }
 
                 <li className="spacer">&nbsp;</li>
                 
-                { this.match({name: this.props.players[3], seed: 4}, {name: this.props.players[4], seed: 5}) }
+                { this.match(
+                    {name: this.state.players[0][3], seed: 4},
+                    {name: this.state.players[0][4], seed: 5},
+                    0,
+                    1) }
 
                 <li className="spacer">&nbsp;</li>
                 
-                { this.match({name: this.props.players[1], seed: 2}, {name: '', seed: ''}, 2) }
+                { this.match(
+                    {name: this.state.players[0][1], seed: 2},
+                    {name: this.state.players[0][8], seed: ''},
+                    0,
+                    2,
+                    2) }
 
                 <li className="spacer">&nbsp;</li>
                 
-                { this.match({name: this.props.players[2], seed: 3}, {name: this.props.players[5], seed: 6}) }
+                { this.match(
+                    {name: this.state.players[0][2], seed: 3},
+                    {name: this.state.players[0][5], seed: 6},
+                    0,
+                    3) }
 
                 <li className="spacer">&nbsp;</li>
             </ul>
             <ul className="round round-3">
                 <li className="spacer">&nbsp;</li>
                 
-                <li className="game game-top"></li>
-                <li className="game game-spacer">&nbsp;</li>
-                <li className="game game-bottom "></li>
+                { this.match(
+                    {name: this.state.players[1][0], seed: ''},
+                    {name: this.state.players[1][1], seed: ''},
+                    1,
+                    0,
+                    2) }
 
                 <li className="spacer">&nbsp;</li>
                 
-                <li className="game game-top"></li>
-                <li className="game game-spacer">&nbsp;</li>
-                <li className="game game-bottom "></li>
+                { this.match(
+                    {name: this.state.players[1][2], seed: ''},
+                    {name: this.state.players[1][3], seed: ''},
+                    1,
+                    1,
+                    2) }
 
                 <li className="spacer">&nbsp;</li>
             </ul>
             <ul className="round round-4">
                 <li className="spacer">&nbsp;</li>
                 
-                <li className="game game-top"></li>
-                <li className="game game-spacer">&nbsp;</li>
-                <li className="game game-bottom "></li>
+                { this.match(
+                    {name: this.state.players[2][0], seed: ''},
+                    {name: this.state.players[2][1], seed: ''},
+                    2,
+                    0,
+                    5) }
 
                 <li className="spacer">&nbsp;</li>
             </ul>
@@ -130,135 +202,48 @@ class Bracket extends React.Component {
   spacers(count) {
     let spacers = [];
     for (let i = 0; i < count; i++) {
-        spacers.push(<li className="spacer">&nbsp;</li>);
+        spacers.push(<li key={i} className="spacer">&nbsp;</li>);
     }
     return spacers;
   }
 
-  gameSpacers(count) {
+  matchSpacers(count) {
     let spacers = [];
     for (let i = 0; i < count; i++) {
-        spacers.push(<li className="game game-spacer">&nbsp;</li>);
+        spacers.push(<li key={i} className="game game-spacer">&nbsp;</li>);
     }
     return spacers;
   }
 
-  match(playerOne, playerTwo, spacers = 1) {
+  match(playerOne, playerTwo, round, matchIndex, spacers = 1) {
       return (
         <div>
-            <li className="game game-top">{playerOne.name} <sup>{playerOne.seed}</sup></li>
-            {this.gameSpacers(spacers)}
-            <li className="game game-bottom ">{playerTwo.name} <sup>{playerTwo.seed}</sup></li>
+            <Competitor
+                player={playerOne.name}
+                seed={playerOne.seed}
+                top={true}
+                updateNextRound={this.updateNextRound}
+                round={round}
+                matchIndex={matchIndex}
+            />
+            {this.matchSpacers(spacers)}
+            <Competitor
+                player={playerTwo.name}
+                seed={playerTwo.seed}
+                top={false}
+                updateNextRound={this.updateNextRound}
+                round={round}
+                matchIndex={matchIndex}
+            />
         </div>
     );
+  }
+
+  updateNextRound(player, currentRound, targetIndex) {
+    let players = {...this.state.players}
+    players[currentRound + 1][targetIndex] = player;
+    this.setState({players});
   }
 };
 
 export default Bracket;
-
-// <div>
-//     <main id="tournament">
-//         <ul className="round round-1">
-//             <li className="spacer">&nbsp;</li>
-            
-//             <li className="game game-top winner">Lousville</li>
-//             <li className="game game-spacer">&nbsp;</li>
-//             <li className="game game-bottom ">NC AnT</li>
-
-//             <li className="spacer">&nbsp;</li>
-            
-//             <li className="game game-top winner">Colo St</li>
-//             <li className="game game-spacer">&nbsp;</li>
-//             <li className="game game-bottom ">Missouri</li>
-
-//             <li className="spacer">&nbsp;</li>
-            
-//             <li className="game game-top ">Oklahoma St</li>
-//             <li className="game game-spacer">&nbsp;</li>
-//             <li className="game game-bottom winner">Oregon</li>
-
-//             <li className="spacer">&nbsp;</li>
-            
-//             <li className="game game-top winner">Saint Louis</li>
-//             <li className="game game-spacer">&nbsp;</li>
-//             <li className="game game-bottom ">New Mexico St</li>
-
-//             <li className="spacer">&nbsp;</li>
-            
-//             <li className="game game-top winner">Memphis</li>
-//             <li className="game game-spacer">&nbsp;</li>
-//             <li className="game game-bottom ">St Mary's</li>
-
-//             <li className="spacer">&nbsp;</li>
-            
-//             <li className="game game-top winner">Mich St</li>
-//             <li className="game game-spacer">&nbsp;</li>
-//             <li className="game game-bottom ">Valparaiso</li>
-
-//             <li className="spacer">&nbsp;</li>
-            
-//             <li className="game game-top winner">Creighton</li>
-//             <li className="game game-spacer">&nbsp;</li>
-//             <li className="game game-bottom ">Cincinnati</li>
-
-//             <li className="spacer">&nbsp;</li>
-            
-//             <li className="game game-top winner">Duke</li>
-//             <li className="game game-spacer">&nbsp;</li>
-//             <li className="game game-bottom ">Albany</li>
-
-//             <li className="spacer">&nbsp;</li>
-//         </ul>
-//         <ul className="round round-2">
-//             <li className="spacer">&nbsp;</li>
-            
-//             <li className="game game-top winner">Lousville</li>
-//             <li className="game game-spacer">&nbsp;</li>
-//             <li className="game game-bottom ">Colo St</li>
-
-//             <li className="spacer">&nbsp;</li>
-            
-//             <li className="game game-top winner">Oregon</li>
-//             <li className="game game-spacer">&nbsp;</li>
-//             <li className="game game-bottom ">Saint Louis</li>
-
-//             <li className="spacer">&nbsp;</li>
-            
-//             <li className="game game-top ">Memphis</li>
-//             <li className="game game-spacer">&nbsp;</li>
-//             <li className="game game-bottom winner">Mich St</li>
-
-//             <li className="spacer">&nbsp;</li>
-            
-//             <li className="game game-top ">Creighton</li>
-//             <li className="game game-spacer">&nbsp;</li>
-//             <li className="game game-bottom winner">Duke</li>
-
-//             <li className="spacer">&nbsp;</li>
-//         </ul>
-//         <ul className="round round-3">
-//             <li className="spacer">&nbsp;</li>
-            
-//             <li className="game game-top winner">Lousville</li>
-//             <li className="game game-spacer">&nbsp;</li>
-//             <li className="game game-bottom ">Oregon</li>
-
-//             <li className="spacer">&nbsp;</li>
-            
-//             <li className="game game-top ">Mich St</li>
-//             <li className="game game-spacer">&nbsp;</li>
-//             <li className="game game-bottom winner">Duke</li>
-
-//             <li className="spacer">&nbsp;</li>
-//         </ul>
-//         <ul className="round round-4">
-//             <li className="spacer">&nbsp;</li>
-            
-//             <li className="game game-top winner">Lousville</li>
-//             <li className="game game-spacer">&nbsp;</li>
-//             <li className="game game-bottom ">Duke</li>
-            
-//             <li className="spacer">&nbsp;</li>
-//         </ul>		
-//     </main>
-// </div>
