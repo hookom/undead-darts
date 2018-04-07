@@ -202,6 +202,9 @@ class Bracket extends React.Component {
 
                 <li className="spacer">&nbsp;</li>
             </ul>
+            <ul className="round round-5">
+                <li className="game game-top">{this.state.players[3][0]}</li>
+            </ul>
         </main>
     );
   }
