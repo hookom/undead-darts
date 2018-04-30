@@ -1,12 +1,12 @@
 const TrackedStats = {
     human: {
         header: 'Human Win',
-        value: 1,
+        value: 3,
         tooltip: 'Eliminate all zombies and humans.'
     },
     survivor: {
         header: 'Survivor',
-        value: 1,
+        value: 2,
         tooltip: 'As the last human and with at least 3 zombies.<br />'
                  + 'Must be called after you throw.<br />'
                  + 'Zombies have a final round to kill the human.'
@@ -18,7 +18,7 @@ const TrackedStats = {
     },
     resdhuman: {
         header: 'Res\'d Human',
-        value: 1,
+        value: 3,
         tooltip: 'Human resurrects and eliminates all other players.'
     },
     lostbulls: {
@@ -65,7 +65,7 @@ const TrackedStats = {
     },
     buffet: {
         header: 'Buffet',
-        value: 2,
+        value: 1,
         tooltip: 'Zombie kills two humans in a single turn.'
     },
     retaliation: {
