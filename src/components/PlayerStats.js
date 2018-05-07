@@ -23,10 +23,11 @@ class PlayerStats extends React.Component {
   }
 
   render() {
+    let version = this.props.stats.length > 0 ? this.props.stats[0].statversion : 'v1';
     return (
       <Card>
         <table id="StatsTable">
-            <ColumnHeaders />
+            <ColumnHeaders statversion={version}/>
             <tbody>
               {
                 this.props.stats.sort(function(a, b) { return b.totalPoints - a.totalPoints; })

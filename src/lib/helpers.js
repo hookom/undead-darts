@@ -59,8 +59,8 @@ var helpers = {
         stats.filter(x => names === undefined || names.includes(x.name))
             .forEach(playerRow => {
                 let total = 0;
-                Object.keys(TrackedStats).forEach(stat => {
-                    total += (parseInt(playerRow[stat], 10) * parseInt(TrackedStats[stat].value, 10));
+                Object.keys(TrackedStats[stats[0].statversion]).forEach(stat => {
+                    total += (parseInt(playerRow[stat], 10) * parseInt(TrackedStats[stats[0].statversion][stat].value, 10));
                 });
                 playerRow.totalPoints = total;
             });

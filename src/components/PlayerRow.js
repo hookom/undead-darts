@@ -20,7 +20,7 @@ export default ({playerIndex, isDaKing, kingPoints, row, onCellChange, seasonInP
             <ReactTooltip />
           </td>
         {
-          Object.keys(TrackedStats).map((columnName, index) => {
+          Object.keys(TrackedStats[row.statversion]).map((columnName, index) => {
             return (
               <td key={index}>
                 <Input

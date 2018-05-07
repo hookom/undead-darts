@@ -2,12 +2,12 @@ import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import TrackedStats from '../lib/TrackedStats.js'
 
-export default () => (
+export default ({statversion}) => (
     <thead className="headerStyle">
       <tr>
         <th>Player Name</th>
         {
-          Object.values(TrackedStats).map((stat, statIndex) => {
+          Object.values(TrackedStats[statversion]).map((stat, statIndex) => {
             return (
               <ColumnHeader key={statIndex} index={statIndex} stat={stat}/>
             );
