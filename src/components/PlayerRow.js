@@ -12,7 +12,7 @@ export default ({playerIndex, isDaKing, kingPoints, row, onCellChange, seasonInP
           <td>
             <TextField
               type='text'
-              value={row.name + `(${outOfFirst})`}
+              value={row.name}
               disabled
               className={isDaKing === true ? 'king' : undefined}
               data-tip={outOfFirst}
