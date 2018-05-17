@@ -43,8 +43,8 @@ var helpers = {
         return axios.get(getSeasonsUrl);
     },
 
-    createNewSeason: (seasonId, playerNames) => {
-        let body = 'data=' + JSON.stringify({id: seasonId, names: playerNames});
+    createNewSeason: (seasonId, playerNames, statversion) => {
+        let body = 'data=' + JSON.stringify({id: seasonId, names: playerNames, statversion: statversion});
 
         return axios.post(addSeasonUrl, body);
     },

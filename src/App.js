@@ -178,7 +178,7 @@ class App extends Component {
 
     this.state.seasons.push({season: newSeasonId});
 
-    helpers.createNewSeason(newSeasonId, playerNames.join());
+    helpers.createNewSeason(newSeasonId, playerNames.join(), this.state.stats[0].statversion);
 
     this.setState({
       stats: this.state.stats,
