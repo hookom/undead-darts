@@ -5,7 +5,7 @@ import ReactTooltip from 'react-tooltip';
 import Input from 'material-ui/Input';
 import TrackedStats from '../lib/TrackedStats.js';
 
-export default ({playerIndex, isDaKing, kingPoints, row, onCellChange, seasonInProgress}) => { 
+export default ({playerIndex, isDaKing, kingPoints, row, onCellChange, seasonInProgress}) => {
   let outOfFirst = (kingPoints - row['totalPoints']) * -1;
   return (
         <tr key={playerIndex}>
@@ -18,6 +18,13 @@ export default ({playerIndex, isDaKing, kingPoints, row, onCellChange, seasonInP
               data-tip={outOfFirst}
             />
             <ReactTooltip />
+          </td>
+          <td>
+            <TextField
+              type='text'
+              value={row['totalPoints']}
+              disabled
+            />
           </td>
         {
           Object.keys(TrackedStats[row.statversion]).map((columnName, index) => {
@@ -34,7 +41,6 @@ export default ({playerIndex, isDaKing, kingPoints, row, onCellChange, seasonInP
           })
         }
         </tr>
-
   )
 }
 

@@ -6,12 +6,11 @@ export default ({statversion}) => (
     <thead className="headerStyle">
       <tr>
         <th>Player Name</th>
+        <th>Score</th>
         {
-          Object.values(TrackedStats[statversion]).map((stat, statIndex) => {
-            return (
-              <ColumnHeader key={statIndex} index={statIndex} stat={stat}/>
-            );
-          })
+            Object.values(TrackedStats[statversion]).map((stat, statIndex) =>
+                <ColumnHeader key={statIndex} index={statIndex} stat={stat}/>
+            )
         }
       </tr>
     </thead>
@@ -19,10 +18,10 @@ export default ({statversion}) => (
 
 const ColumnHeader = ({index, stat}) => {
   return (
-    <th 
+    <th
       className="mdl-data-table__cell--non-numeric"
-      key={index} 
-      data-multiline={true} 
+      key={index}
+      data-multiline={true}
       data-tip={stat.tooltip + '<br />Value:  ' + stat.value}>
           {stat.header}
           <ReactTooltip />
