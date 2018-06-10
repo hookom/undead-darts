@@ -45,7 +45,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3001').then((res) => console.log(res.data));
+    axios.get('https://undead-darts-1.appspot.com/hello').then((res) => console.log(res.data));
 
     helpers.getChangelog()
       .then(res => {
