@@ -15,6 +15,7 @@ import AppHeader from './components/AppHeader.js';
 import PlayerStats from './components/PlayerStats.js'
 import { withStyles } from 'material-ui/styles';
 import Bracket from './components/Bracket.js'
+import axios from 'axios';  
 
 class App extends Component {
   constructor(props) {
@@ -44,6 +45,8 @@ class App extends Component {
   }
 
   componentDidMount() {
+    axios.get('http://localhost:8090/hello').then((res) => alert(res.data));
+
     helpers.getChangelog()
       .then(res => {
         this.setState({changelog: res.data});
