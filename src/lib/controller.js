@@ -31,7 +31,8 @@ var controller = {
     },
 
     getChangelog: () => {
-        return axios.get(getChangelogUrl);
+        // return axios.get(getChangelogUrl);
+        return axios.get('https://us-central1-undead-darts-1.cloudfunctions.net/getChangelog');
     },
 
     updateStats: (body) => {

@@ -47,6 +47,7 @@ class App extends Component {
   componentDidMount() {
     controller.getChangelog()
       .then(res => {
+        console.log(res);
         this.setState({changelog: res.data});
       });
 

@@ -1,0 +1,14 @@
+{
+  "name": "undead-darts-cloud-functions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "gcloud beta functions deploy getChangelog --trigger-http"
+  },
+  "author": "Isaac",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/datastore": "^1.4.0"
+  }
+}
