@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import './App.css';
 import helpers from './lib/helpers.js';
+import controller from './lib/controller.js';
 import Table, { TableBody, TableCell, TableRow } from 'material-ui/Table';
 import Reboot from 'material-ui/Reboot';
 import 'typeface-roboto';
@@ -15,7 +16,6 @@ import AppHeader from './components/AppHeader.js';
 import PlayerStats from './components/PlayerStats.js'
 import { withStyles } from 'material-ui/styles';
 import Bracket from './components/Bracket.js'
-import axios from 'axios';  
 
 class App extends Component {
   constructor(props) {
@@ -45,14 +45,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:8090/hello').then((res) => alert(res.data));
-
-    helpers.getChangelog()
+    controller.getChangelog()
       .then(res => {
         this.setState({changelog: res.data});
       });
 
-    helpers.getSeasons()
+      controller.getSeasons()
       .then(res => {
         this.getData(res.data[res.data.length - 1].season);
 
@@ -129,7 +127,7 @@ class App extends Component {
       change: changeDescription
     };
     let body = 'data=' + JSON.stringify(obj);
-    helpers.updateStats(body);
+    controller.updateStats(body);
 
     let newLog = this.state.changelog;
     newLog.unshift({message: changeDescription, timestamp: ts});
@@ -146,7 +144,7 @@ class App extends Component {
   }
 
   getData(targetSeason) {
-    helpers.getAllStats(targetSeason)
+    controller.getAllStats(targetSeason)
       .then(res => {
         let statsWithTotals = helpers.setTotalPointsFor(res.data);
         let highScore = helpers.getKingTotal(statsWithTotals);
@@ -181,7 +179,7 @@ class App extends Component {
 
     this.state.seasons.push({season: newSeasonId});
 
-    helpers.createNewSeason(newSeasonId, playerNames.join(), this.state.stats[0].statversion);
+    controller.createNewSeason(newSeasonId, playerNames.join(), this.state.stats[0].statversion);
 
     this.setState({
       stats: this.state.stats,
@@ -208,7 +206,7 @@ class App extends Component {
 
     this.state.stats.push(newRow);
 
-    helpers.addPlayer(this.state.selectedSeason, playerName);
+    controller.addPlayer(this.state.selectedSeason, playerName);
 
     this.setState({ stats: this.state.stats });
   }
