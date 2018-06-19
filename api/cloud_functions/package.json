@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "deploy": "gcloud beta functions deploy getChangelog --trigger-http"
+    "deploy": "gcloud beta functions deploy $FUNC --trigger-http"
   },
   "author": "Isaac",
   "license": "ISC",

@@ -18,3 +18,19 @@ exports.getChangelog = (req, res) => {
         res.send(results[0]);
     });
 };
+
+exports.getStats = (req, res) => {
+    let datastore = new Datastore({
+        projectId: 'undead-darts-1'
+    });
+
+    let query = datastore
+        .createQuery('PlayerStat')
+        .filter('season', '=', req.query.season);
+
+    datastore.runQuery(query).then(results => { 
+        res.set('Access-Control-Allow-Origin', "*");
+        res.set('Access-Control-Allow-Methods', 'GET');
+        res.send(results[0]);
+    });
+};

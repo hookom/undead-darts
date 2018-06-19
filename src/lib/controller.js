@@ -27,7 +27,8 @@ if(hostname === 'localhost') {
 
 var controller = {
     getAllStats: (season) => {
-        return axios.get(getStatsUrl + '?season=' + season);
+        // return axios.get(getStatsUrl + '?season=' + season);
+        return axios.get('https://us-central1-undead-darts-1.cloudfunctions.net/getStats' + '?season=' + season);
     },
 
     getChangelog: () => {

@@ -47,11 +47,10 @@ class App extends Component {
   componentDidMount() {
     controller.getChangelog()
       .then(res => {
-        console.log(res);
         this.setState({changelog: res.data});
       });
 
-      controller.getSeasons()
+    controller.getSeasons()
       .then(res => {
         this.getData(res.data[res.data.length - 1].season);
 
