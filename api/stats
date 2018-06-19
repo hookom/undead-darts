@@ -2,7 +2,6 @@ INSERT INTO `stats` VALUES ('Austin', '27', 'v1', 0, 13, 2, 2, 0, 5, 0, 2, 0, 0,
 INSERT INTO `stats` VALUES ('Bill', '27', 'v1', 0, 24, 0, 0, 4, 1, 0, 1, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `stats` VALUES ('Brian', '27', 'v1', 0, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `stats` VALUES ('Isaac', '27', 'v1', 0, 24, 1, 0, 5, 2, 1, 1, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0);
-INSERT INTO `stats` VALUES ('Jeff H', '27', 'v1', 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `stats` VALUES ('Luke', '27', 'v1', 0, 5, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `stats` VALUES ('Matt', '27', 'v1', 0, 4, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `stats` VALUES ('Prateek', '27', 'v1', 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
