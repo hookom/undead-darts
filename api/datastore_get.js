@@ -1,8 +1,7 @@
 const Datastore = require('@google-cloud/datastore');
 
 let datastore = new Datastore({
-    projectId: 'undead-darts-1',
-//    keyFilename: '../../undead-darts-1-b5b234a87fce.json'
+    projectId: 'undead-darts-1'
 });
 
 let query = datastore
