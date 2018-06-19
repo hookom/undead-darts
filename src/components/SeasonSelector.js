@@ -32,7 +32,7 @@ class SeasonSelector extends React.Component {
             {
               this.props.seasons.map((id, index) => {
                 return (
-                  <MenuItem key={index} value={id.season}>{id.season}</MenuItem>
+                  <MenuItem key={index} value={id}>{id}</MenuItem>
                 );
               })
             }

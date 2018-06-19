@@ -41,7 +41,8 @@ var controller = {
     },
 
     getSeasons: () => {
-        return axios.get(getSeasonsUrl);
+        // return axios.get(getSeasonsUrl);
+        return axios.get('https://us-central1-undead-darts-1.cloudfunctions.net/getSeasons');
     },
 
     createNewSeason: (seasonId, playerNames, statversion) => {

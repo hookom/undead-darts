@@ -52,12 +52,12 @@ class App extends Component {
 
     controller.getSeasons()
       .then(res => {
-        this.getData(res.data[res.data.length - 1].season);
+        this.getData(res.data[res.data.length - 1]);
 
         this.setState({
           seasons: res.data,
-          selectedSeason: res.data[res.data.length - 1].season,
-          seasonInProgress: res.data[res.data.length - 1].season
+          selectedSeason: res.data[res.data.length - 1],
+          seasonInProgress: res.data[res.data.length - 1]
         });
       });
   }
