@@ -137,7 +137,7 @@ exports.addSeason = (req, res) => {
             key: datastore.key('PlayerStat'),
             data: {
                 season: req.body.id,
-                player: name,
+                name: name,
                 statversion: req.body.statversion
             }
         });
@@ -154,7 +154,7 @@ exports.addSeasonTest = (req, res) => {
             key: datastore.key('PlayerStatTest'),
             data: {
                 season: req.body.id,
-                player: name,
+                name: name,
                 statversion: req.body.statversion
             }
         });

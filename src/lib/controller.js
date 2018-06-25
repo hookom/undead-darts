@@ -51,7 +51,7 @@ var controller = {
             addPlayerUrl,
             {
                 season: seasonId,
-                player: playerName,
+                name: playerName,
                 statversion: statversion
             }
         );
