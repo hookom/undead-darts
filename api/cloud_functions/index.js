@@ -115,7 +115,12 @@ exports.addPlayerTest = (req, res) => {
         projectId: 'undead-darts-1'
     });
 
-    datastore.insert({ key: datastore.key('PlayerStatTest'), data: req.body });
+    datastore.insert({ key: datastore.key('PlayerStatTest'), data: req.body })
+        .then(() => {
+            res.set('Access-Control-Allow-Origin', "*");
+            res.set('Access-Control-Allow-Methods', 'POST');
+            res.status(201).send();
+        });
 };
 
 exports.addSeason = (req, res) => {
