@@ -48,8 +48,8 @@ var controller = {
         return axios.post(addSeasonUrl, body);
     },
 
-    addPlayer: (seasonId, playerName) => {
-        let body = 'data=' + JSON.stringify({season: seasonId, player: playerName});
+    addPlayer: (seasonId, statversion, playerName) => {
+        let body = 'data=' + JSON.stringify({season: seasonId, player: playerName, statversion: statversion});
 
         return axios.post(addPlayerUrl, body);
     }

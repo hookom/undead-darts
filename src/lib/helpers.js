@@ -1,7 +1,6 @@
 const TrackedStats = require('./TrackedStats.js');
 
 var helpers = {
-
     setTotalPointsFor: (stats, names) => {
         stats.filter(x => names === undefined || names.includes(x.name))
             .forEach(playerRow => {

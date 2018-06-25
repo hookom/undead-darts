@@ -4,7 +4,8 @@
     $request = json_decode($_POST['data']);
     $season = $request->season;
     $player = $request->player;
+    $statversion = $request->statversion;
 
     $db = new Db();
-    $db -> query("INSERT INTO `stats-test` (name, season) VALUES ('$player', '$season')");
+    $db -> query("INSERT INTO `stats-test` (name, season, statversion) VALUES ('$player', '$season', '$statversion')");
 ?>
