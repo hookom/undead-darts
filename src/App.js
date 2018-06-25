@@ -193,11 +193,11 @@ class App extends Component {
   addNewPlayer(playerName) {
     let newRow = Object.assign({}, this.state.stats[0]);
     Object.keys(newRow).forEach(key => {
-      if (key === 'season') {
-        newRow[key] = this.state.selectedSeason;
-      }
-      else if (key === 'name') {
+      if (key === 'name') {
         newRow[key] = playerName;
+      }
+      else if (key === 'statversion' || key === 'season') {
+        // keep copied value
       } else {
         newRow[key] = 0;
       }
@@ -205,7 +205,11 @@ class App extends Component {
 
     this.state.stats.push(newRow);
 
-    helpers.addPlayer(this.state.selectedSeason, playerName);
+    helpers.addPlayer(
+      this.state.selectedSeason,
+      this.state.stats[0].statversion,
+      playerName
+    );
 
     this.setState({ stats: this.state.stats });
   }
