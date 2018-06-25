@@ -101,3 +101,53 @@ exports.getSeasonsTest = (req, res) => {
         res.send(results[0].map(row => row.season));
     });
 };
+
+exports.addPlayer = (req, res) => {
+    let datastore = new Datastore({
+        projectId: 'undead-darts-1'
+    });
+
+    datastore.insert({ key: datastore.key('PlayerStat'), data: req.body });
+};
+
+exports.addPlayerTest = (req, res) => {
+    let datastore = new Datastore({
+        projectId: 'undead-darts-1'
+    });
+
+    datastore.insert({ key: datastore.key('PlayerStatTest'), data: req.body });
+};
+
+exports.addSeason = (req, res) => {
+    let datastore = new Datastore({
+        projectId: 'undead-darts-1'
+    });
+
+    req.body.names.forEach(name => {
+        datastore.insert({
+            key: datastore.key('PlayerStat'),
+            data: {
+                season: req.body.id,
+                player: name,
+                statversion: req.body.statversion
+            }
+        });
+    });
+};
+
+exports.addSeasonTest = (req, res) => {
+    let datastore = new Datastore({
+        projectId: 'undead-darts-1'
+    });
+
+    req.body.names.forEach(name => {
+        datastore.insert({
+            key: datastore.key('PlayerStatTest'),
+            data: {
+                season: req.body.id,
+                player: name,
+                statversion: req.body.statversion
+            }
+        });
+    });
+};

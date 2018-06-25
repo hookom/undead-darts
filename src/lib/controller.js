@@ -4,25 +4,18 @@ const baseUrl = 'https://us-central1-undead-darts-1.cloudfunctions.net/';
 let getStatsUrl = baseUrl + 'getStats';
 let getChangelogUrl = baseUrl + 'getChangelog';
 let updateUrl = baseUrl;
-let addSeasonUrl = baseUrl;
+let addSeasonUrl = baseUrl + 'addSeason';
 let getSeasonsUrl = baseUrl + 'getSeasons';
-let addPlayerUrl = baseUrl;
+let addPlayerUrl = baseUrl + 'addPlayer';
 
 const hostname = window && window.location && window.location.hostname;
 if(hostname === 'localhost') {
     getStatsUrl += 'Test';
     getChangelogUrl += 'Test';
     updateUrl += 'update-test.php';
-    addSeasonUrl += 'add-season-test.php';
+    addSeasonUrl += 'Test';
     getSeasonsUrl += 'Test';
-    addPlayerUrl += 'add-player-test.php';
-} else {
-    // getStatsUrl += 'get-stats.php';
-    // getChangelogUrl += 'get-changelog.php';
-    updateUrl += 'update.php';
-    addSeasonUrl += 'add-season.php';
-    // getSeasonsUrl += 'get-seasons.php';
-    addPlayerUrl += 'add-player.php';
+    addPlayerUrl += 'Test';
 }
 
 var controller = {
@@ -43,15 +36,25 @@ var controller = {
     },
 
     createNewSeason: (seasonId, playerNames, statversion) => {
-        let body = 'data=' + JSON.stringify({id: seasonId, names: playerNames, statversion: statversion});
-
-        return axios.post(addSeasonUrl, body);
+        return axios.post(
+            addSeasonUrl,
+            {
+                id: seasonId,
+                names: playerNames,
+                statversion: statversion
+            }
+        );
     },
 
     addPlayer: (seasonId, statversion, playerName) => {
-        let body = 'data=' + JSON.stringify({season: seasonId, player: playerName, statversion: statversion});
-
-        return axios.post(addPlayerUrl, body);
+        return axios.post(
+            addPlayerUrl,
+            {
+                season: seasonId,
+                player: playerName,
+                statversion: statversion
+            }
+        );
     }
 };
 
