@@ -9,6 +9,7 @@
   "author": "Isaac",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/datastore": "^1.4.0"
+    "@google-cloud/datastore": "^1.4.0",
+    "cors": "2.8.4"
   }
 }

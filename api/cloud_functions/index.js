@@ -1,4 +1,5 @@
 const Datastore = require('@google-cloud/datastore');
+const cors = require('cors');
 
 exports.getChangelog = (req, res) => {
     let datastore = new Datastore({
@@ -111,16 +112,19 @@ exports.addPlayer = (req, res) => {
 };
 
 exports.addPlayerTest = (req, res) => {
-    let datastore = new Datastore({
-        projectId: 'undead-darts-1'
-    });
-
-    datastore.insert({ key: datastore.key('PlayerStatTest'), data: req.body })
-        .then(() => {
-            res.set('Access-Control-Allow-Origin', "*");
-            res.set('Access-Control-Allow-Methods', 'POST');
-            res.status(201).send();
+    let corsFn = cors();
+    corsFn(req, res, () => {
+        let datastore = new Datastore({
+            projectId: 'undead-darts-1'
         });
+    
+        datastore.insert({ key: datastore.key('PlayerStatTest'), data: req.body })
+            .then(() => {
+                res.set('Access-Control-Allow-Origin', "*");
+                res.set('Access-Control-Allow-Methods', 'POST');
+                res.status(201).send();
+            });
+    });
 };
 
 exports.addSeason = (req, res) => {
