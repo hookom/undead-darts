@@ -3,7 +3,7 @@ const axios = require('axios');
 const baseUrl = 'https://us-central1-undead-darts-1.cloudfunctions.net/';
 let getStatsUrl = baseUrl + 'getStats';
 let getChangelogUrl = baseUrl + 'getChangelog';
-let updateUrl = baseUrl;
+let updateUrl = baseUrl + 'updateStat';
 let addSeasonUrl = baseUrl + 'addSeason';
 let getSeasonsUrl = baseUrl + 'getSeasons';
 let addPlayerUrl = baseUrl + 'addPlayer';
@@ -12,7 +12,7 @@ const hostname = window && window.location && window.location.hostname;
 if(hostname === 'localhost') {
     getStatsUrl += 'Test';
     getChangelogUrl += 'Test';
-    updateUrl += 'update-test.php';
+    updateUrl += 'Test';
     addSeasonUrl += 'Test';
     getSeasonsUrl += 'Test';
     addPlayerUrl += 'Test';
@@ -46,14 +46,10 @@ var controller = {
         );
     },
 
-    addPlayer: (seasonId, statversion, playerName) => {
+    addPlayer: (newRow) => {
         return axios.post(
             addPlayerUrl,
-            {
-                season: seasonId,
-                name: playerName,
-                statversion: statversion
-            }
+            newRow
         );
     }
 };

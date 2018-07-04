@@ -118,16 +118,13 @@ class App extends Component {
                             + ':' + newValue;
     let ts = moment().format('YYYY-MM-DD HH:mm:ss');
 
-    let obj = {
-      name: modifiedRow.name,
-      season: modifiedRow.season,
-      field: modifiedColumn,
-      value: newValue,
-      timestamp: ts,
-      change: changeDescription
-    };
-    let body = 'data=' + JSON.stringify(obj);
-    controller.updateStats(body);
+    controller.updateStats(
+      {
+        updatedRow: newStats.filter(x => x.name === modifiedRow.name)[0],
+        timestamp: ts,
+        change: changeDescription
+      }
+    );
 
     let newLog = this.state.changelog;
     newLog.unshift({message: changeDescription, timestamp: ts});
@@ -206,11 +203,7 @@ class App extends Component {
 
     this.state.stats.push(newRow);
 
-    controller.addPlayer(
-      this.state.selectedSeason,
-      this.state.stats[0].statversion,
-      playerName
-    );
+    controller.addPlayer(newRow);
 
     this.setState({ stats: this.state.stats });
   }

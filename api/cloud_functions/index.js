@@ -104,11 +104,19 @@ exports.getSeasonsTest = (req, res) => {
 };
 
 exports.addPlayer = (req, res) => {
-    let datastore = new Datastore({
-        projectId: 'undead-darts-1'
+    let corsFn = cors();
+    corsFn(req, res, () => {
+        let datastore = new Datastore({
+            projectId: 'undead-darts-1'
+        });
+    
+        datastore.insert({ key: datastore.key('PlayerStat'), data: req.body })
+            .then(() => {
+                res.set('Access-Control-Allow-Origin', "*");
+                res.set('Access-Control-Allow-Methods', 'POST');
+                res.status(201).send();
+            });
     });
-
-    datastore.insert({ key: datastore.key('PlayerStat'), data: req.body });
 };
 
 exports.addPlayerTest = (req, res) => {
@@ -159,4 +167,72 @@ exports.addSeasonTest = (req, res) => {
             }
         });
     });
+};
+
+exports.updateStat = (req, res) => {
+    let datastore = new Datastore({
+        projectId: 'undead-darts-1'
+    });
+
+    let query = datastore
+        .createQuery('PlayerStat')
+        .filter('season', '=', req.body.updatedRow.season)
+        .filter('name', '=', req.body.updatedRow.name)
+        .select('__key__');
+
+    let update = datastore.runQuery(query).then(results => { 
+        datastore.update({
+            key: results[0],
+            data: req.body.updatedRow
+        });
+    });
+
+    let changelog = datastore.insert({
+        key: datastore.key('Changelog'),
+        data: {
+            message: req.body.change,
+            timestamp: req.body.timestamp,
+        }
+    });
+
+    Promise.all([update, changelog])
+        .then(() => {
+            res.set('Access-Control-Allow-Origin', "*");
+            res.set('Access-Control-Allow-Methods', 'POST');
+            res.status(200).send();
+        });
+};
+
+exports.updateStatTest = (req, res) => {
+    let datastore = new Datastore({
+        projectId: 'undead-darts-1'
+    });
+
+    let query = datastore
+        .createQuery('PlayerStatTest')
+        .filter('season', '=', req.body.updatedRow.season)
+        .filter('name', '=', req.body.updatedRow.name)
+        .select('__key__');
+
+    let update = datastore.runQuery(query).then(results => { 
+        datastore.update({
+            key: results[0],
+            data: req.body.updatedRow
+        });
+    });
+
+    let changelog = datastore.insert({
+        key: datastore.key('ChangelogTest'),
+        data: {
+            message: req.body.change,
+            timestamp: req.body.timestamp,
+        }
+    });
+
+    Promise.all([update, changelog])
+        .then(() => {
+            res.set('Access-Control-Allow-Origin', "*");
+            res.set('Access-Control-Allow-Methods', 'POST');
+            res.status(200).send();
+        });
 };
