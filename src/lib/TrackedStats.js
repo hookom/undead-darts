@@ -20,7 +20,7 @@ const TrackedStats = {
         coweringdefeat: {
             header: 'Cowering Defeat',
             value: -2,
-            tooltip: 'Human calls survivor but is killed by zombies.'
+            tooltip: 'Human calls Survivor but is killed by zombies.'
         },
         lostbulls: {
             header: 'Lost Bullseyes',
@@ -40,13 +40,14 @@ const TrackedStats = {
         firstrdelim: {
             header: 'First Round Elimination',
             value: 2,
-            tooltip: 'Kill another player and hit bullseye to eliminate<br />'
-                    + 'them during your first turn.'
+            tooltip: 'During your first turn, kill another player,<br/>'
+                     + 'then hit bullseye to eliminate them.'
         },
         resdkill: {
             header: 'Res\'d Kill',
             value: 2,
-            tooltip: 'Resurrect, become a killer, and kill a human in one turn.'
+            tooltip: 'In a single turn, resurrect, become a killer,<br/>'
+                     + 'then kill a player or eliminate zombies.'
         },
         zombiehero: {
             header: 'Zombie Hero',
@@ -56,18 +57,19 @@ const TrackedStats = {
         },
         buffet: {
             header: 'Buffet',
-            value: 1,
+            value: 2,
             tooltip: 'Zombie kills two humans in a single turn.'
         },
         retaliation: {
             header: 'Retaliation',
             value: 2,
             tooltip: 'Killed by someone, then you hit 2+ bullseyes in your<br />'
-                    + 'next turn as a zombie to retaliate.'
+                    + 'next turn as a zombie, both of which are needed to kill<br/>'
+                    + 'them if they cannot cleanse.'
         },
         flawlessfinish: {
             header: 'Flawless Finish',
-            value: 1,
+            value: 2,
             tooltip: 'All 3 of a winning player\'s final darts count for a<br />'
                     + 'kill or cleanse (stacks).'
         },
