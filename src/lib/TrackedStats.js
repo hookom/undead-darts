@@ -1,4 +1,82 @@
 const TrackedStats = {
+    v5: {
+        human: {
+            header: 'Human Win',
+            value: 3,
+            tooltip: 'Eliminate all zombies and humans without dying.'
+        },
+        resdhuman: {
+            header: 'Res\'d Human Win',
+            value: 5,
+            tooltip: 'Eliminate all zombies and humans after resurrecting.'
+        },
+        survivor: {
+            header: 'Survivor',
+            value: 5,
+            tooltip: 'Being the only human left, and with at least 3 zombies,<br/>'
+                    + 'sacrifice your next turn and remain alive through 1<br/>'
+                    + 'final round of zombie attacks.'
+        },
+        coweringdefeat: {
+            header: 'Cowering Defeat',
+            value: -2,
+            tooltip: 'Human calls survivor but is killed by zombies.'
+        },
+        lostbulls: {
+            header: 'Lost Bullseyes',
+            value: -1,
+            tooltip: 'Zombie did not declare target of a bullseye.'
+        },
+        catches: {
+            header: 'Catches',
+            value: 10,
+            tooltip: 'Catch a dart that bounces out of the board.'
+        },
+        firstrdkill: {
+            header: 'First Round Kill',
+            value: 1,
+            tooltip: 'Kill another player during your first turn.'
+        },
+        firstrdelim: {
+            header: 'First Round Elimination',
+            value: 2,
+            tooltip: 'Kill another player and hit bullseye to eliminate<br />'
+                    + 'them during your first turn.'
+        },
+        resdkill: {
+            header: 'Res\'d Kill',
+            value: 2,
+            tooltip: 'Resurrect, become a killer, and kill a human in one turn.'
+        },
+        zombiehero: {
+            header: 'Zombie Hero',
+            value: 2,
+            tooltip: 'A zombie throws 2+ bullseyes in a single turn to<br />'
+                    + 'prevent a human from attaining survivor.'
+        },
+        buffet: {
+            header: 'Buffet',
+            value: 1,
+            tooltip: 'Zombie kills two humans in a single turn.'
+        },
+        retaliation: {
+            header: 'Retaliation',
+            value: 2,
+            tooltip: 'Killed by someone, then you hit 2+ bullseyes in your<br />'
+                    + 'next turn as a zombie to retaliate.'
+        },
+        flawlessfinish: {
+            header: 'Flawless Finish',
+            value: 1,
+            tooltip: 'All 3 of a winning player\'s final darts count for a<br />'
+                    + 'kill or cleanse (stacks).'
+        },
+        bully: {
+            header: 'Bully',
+            value: 1,
+            tooltip: 'Kill and/or eat the same human twice in a game.'
+        }
+    },
     v4: {
         human: {
             header: 'Human Win',
