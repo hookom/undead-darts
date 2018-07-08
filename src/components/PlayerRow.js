@@ -35,6 +35,7 @@ export default ({playerIndex, isDaKing, kingPoints, row, onCellChange, seasonInP
                   disabled={row.season !== seasonInProgress}
                   value={row[columnName]}
                   onChange={(e) => onCellChange(columnName, row, e.target.value)}
+                  onkeydown="return false;"
                 />
               </td>
             );
