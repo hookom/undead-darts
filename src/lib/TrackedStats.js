@@ -77,6 +77,11 @@ const TrackedStats = {
             header: 'Bully',
             value: 1,
             tooltip: 'Kill and/or eat the same human twice in a game.'
+        },
+        wagers: {
+            header: 'Wagers',
+            value: 1,
+            tooltip: 'Points wagered between players.'
         }
     },
     v4: {
