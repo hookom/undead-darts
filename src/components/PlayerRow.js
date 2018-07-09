@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField';
 import ReactTooltip from 'react-tooltip';
 import Input from 'material-ui/Input';
 import TrackedStats from '../lib/TrackedStats.js';
+import { DebounceInput } from 'react-debounce-input';
 
 export default ({playerIndex, isDaKing, kingPoints, row, onCellChange, seasonInProgress}) => {
   let outOfFirst = (kingPoints - row['totalPoints']) * -1;
@@ -30,12 +31,13 @@ export default ({playerIndex, isDaKing, kingPoints, row, onCellChange, seasonInP
           Object.keys(TrackedStats[row.statversion]).map((columnName, index) => {
             return (
               <td key={index}>
-                <Input
+                <DebounceInput
+                  element={Input}
                   type='number'
                   disabled={row.season !== seasonInProgress}
                   value={row[columnName]}
+                  debounceTimeout={300}
                   onChange={(e) => onCellChange(columnName, row, e.target.value)}
-                  onkeydown="return false;"
                 />
               </td>
             );

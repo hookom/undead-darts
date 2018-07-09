@@ -15,7 +15,6 @@ import AppHeader from './components/AppHeader.js';
 import PlayerStats from './components/PlayerStats.js'
 import { withStyles } from 'material-ui/styles';
 import Bracket from './components/Bracket.js'
-import { debounce } from 'lodash';
 
 class App extends Component {
   constructor(props) {
@@ -42,8 +41,6 @@ class App extends Component {
     this.createNewSeason = this.createNewSeason.bind(this);
     this.addNewPlayer = this.addNewPlayer.bind(this);
     this.getOrderedPlayerNames = this.getOrderedPlayerNames.bind(this);
-
-    this.onCellChange = debounce(this.onCellChange, 500);
   }
 
   componentDidMount() {
