@@ -31,7 +31,8 @@ lines.forEach(row => {
         retaliation: parseInt(cols[21].substr(0, cols[21].length -1 )),
         flawlessfinish: parseInt(cols[22].substr(0, cols[22].length -1 )),
         multitalented: parseInt(cols[23].substr(0, cols[23].length -1 )),
-        bully: parseInt(cols[24].substr(0, cols[24].length -1 ))
+        bully: parseInt(cols[24].substr(0, cols[24].length -1 )),
+        wagers: parseInt(cols[25].substr(0, cols[25].length -1 ))
     };
 
     datastore.insert({ key: datastore.key('PlayerStatTest'), data });
