@@ -20,7 +20,7 @@ if(hostname === 'localhost') {
 
 var controller = {
     getAllStats: (season) => {
-        return axios.get(getStatsUrl + '?season=' + season);
+        return axios.get('http://localhost:8080/stats/'+season);
     },
 
     getChangelog: () => {
