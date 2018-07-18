@@ -18,11 +18,11 @@ if(hostname === 'localhost') {
 
 var controller = {
     getAllStats: () => {
-        return axios.get('http://localhost:8080/stats');
+        return axios.get('http://35.237.86.42:8080/stats');
     },
 
     getChangelog: () => {
-        return axios.get('http://localhost:8080/changelog');
+        return axios.get('http://35.237.86.42:8080/changelog');
     },
 
     updateStats: (body) => {
