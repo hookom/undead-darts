@@ -22,7 +22,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      stats: [],
+      allStatsWithTotals: [],
+      selectedSeasonStats: [],
       selectedSeason: '',
       seasonInProgress: '',
       seasons: [],
@@ -37,7 +38,6 @@ class App extends Component {
     };
 
     this.onCellChange = this.onCellChange.bind(this);
-    this.getData = this.getData.bind(this);
     this.isDaKing = this.isDaKing.bind(this);
     this.createNewSeason = this.createNewSeason.bind(this);
     this.addNewPlayer = this.addNewPlayer.bind(this);
@@ -45,20 +45,34 @@ class App extends Component {
   }
 
   componentDidMount() {
+    controller.getAllStats()
+      .then(res => {
+        let allStatsWithTotals = helpers.setTotalPointsFor(res.data);
+        console.log('allStatsWithTotals: ', allStatsWithTotals)
+        let seasons = res.data.filter(x => x.name === 'ZOMBIES').map(row => row.season);
+        console.log('seasons: ', seasons)
+        let selectedSeason = seasons[seasons.length - 1];
+        console.log('selectedSeason: ', selectedSeason)
+        let selectedSeasonStats = allStatsWithTotals.filter(x => x.season === selectedSeason);
+        console.log('selectedSeasonStats: ', selectedSeasonStats)
+        let highScore = helpers.getKingTotal(selectedSeasonStats);
+        console.log('highScore: ', highScore)
+        let zombiewins = selectedSeasonStats.filter(x => x.name === 'ZOMBIES')[0].zombiewins;
+        console.log('zombiewins: ', zombiewins)
+        this.setState({
+          allStatsWithTotals,
+          selectedSeasonStats,
+          selectedSeason,
+          seasonInProgress: selectedSeason,
+          kingPoints: highScore,
+          zombiewins,
+          seasons
+        });
+      });
+
     controller.getChangelog()
       .then(res => {
         this.setState({changelog: res.data});
-      });
-
-    controller.getSeasons()
-      .then(res => {
-        this.getData(res.data[res.data.length - 1]);
-
-        this.setState({
-          seasons: res.data,
-          selectedSeason: res.data[res.data.length - 1],
-          seasonInProgress: res.data[res.data.length - 1]
-        });
       });
   }
 
@@ -89,7 +103,7 @@ class App extends Component {
           </TableBody>
         </Table>
         <PlayerStats
-          stats={this.state.stats}
+          stats={this.state.selectedSeasonStats}
           kingPoints={this.state.kingPoints}
           isDaKing={this.isDaKing}
           onCellChange={this.onCellChange}
@@ -109,7 +123,7 @@ class App extends Component {
   }
 
   onCellChange(modifiedColumn, modifiedRow, newValue) {
-    let newStats = this.state.stats;
+    let newStats = this.state.selectedSeasonStats;
     newStats.filter(x => x.name === modifiedRow.name)[0][modifiedColumn] = newValue;
 
     let changeDescription = modifiedRow.name
@@ -140,20 +154,6 @@ class App extends Component {
       zombiewins});
   }
 
-  getData(targetSeason) {
-    controller.getAllStats(targetSeason)
-      .then(res => {
-        let statsWithTotals = helpers.setTotalPointsFor(res.data);
-        let highScore = helpers.getKingTotal(statsWithTotals);
-        let zwins = statsWithTotals.filter(x => x.name === 'ZOMBIES')[0].zombiewins;
-        this.setState({
-          stats: statsWithTotals,
-          selectedSeason: targetSeason,
-          kingPoints: highScore,
-          zombiewins: zwins});
-      });
-  }
-
   isDaKing(playersPoints) {
     return this.state.kingPoints === playersPoints;
   }
@@ -161,7 +161,7 @@ class App extends Component {
   createNewSeason(newSeasonId) {
     let playerNames = [];
 
-    this.state.stats.forEach(row => {
+    this.state.selectedSeasonStats.forEach(row => {
       playerNames.push(row.name);
 
       Object.keys(row).forEach(key => {
@@ -176,10 +176,10 @@ class App extends Component {
 
     this.state.seasons.push({season: newSeasonId});
 
-    controller.createNewSeason(newSeasonId, playerNames.join(), this.state.stats[0].statversion);
+    controller.createNewSeason(newSeasonId, playerNames.join(), this.state.selectedSeasonStats[0].statversion);
 
     this.setState({
-      stats: this.state.stats,
+      selectedSeasonStats: this.state.selectedSeasonStats,
       selectedSeason: newSeasonId,
       seasonInProgress: newSeasonId,
       seasons: this.state.seasons,
@@ -189,7 +189,7 @@ class App extends Component {
   }
 
   addNewPlayer(playerName) {
-    let newRow = Object.assign({}, this.state.stats[0]);
+    let newRow = Object.assign({}, this.state.selectedSeasonStats[0]);
     Object.keys(newRow).forEach(key => {
       if (key === 'name') {
         newRow[key] = playerName;
@@ -201,16 +201,16 @@ class App extends Component {
       }
     });
 
-    this.state.stats.push(newRow);
+    this.state.selectedSeasonStats.push(newRow);
 
     controller.addPlayer(newRow);
 
-    this.setState({ stats: this.state.stats });
+    this.setState({ selectedSeasonStats: this.state.selectedSeasonStats });
   }
 
   getOrderedPlayerNames() {
     let names = [];
-    this.state.stats
+    this.state.selectedSeasonStats
       .sort(function(a, b) { return b.totalPoints - a.totalPoints; })
       .forEach((player) => {
         if (player.name !== 'ZOMBIES') {

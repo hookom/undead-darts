@@ -5,7 +5,6 @@ let getStatsUrl = baseUrl + 'getStats';
 let getChangelogUrl = baseUrl + 'getChangelog';
 let updateUrl = baseUrl + 'updateStat';
 let addSeasonUrl = baseUrl + 'addSeason';
-let getSeasonsUrl = baseUrl + 'getSeasons';
 let addPlayerUrl = baseUrl + 'addPlayer';
 
 const hostname = window && window.location && window.location.hostname;
@@ -14,25 +13,20 @@ if(hostname === 'localhost') {
     getChangelogUrl += 'Test';
     updateUrl += 'Test';
     addSeasonUrl += 'Test';
-    getSeasonsUrl += 'Test';
     addPlayerUrl += 'Test';
 }
 
 var controller = {
-    getAllStats: (season) => {
-        return axios.get('http://localhost:8080/stats/'+season);
+    getAllStats: () => {
+        return axios.get('http://localhost:8080/stats');
     },
 
     getChangelog: () => {
-        return axios.get(getChangelogUrl);
+        return axios.get('http://localhost:8080/changelog');
     },
 
     updateStats: (body) => {
         return axios.post(updateUrl, body);
-    },
-
-    getSeasons: () => {
-        return axios.get(getSeasonsUrl);
     },
 
     createNewSeason: (seasonId, playerNames, statversion) => {
