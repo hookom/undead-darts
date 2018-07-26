@@ -1,16 +1,16 @@
 const axios = require('axios');
 
-const baseUrl = 'https://us-central1-undead-darts-1.cloudfunctions.net/';
-let getStatsUrl = baseUrl + 'getStats';
-let getChangelogUrl = baseUrl + 'getChangelog';
-let updateUrl = baseUrl + 'updateStat';
-let addSeasonUrl = baseUrl + 'addSeason';
-let addPlayerUrl = baseUrl + 'addPlayer';
+const cloudFunctionsUrl = 'https://us-central1-undead-darts-1.cloudfunctions.net/';
+let baseUrl = 'http://35.237.86.42';
+
+let updateUrl = cloudFunctionsUrl + 'updateStat';
+let addSeasonUrl = cloudFunctionsUrl + 'addSeason';
+let addPlayerUrl = cloudFunctionsUrl + 'addPlayer';
 
 const hostname = window && window.location && window.location.hostname;
 if(hostname === 'localhost') {
-    getStatsUrl += 'Test';
-    getChangelogUrl += 'Test';
+    baseUrl = 'http://localhost';
+
     updateUrl += 'Test';
     addSeasonUrl += 'Test';
     addPlayerUrl += 'Test';
@@ -18,11 +18,11 @@ if(hostname === 'localhost') {
 
 var controller = {
     getAllStats: () => {
-        return axios.get('http://35.237.86.42:8080/stats');
+        return axios.get(baseUrl + ':8080/stats');
     },
 
     getChangelog: () => {
-        return axios.get('http://35.237.86.42:8080/changelog');
+        return axios.get(baseUrl + ':8080/changelog');
     },
 
     updateStats: (body) => {
