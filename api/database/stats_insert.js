@@ -35,6 +35,7 @@ lines.forEach(row => {
         wagers: parseInt(cols[25].substr(0, cols[25].length -1 ))
     };
 
-    datastore.insert({ key: datastore.key('PlayerStatTest'), data });
+    let key = datastore.key(['PlayerStatTest', data.name+'-'+data.season]);
+    datastore.insert({ key, data });
 })
   
