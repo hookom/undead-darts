@@ -6,7 +6,12 @@ var helpers = {
             .forEach(playerRow => {
                 let total = 0;
                 Object.keys(TrackedStats[stats[0].statversion]).forEach(stat => {
-                    total += (parseInt(playerRow[stat], 10) * parseInt(TrackedStats[stats[0].statversion][stat].value, 10));
+                    let current = (parseInt(playerRow[stat], 10) * parseInt(TrackedStats[stats[0].statversion][stat].value, 10));
+                    if (isNaN(parseInt(stat.charAt(0), 10))) {
+                        total -= current;
+                    } else {
+                        total += current;
+                    }
                 });
                 playerRow.totalPoints = total;
             });
