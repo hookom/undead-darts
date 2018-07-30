@@ -134,9 +134,16 @@ class App extends Component {
 
     controller.updateStats(
       {
-        updatedRow: newStats.filter(x => x.name === modifiedRow.name)[0],
-        timestamp: ts,
-        change: changeDescription
+        stat: {
+          field: modifiedColumn,
+          value: newValue,
+          name: modifiedRow.name,
+          season: modifiedRow.season
+        },
+        changelog: {
+          message: changeDescription,
+          timestamp: ts
+        }
       }
     );
 
