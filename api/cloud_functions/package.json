@@ -1,0 +1,15 @@
+{
+  "name": "undead-darts-cloud-functions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "gcloud beta functions deploy $FUNC --trigger-http"
+  },
+  "author": "Isaac",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/datastore": "1.4.1",
+    "cors": "2.8.4"
+  }
+}

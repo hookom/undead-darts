@@ -8,18 +8,18 @@ class SeasonSelector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      seasonDialogOpen: false
+      // seasonDialogOpen: false
     }
   }
 
-  handleSeasonClick = () => {
-    this.setState({seasonDialogOpen: true});
-  }
+  // handleSeasonClick = () => {
+  //   this.setState({seasonDialogOpen: true});
+  // }
 
-  createNewSeason = (value) => {
-    this.setState({seasonDialogOpen: false});
-    this.props.create(value);
-  }
+  // createNewSeason = (value) => {
+  //   this.setState({seasonDialogOpen: false});
+  //   this.props.create(value);
+  // }
 
   render() {
     return (
@@ -27,22 +27,22 @@ class SeasonSelector extends React.Component {
         <span className="headerStyle">Season: </span>
           <Select
             value={this.props.selectedSeason}
-            onChange={(e) => this.props.getData(e.target.value)}
+            onChange={(e) => this.props.setSelectedSeason(e.target.value)}
           >
             {
               this.props.seasons.map((id, index) => {
                 return (
-                  <MenuItem key={index} value={id.season}>{id.season}</MenuItem>
+                  <MenuItem key={index} value={id}>{id}</MenuItem>
                 );
               })
             }
           </Select>
-        <Button onClick={this.handleSeasonClick}>+</Button>
+        {/* <Button onClick={this.handleSeasonClick}>+</Button>
         <InputDialog
           open={this.state.seasonDialogOpen}
           onSave={this.createNewSeason}
           title='Add Season'
-        />
+        /> */}
       </span>
     );
   }
