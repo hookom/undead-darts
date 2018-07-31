@@ -2,7 +2,6 @@ const TrackedStats = require('./TrackedStats.js');
 
 var helpers = {
     setTotalPointsFor: (stats, names) => {
-        console.log(stats)
         stats.filter(x => names === undefined || names.includes(x.name))
             .forEach(playerRow => {
                 let version = playerRow.statversion;
