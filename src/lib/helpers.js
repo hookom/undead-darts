@@ -2,15 +2,17 @@ const TrackedStats = require('./TrackedStats.js');
 
 var helpers = {
     setTotalPointsFor: (stats, names) => {
+        console.log(stats)
         stats.filter(x => names === undefined || names.includes(x.name))
             .forEach(playerRow => {
+                let version = playerRow.statversion;
                 let total = 0;
-                Object.keys(TrackedStats[stats[0].statversion]).forEach(stat => {
+                Object.keys(TrackedStats[version]).forEach(stat => {
                     let current = 0;
-                    if (isNaN(parseInt(stat.charAt(0), 10))) {
-                        current = (-1 * parseInt(playerRow[stat].substr(1), 10) * parseInt(TrackedStats[stats[0].statversion][stat].value, 10));
+                    if (isNaN(parseInt(playerRow[stat].charAt(0)))) {
+                        current = (-1 * parseInt(playerRow[stat].substr(1)) * parseInt(TrackedStats[version][stat].value));
                     } else {
-                        current = (parseInt(playerRow[stat], 10) * parseInt(TrackedStats[stats[0].statversion][stat].value, 10));
+                        current = (parseInt(playerRow[stat]) * parseInt(TrackedStats[version][stat].value));
                     }
                     total += current;
                 });

@@ -49,17 +49,17 @@ class App extends Component {
     controller.getAllStats()
       .then(res => {
         let allStatsWithTotals = helpers.setTotalPointsFor(res.data);
-        console.log('allStatsWithTotals: ', allStatsWithTotals)
+        // console.log('allStatsWithTotals: ', allStatsWithTotals)
         let seasons = res.data.filter(x => x.name === 'ZOMBIES').map(row => row.season);
-        console.log('seasons: ', seasons)
+        // console.log('seasons: ', seasons)
         let selectedSeason = seasons[seasons.length - 1];
-        console.log('selectedSeason: ', selectedSeason)
+        // console.log('selectedSeason: ', selectedSeason)
         let selectedSeasonStats = allStatsWithTotals.filter(x => x.season === selectedSeason);
-        console.log('selectedSeasonStats: ', selectedSeasonStats)
+        // console.log('selectedSeasonStats: ', selectedSeasonStats)
         let kingPoints = helpers.getKingTotal(selectedSeasonStats);
-        console.log('kingPoints: ', kingPoints)
+        // console.log('kingPoints: ', kingPoints)
         let zombiewins = selectedSeasonStats.filter(x => x.name === 'ZOMBIES')[0].zombiewins;
-        console.log('zombiewins: ', zombiewins)
+        // console.log('zombiewins: ', zombiewins)
         this.setState({
           allStatsWithTotals,
           selectedSeasonStats,
