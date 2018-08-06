@@ -40,7 +40,7 @@ class App extends Component {
     this.onCellChange = this.onCellChange.bind(this);
     this.isDaKing = this.isDaKing.bind(this);
     this.setSelectedSeason = this.setSelectedSeason.bind(this);
-    // this.createNewSeason = this.createNewSeason.bind(this);
+    this.createNewSeason = this.createNewSeason.bind(this);
     // this.addNewPlayer = this.addNewPlayer.bind(this);
     this.getOrderedPlayerNames = this.getOrderedPlayerNames.bind(this);
   }
@@ -181,55 +181,68 @@ class App extends Component {
     return this.state.kingPoints === playersPoints;
   }
 
-  // createNewSeason(newSeasonId) {
-  //   let playerNames = [];
+  createNewSeason(newSeasonId) {
+    let playerNames = [];
+    let newSeasonStats = this.state.selectedSeasonStats;
+    let statVersion = this.state.selectedSeasonStats[0].statversion;
+    let allStatsWithTotals = this.state.allStatsWithTotals;
+    
+    newSeasonStats.forEach(row => {
+      playerNames.push(row.name);
 
-  //   this.state.selectedSeasonStats.forEach(row => {
-  //     playerNames.push(row.name);
+      Object.keys(row).forEach(key => {
+          if (key === 'season') {
+            row[key] = newSeasonId;
+          }
+          else if (key !== 'name') {
+            row[key] = 0;
+          }
+      });
 
-  //     Object.keys(row).forEach(key => {
-  //         if (key === 'season') {
-  //           row[key] = newSeasonId;
-  //         }
-  //         else if (key !== 'name') {
-  //           row[key] = 0
-  //         }
-  //     });
-  //   });
+      allStatsWithTotals.push(row);
+    });
 
-  //   this.state.seasons.push({season: newSeasonId});
+    let seasons = this.state.seasons;
+    seasons.push({season: newSeasonId});
 
-  //   controller.createNewSeason(newSeasonId, playerNames.join(), this.state.selectedSeasonStats[0].statversion);
+    controller.createNewSeason(newSeasonId, playerNames, statVersion);
 
-  //   this.setState({
-  //     selectedSeasonStats: this.state.selectedSeasonStats,
-  //     selectedSeason: newSeasonId,
-  //     seasonInProgress: newSeasonId,
-  //     seasons: this.state.seasons,
-  //     kingPoints: 0,
-  //     zombiewins: 0
-  //   });
-  // }
+    this.setState({
+      allStatsWithTotals,
+      selectedSeasonStats: newSeasonStats,
+      selectedSeason: newSeasonId,
+      seasonInProgress: newSeasonId,
+      seasons,
+      kingPoints: 0,
+      zombiewins: 0
+    });
+  }
 
-  // addNewPlayer(playerName) {
-  //   let newRow = Object.assign({}, this.state.selectedSeasonStats[0]);
-  //   Object.keys(newRow).forEach(key => {
-  //     if (key === 'name') {
-  //       newRow[key] = playerName;
-  //     }
-  //     else if (key === 'statversion' || key === 'season') {
-  //       // keep copied value
-  //     } else {
-  //       newRow[key] = 0;
-  //     }
-  //   });
+  addNewPlayer(playerName) {
+    let newRow = Object.assign({}, this.state.selectedSeasonStats[0]);
+    Object.keys(newRow).forEach(key => {
+      if (key === 'name') {
+        newRow[key] = playerName;
+      }
+      else if (key === 'statversion' || key === 'season') {
+        // keep copied value
+      } else {
+        newRow[key] = 0;
+      }
+    });
 
-  //   this.state.selectedSeasonStats.push(newRow);
+    let selectedSeasonStats = this.state.selectedSeasonStats;
+    selectedSeasonStats.push(newRow);
+    let allStatsWithTotals = this.state.allStatsWithTotals;
+    allStatsWithTotals.push(newRow);
 
-  //   controller.addPlayer(newRow);
+    controller.addPlayer(newRow.season, [playerName], newRow.statversion);
 
-  //   this.setState({ selectedSeasonStats: this.state.selectedSeasonStats });
-  // }
+    this.setState({
+      allStatsWithTotals,
+      selectedSeasonStats
+    });
+  }
 
   getOrderedPlayerNames() {
     let names = [];
