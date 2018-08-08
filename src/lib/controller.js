@@ -21,24 +21,26 @@ var controller = {
         return axios.post(baseUrl + ':8080/update-stat', body);
     },
 
-    createNewSeason: (seasonId, playerNames, statversion) => {
+    createNewSeason: (seasonId, playerNames, statversion, stats) => {
         return axios.post(
             baseUrl + ':8080/add-season',
             {
                 names: playerNames,
                 id: seasonId,
-                statversion: statversion
+                statversion: statversion,
+                stats: stats
             }
         );
     },
 
-    addPlayer: (seasonId, playerNames, statversion) => {
+    addPlayer: (seasonId, playerNames, statversion, stats) => {
         return axios.post(
             baseUrl + ':8080/add-player',
             {
                 names: playerNames,
                 id: seasonId,
-                statversion: statversion
+                statversion: statversion,
+                stats: stats
             }
         );
     }

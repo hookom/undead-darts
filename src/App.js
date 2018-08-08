@@ -16,6 +16,7 @@ import AppHeader from './components/AppHeader.js';
 import PlayerStats from './components/PlayerStats.js'
 import { withStyles } from 'material-ui/styles';
 import Bracket from './components/Bracket.js'
+import TrackedStats from './lib/TrackedStats.js'
 
 class App extends Component {
   constructor(props) {
@@ -41,7 +42,7 @@ class App extends Component {
     this.isDaKing = this.isDaKing.bind(this);
     this.setSelectedSeason = this.setSelectedSeason.bind(this);
     this.createNewSeason = this.createNewSeason.bind(this);
-    // this.addNewPlayer = this.addNewPlayer.bind(this);
+    this.addNewPlayer = this.addNewPlayer.bind(this);
     this.getOrderedPlayerNames = this.getOrderedPlayerNames.bind(this);
   }
 
@@ -97,7 +98,7 @@ class App extends Component {
                   selectedSeason={this.state.selectedSeason} 
                   seasons={this.state.seasons}
                   setSelectedSeason={this.setSelectedSeason}
-                  // create={this.createNewSeason}
+                  create={this.createNewSeason}
                 />
               </TableCell>
             </TableRow>
@@ -109,7 +110,7 @@ class App extends Component {
           isDaKing={this.isDaKing}
           onCellChange={this.onCellChange}
           seasonInProgress={this.state.seasonInProgress}
-          // addPlayer={this.addNewPlayer}
+          addPlayer={this.addNewPlayer}
         />
         <IconButton onClick={this.handleExpandClick}>
           <h4>History</h4>
@@ -194,7 +195,7 @@ class App extends Component {
           if (key === 'season') {
             row[key] = newSeasonId;
           }
-          else if (key !== 'name') {
+          else if (key !== 'name' && key !== 'statversion') {
             row[key] = 0;
           }
       });
@@ -203,9 +204,9 @@ class App extends Component {
     });
 
     let seasons = this.state.seasons;
-    seasons.push({season: newSeasonId});
+    seasons.push(newSeasonId);
 
-    controller.createNewSeason(newSeasonId, playerNames, statVersion);
+    controller.createNewSeason(newSeasonId, playerNames, statVersion, Object.keys(TrackedStats[statVersion]));
 
     this.setState({
       allStatsWithTotals,
@@ -227,8 +228,9 @@ class App extends Component {
       else if (key === 'statversion' || key === 'season') {
         // keep copied value
       } else {
-        newRow[key] = 0;
+        newRow[key] = '0';
       }
+      newRow.totalPoints = 0;
     });
 
     let selectedSeasonStats = this.state.selectedSeasonStats;
@@ -236,7 +238,7 @@ class App extends Component {
     let allStatsWithTotals = this.state.allStatsWithTotals;
     allStatsWithTotals.push(newRow);
 
-    controller.addPlayer(newRow.season, [playerName], newRow.statversion);
+    controller.addPlayer(newRow.season, [playerName], newRow.statversion, Object.keys(TrackedStats[newRow.statversion]));
 
     this.setState({
       allStatsWithTotals,
@@ -255,7 +257,6 @@ class App extends Component {
       });
     return names;
   }
-
 }
 
 const styles = theme => ({

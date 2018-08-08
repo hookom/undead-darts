@@ -13,14 +13,14 @@ class PlayerStats extends React.Component {
     }
   }
 
-  // handleDialogClick = () => {
-  //   this.setState({playerDialogOpen: true});
-  // }
+  handleDialogClick = () => {
+    this.setState({playerDialogOpen: true});
+  }
 
-  // addNewPlayer = (value) => {
-  //   this.setState({playerDialogOpen: false, newSeason: value});
-  //   this.props.addPlayer(value);
-  // }
+  addNewPlayer = (value) => {
+    this.setState({playerDialogOpen: false, newSeason: value});
+    this.props.addPlayer(value);
+  }
 
   render() {
     let version = this.props.stats.length > 0 ? this.props.stats[0].statversion : 'v1';
@@ -50,12 +50,12 @@ class PlayerStats extends React.Component {
               }
               <tr>
                 <td>
-                  {/* <Button onClick={this.handleDialogClick}>+</Button>
+                  <Button onClick={this.handleDialogClick}>+</Button>
                   <InputDialog
                     open={this.state.playerDialogOpen}
                     onSave={this.addNewPlayer}
                     title='Add Player'
-                  /> */}
+                  />
                 </td>
               </tr>
             </tbody>
