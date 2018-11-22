@@ -1,16 +1,16 @@
-import React from 'react';
-import PlayerRow from './PlayerRow.js';
+import React, { Component } from 'react';
 import Card from 'material-ui/Card';
-import ColumnHeaders from './ColumnHeaders';
-import InputDialog from './InputDialog';
 import Button from 'material-ui/Button';
 
-class PlayerStats extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      playerDialogOpen: false
-    }
+import PlayerRow from './PlayerRow.js';
+import ColumnHeaders from './ColumnHeaders';
+import InputDialog from './InputDialog';
+
+import './PlayerStats.css';
+
+class PlayerStats extends Component {
+  state = {
+    playerDialogOpen: false
   }
 
   handleDialogClick = () => {

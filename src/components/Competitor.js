@@ -1,18 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
+
 import './Bracket.css';
 
-class Competitor extends React.Component {
-  constructor(props) {
-    super(props);
+class Competitor extends Component {
+  state = {
+    isWinner: false
+  };
 
-    this.state = {
-        isWinner: false
-    };
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
+  handleClick = () => {
     if (this.props.player !== 'BYE') {
       if (this.props.round < 3) {
         this.props.updateNextRound(this.props.player, this.props.round, this.props.matchIndex);

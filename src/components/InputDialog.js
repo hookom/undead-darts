@@ -1,18 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Button from 'material-ui/Button';
 import Dialog, { DialogTitle } from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 
-
-class InputDialog extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      open: this.props.open,
-      input: ''
-    };
-  }
+class InputDialog extends Component {
+  state = {
+    open: this.props.open,
+    input: ''
+  };
 
   handleButtonClick = () => {
     this.setState({open: false});

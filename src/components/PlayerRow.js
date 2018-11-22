@@ -1,10 +1,12 @@
 import React from 'react';
-import '../App.css';
 import TextField from 'material-ui/TextField';
 import ReactTooltip from 'react-tooltip';
 import Input from 'material-ui/Input';
-import TrackedStats from '../lib/TrackedStats.js';
 import { DebounceInput } from 'react-debounce-input';
+
+import TrackedStats from '../lib/TrackedStats.js';
+
+import './PlayerRow.css';
 
 export default ({playerIndex, isDaKing, kingPoints, row, onCellChange, seasonInProgress}) => {
   let outOfFirst = (kingPoints - row['totalPoints']) * -1;

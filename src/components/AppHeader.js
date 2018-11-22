@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
+
 import logo from '../images/friendly_zombie.jpg';
 
-class AppHeader extends React.Component {
+import './AppHeader.css';
+
+class AppHeader extends Component {
   render() {
     return (
         <header className="App-header">

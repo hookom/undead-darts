@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
-import InputDialog from './InputDialog';
 import Button from 'material-ui/Button';
 
-class SeasonSelector extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      seasonDialogOpen: false
-    }
+import InputDialog from './InputDialog';
+
+class SeasonSelector extends Component {
+  state = {
+    seasonDialogOpen: false
   }
 
   handleSeasonClick = () => {

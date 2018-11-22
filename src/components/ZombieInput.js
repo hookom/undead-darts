@@ -6,9 +6,9 @@ export default ({zombiewins, onCellChange, season}) => (
     <span className="headerStyle">Zombie Wins: </span>
     <TextField
       type='number'
-    value={zombiewins}
-    style={{width: 40}}
-    onChange={(e) => onCellChange('zombiewins', {name: 'ZOMBIES', season: season}, e.target.value)}
+      value={zombiewins}
+      style={{width: 40}}
+      onChange={(e) => onCellChange('zombiewins', {name: 'ZOMBIES', season: season}, e.target.value)}
     />
   </span>
 )

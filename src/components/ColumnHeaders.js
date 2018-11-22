@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
+
 import TrackedStats from '../lib/TrackedStats.js'
 
 export default ({statversion}) => (

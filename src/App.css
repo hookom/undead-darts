@@ -2,51 +2,11 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 tr:nth-child(even) {background-color: #f2f2f2;}
-
-#StatsTable tr:hover { background: #95b3e2; }
-
-.collapseBorder {
-  border-collapse: collapse;
-}
-
-.king {
-  background-color: gold;
-}
 
 .headerStyle {
   /* padding: 4px 6px 4px 6px; */
   /* width: auto; */
   font-size: 1rem;
   font-weight: 600;
-}
-
-.cellStyle {
-  /* padding: 4px 6px 4px 6px; */
-  width: 5%;
 }

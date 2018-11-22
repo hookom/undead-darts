@@ -1,44 +1,37 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import helpers from '../lib/helpers.js';
-import controller from '../lib/controller.js';
 import Table, { TableBody, TableCell, TableRow } from 'material-ui/Table';
 import Reboot from 'material-ui/Reboot';
-import ChangeHistory from './ChangeHistory.js';
 import Collapse from 'material-ui/transitions/Collapse';
 import IconButton from 'material-ui/IconButton';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+import { withStyles } from 'material-ui/styles';
+
+import Bracket from './Bracket.js'
+import TrackedStats from '../lib/TrackedStats.js'
+import helpers from '../lib/helpers.js';
+import controller from '../lib/controller.js';
+import ChangeHistory from './ChangeHistory.js';
 import SeasonSelector from './SeasonSelector.js';
 import ZombieInput from './ZombieInput.js';
 import AppHeader from './AppHeader.js';
 import PlayerStats from './PlayerStats.js'
-import { withStyles } from 'material-ui/styles';
-import Bracket from './Bracket.js'
-import TrackedStats from '../lib/TrackedStats.js'
 
 import '../App.css';
 import 'typeface-roboto';
 
 class UndeadDarts extends Component {
-    state = {
-        allStatsWithTotals: [],
-        selectedSeasonStats: [],
-        selectedSeason: '',
-        seasonInProgress: '',
-        seasons: [],
-        changelog: [],
-        kingPoints: 0,
-        zombiewins: 0,
-        historyExpanded: false
-    };
-
-    handleExpandClick = this.handleExpandClick.bind(this);
-    onCellChange = this.onCellChange.bind(this);
-    isDaKing = this.isDaKing.bind(this);
-    setSelectedSeason = this.setSelectedSeason.bind(this);
-    createNewSeason = this.createNewSeason.bind(this);
-    addNewPlayer = this.addNewPlayer.bind(this);
-    getOrderedPlayerNames = this.getOrderedPlayerNames.bind(this);
+  state = {
+      allStatsWithTotals: [],
+      selectedSeasonStats: [],
+      selectedSeason: '',
+      seasonInProgress: '',
+      seasons: [],
+      changelog: [],
+      kingPoints: 0,
+      zombiewins: 0,
+      historyExpanded: false
+  };
 
   componentDidMount() {
     controller.getAllStats()
@@ -47,15 +40,13 @@ class UndeadDarts extends Component {
         let seasons = res.data.filter(x => x.name === 'ZOMBIES').map(row => row.season);
         let selectedSeason = seasons[seasons.length - 1];
         let selectedSeasonStats = allStatsWithTotals.filter(x => x.season === selectedSeason);
-        let kingPoints = helpers.getKingTotal(selectedSeasonStats);
-        let zombiewins = selectedSeasonStats.filter(x => x.name === 'ZOMBIES')[0].zombiewins;
         this.setState({
           allStatsWithTotals,
           selectedSeasonStats,
           selectedSeason,
           seasonInProgress: selectedSeason,
-          kingPoints,
-          zombiewins,
+          kingPoints: helpers.getKingTotal(selectedSeasonStats),
+          zombiewins: selectedSeasonStats.filter(x => x.name === 'ZOMBIES')[0].zombiewins,
           seasons
         });
       });
@@ -100,7 +91,7 @@ class UndeadDarts extends Component {
           seasonInProgress={this.state.seasonInProgress}
           addPlayer={this.addNewPlayer}
         />
-        <IconButton onClick={this.handleExpandClick}>
+        <IconButton onClick={() => this.setState({ historyExpanded: !this.state.historyExpanded })}>
           <h4>History</h4>
           <ExpandMoreIcon />
         </IconButton> 
@@ -112,11 +103,7 @@ class UndeadDarts extends Component {
     );
   }
 
-  handleExpandClick() {
-    this.setState({ historyExpanded: !this.state.historyExpanded });
-  }
-
-  onCellChange(modifiedColumn, modifiedRow, newValue) {
+  onCellChange = (modifiedColumn, modifiedRow, newValue) => {
     let newStats = this.state.allStatsWithTotals;
     newStats.filter(x => x.season === modifiedRow.season && x.name === modifiedRow.name)[0][modifiedColumn] = newValue;
 
@@ -157,7 +144,7 @@ class UndeadDarts extends Component {
       zombiewins});
   }
 
-  setSelectedSeason(season) {
+  setSelectedSeason = (season) => {
     let selectedSeason = season;
     let selectedSeasonStats = this.state.allStatsWithTotals.filter(x => x.season === selectedSeason);
     let kingPoints = helpers.getKingTotal(selectedSeasonStats);
@@ -170,11 +157,11 @@ class UndeadDarts extends Component {
     });
   }
 
-  isDaKing(playersPoints) {
+  isDaKing = (playersPoints) => {
     return this.state.kingPoints === playersPoints;
   }
 
-  createNewSeason(newSeasonId) {
+  createNewSeason = (newSeasonId) => {
     let playerNames = [];
     let newSeasonStats = this.state.selectedSeasonStats;
     let statVersion = this.state.selectedSeasonStats[0].statversion;
@@ -211,7 +198,7 @@ class UndeadDarts extends Component {
     });
   }
 
-  addNewPlayer(playerName) {
+  addNewPlayer = (playerName) => {
     let newRow = Object.assign({}, this.state.selectedSeasonStats[0]);
     Object.keys(newRow).forEach(key => {
       if (key === 'name') {
@@ -238,7 +225,7 @@ class UndeadDarts extends Component {
     });
   }
 
-  getOrderedPlayerNames() {
+  getOrderedPlayerNames = () => {
     let names = [];
     this.state.selectedSeasonStats
       .sort(function(a, b) { return b.totalPoints - a.totalPoints; })

@@ -1,18 +1,14 @@
-import React from 'react';
-import './Bracket.css';
+import React, { Component } from 'react';
+
 import Competitor from './Competitor.js';
 
-class Bracket extends React.Component {
-  constructor(props) {
-    super(props);
+import './Bracket.css';
 
-    this.state = {
-        players: [],
-        count: 0
-    };
-
-    this.updateNextRound = this.updateNextRound.bind(this);
-  }
+class Bracket extends Component {
+  state = {
+    players: [],
+    count: 0
+  };
 
   componentWillReceiveProps(props) {
     let count = props.players.length;
@@ -249,7 +245,7 @@ class Bracket extends React.Component {
     );
   }
 
-  updateNextRound(player, currentRound, targetIndex) {
+  updateNextRound = (player, currentRound, targetIndex) => {
     let players = {...this.state.players}
     if (targetIndex === 'play-in') {
         players[0][8] = player;

@@ -5,10 +5,6 @@ import './App.css';
 
 class App extends Component {
 
-  state = {
-    user: null
-  }
-
   render() {
     return (
       <div className="App">
@@ -16,6 +12,7 @@ class App extends Component {
       </div>
     );
   }
+
 }
 
 export default App;
