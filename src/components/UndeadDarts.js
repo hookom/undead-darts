@@ -4,6 +4,7 @@ import Table, { TableBody, TableCell, TableRow } from 'material-ui/Table';
 import Reboot from 'material-ui/Reboot';
 import Collapse from 'material-ui/transitions/Collapse';
 import IconButton from 'material-ui/IconButton';
+import Button from 'material-ui/Button';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import { withStyles } from 'material-ui/styles';
 
@@ -30,7 +31,8 @@ class UndeadDarts extends Component {
       changelog: [],
       kingPoints: 0,
       zombiewins: 0,
-      historyExpanded: false
+      historyExpanded: false,
+      participants: []
   };
 
   componentDidMount() {
@@ -65,6 +67,9 @@ class UndeadDarts extends Component {
         <Table>
           <TableBody>
             <TableRow>
+              <TableCell>
+                <Button onClick={() => {}} disabled={true}>Start</Button>
+              </TableCell>
               <TableCell>
                 <ZombieInput
                   zombiewins={this.state.zombiewins}

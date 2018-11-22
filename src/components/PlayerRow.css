@@ -1,3 +1,11 @@
 .king {
     background-color: gold;
 }
+
+.playerName {
+    cursor: pointer;
+}
+
+.participating {
+    background-color: red;
+}
