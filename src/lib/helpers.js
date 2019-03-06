@@ -29,7 +29,18 @@ var helpers = {
             }
         });
         return highest;
-    }
+    },
+
+  getOrderedPlayerNames: (stats) => {
+    let names = [];
+    stats.sort(function(a, b) { return b.totalPoints - a.totalPoints; })
+      .forEach((player) => {
+        if (player.name !== 'ZOMBIES') {
+          names.push(player.name);
+        }
+      });
+    return names;
+  }
 };
 
 module.exports = helpers;

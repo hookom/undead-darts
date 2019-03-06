@@ -68,7 +68,7 @@ class UndeadDarts extends Component {
           <TableBody>
             <TableRow>
               <TableCell>
-                <Button onClick={() => {}} disabled={true}>Start</Button>
+                <Button onClick={() => {}} disabled={this.state.participants.length < 1}>Start</Button>
               </TableCell>
               <TableCell>
                 <ZombieInput
@@ -91,10 +91,11 @@ class UndeadDarts extends Component {
         <PlayerStats
           stats={this.state.selectedSeasonStats}
           kingPoints={this.state.kingPoints}
-          isDaKing={this.isDaKing}
           onCellChange={this.onCellChange}
           seasonInProgress={this.state.seasonInProgress}
           addPlayer={this.addNewPlayer}
+          toggleParticipating={this.toggleParticipating}
+          participants={this.state.participants}
         />
         <IconButton onClick={() => this.setState({ historyExpanded: !this.state.historyExpanded })}>
           <h4>History</h4>
@@ -103,7 +104,7 @@ class UndeadDarts extends Component {
         <Collapse in={this.state.historyExpanded} timeout="auto" unmountOnExit>
           <ChangeHistory changelog={this.state.changelog}/>
         </Collapse>
-        <Bracket players={ this.getOrderedPlayerNames() }/>
+        <Bracket players={ helpers.getOrderedPlayerNames(this.state.selectedSeasonStats) }/>
       </div>
     );
   }
@@ -149,6 +150,17 @@ class UndeadDarts extends Component {
       zombiewins});
   }
 
+  toggleParticipating = (name) => {
+    let participants = this.state.participants;
+    if (participants.includes(name)) {
+      participants = participants.filter(x => x !== name);
+    } else {
+      participants.push(name);
+    }
+
+    this.setState({participants});
+  }
+
   setSelectedSeason = (season) => {
     let selectedSeason = season;
     let selectedSeasonStats = this.state.allStatsWithTotals.filter(x => x.season === selectedSeason);
@@ -160,10 +172,6 @@ class UndeadDarts extends Component {
       kingPoints,
       zombiewins
     });
-  }
-
-  isDaKing = (playersPoints) => {
-    return this.state.kingPoints === playersPoints;
   }
 
   createNewSeason = (newSeasonId) => {
@@ -228,18 +236,6 @@ class UndeadDarts extends Component {
       allStatsWithTotals,
       selectedSeasonStats
     });
-  }
-
-  getOrderedPlayerNames = () => {
-    let names = [];
-    this.state.selectedSeasonStats
-      .sort(function(a, b) { return b.totalPoints - a.totalPoints; })
-      .forEach((player) => {
-        if (player.name !== 'ZOMBIES') {
-          names.push(player.name);
-        }
-      });
-    return names;
   }
 }
 

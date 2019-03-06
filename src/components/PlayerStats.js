@@ -39,9 +39,10 @@ class PlayerStats extends Component {
                         row={row}
                         playerIndex={playerIndex}
                         kingPoints={this.props.kingPoints}
-                        isDaKing={this.props.isDaKing(row.totalPoints)}
                         onCellChange={this.props.onCellChange}
                         seasonInProgress={this.props.seasonInProgress}
+                        toggleParticipating={this.props.toggleParticipating}
+                        participating={this.props.participants.includes(row.name)}
                       />
                     );
                   }

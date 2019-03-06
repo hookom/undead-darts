@@ -9,39 +9,31 @@ import TrackedStats from '../lib/TrackedStats.js';
 import './PlayerRow.css';
 
 class PlayerRow extends Component {
-  state = {
-    nameStyles: this.props.isDaKing === true ? ['playerName', 'king'] : ['playerName']
-  }
 
-  toggleParticipating = () => {
-    let nameStyles = this.state.nameStyles;
-    let alreadyParticipating = false;
-    for (let i = 0; i < nameStyles.length; i++) {
-      if (nameStyles[i] === 'participating') {
-        alreadyParticipating = true;
-        nameStyles.splice(i, 1);
-      }
+  determineStyles = () => {
+    let styles = ['playerName'];
+
+    if (this.props.kingPoints === this.props.row.totalPoints) {
+      styles.push('king');
     }
 
-    if (!alreadyParticipating) {
-      nameStyles.push('participating');
+    if (this.props.participating) {
+      styles.push('participating');
     }
 
-    this.setState({nameStyles});
-
-    // TODO: 
-    // this.props.toggleParticipant();
+    return styles;
   }
 
   render() {
-    let outOfFirst = (this.props.kingPoints - this.props.row['totalPoints']) * -1;
+    let renderStyles = this.determineStyles();
+    let outOfFirst = (this.props.kingPoints - this.props.row.totalPoints) * -1;
 
     return (
           <tr key={this.props.playerIndex}>
             <td>
               <div
-                onClick={this.toggleParticipating}
-                className={this.state.nameStyles.join(' ')}
+                onClick={() => this.props.toggleParticipating(this.props.row.name)}
+                className={renderStyles.join(' ')}
                 data-tip={outOfFirst}
               >{this.props.row.name}</div>
               <ReactTooltip />
@@ -49,7 +41,7 @@ class PlayerRow extends Component {
             <td>
               <TextField
                 type='text'
-                value={this.props.row['totalPoints']}
+                value={this.props.row.totalPoints}
                 disabled
               />
             </td>
