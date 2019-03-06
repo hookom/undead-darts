@@ -68,7 +68,7 @@ class UndeadDarts extends Component {
           <TableBody>
             <TableRow>
               <TableCell>
-                <Button onClick={() => {}} disabled={this.state.participants.length < 1}>Start</Button>
+                <Button onClick={this.startGame} disabled={this.state.participants.length < 1}>Start</Button>
               </TableCell>
               <TableCell>
                 <ZombieInput
@@ -147,7 +147,9 @@ class UndeadDarts extends Component {
       selectedSeasonStats,
       changelog: newLog,
       kingPoints,
-      zombiewins});
+      zombiewins,
+      participants: []
+    });
   }
 
   toggleParticipating = (name) => {
@@ -159,6 +161,17 @@ class UndeadDarts extends Component {
     }
 
     this.setState({participants});
+  }
+
+  startGame = () => {
+    this.state.participants.forEach(name => {
+      let row = this.state.selectedSeasonStats.filter(x => x.name === name)[0];
+      this.onCellChange(
+        'gamesplayed',
+        row,
+        parseInt(row.gamesplayed, 10) + 1
+      );
+    })
   }
 
   setSelectedSeason = (season) => {

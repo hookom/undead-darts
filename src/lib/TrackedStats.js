@@ -1,4 +1,84 @@
 const TrackedStats = {
+    v6: {
+        human: {
+            header: 'Human Win',
+            value: 3,
+            tooltip: 'Eliminate all zombies and humans without dying.'
+        },
+        resdhuman: {
+            header: 'Res\'d Human Win',
+            value: 5,
+            tooltip: 'Eliminate all zombies and humans after resurrecting.'
+        },
+        survivor: {
+            header: 'Survivor',
+            value: 5,
+            tooltip: 'Being the only human left, and with at least 3 zombies,<br/>'
+                    + 'sacrifice your next turn and remain alive through 1<br/>'
+                    + 'final round of zombie attacks.'
+        },
+        coweringdefeat: {
+            header: 'Cowering Defeat',
+            value: -2,
+            tooltip: 'Human calls Survivor but is killed by zombies.'
+        },
+        lostbulls: {
+            header: 'Lost Bullseyes',
+            value: -1,
+            tooltip: 'Zombie did not declare target of a bullseye.'
+        },
+        catches: {
+            header: 'Catches',
+            value: 10,
+            tooltip: 'Catch a dart that bounces out of the board.'
+        },
+        firstrdkill: {
+            header: 'First Round Kill',
+            value: 1,
+            tooltip: 'Kill another player during your first turn.'
+        },
+        firstrdelim: {
+            header: 'First Round Elimination',
+            value: 2,
+            tooltip: 'During your first turn, kill another player,<br/>'
+                     + 'then hit bullseye to eliminate them.'
+        },
+        resdkill: {
+            header: 'Res\'d Kill',
+            value: 2,
+            tooltip: 'In a single turn, resurrect, become a killer,<br/>'
+                     + 'then kill a player or eliminate zombies.'
+        },
+        zombiehero: {
+            header: 'Zombie Hero',
+            value: 2,
+            tooltip: 'A zombie throws 2+ bullseyes in a single turn to<br />'
+                    + 'prevent a human from attaining survivor.'
+        },
+        buffet: {
+            header: 'Buffet',
+            value: 2,
+            tooltip: 'Zombie kills two humans in a single turn.'
+        },
+        retaliation: {
+            header: 'Retaliation',
+            value: 2,
+            tooltip: 'Killed by someone, then you hit 2+ bullseyes in your<br />'
+                    + 'next turn as a zombie, both of which are needed to kill<br/>'
+                    + 'them if they cannot cleanse.'
+        },
+        flawlessfinish: {
+            header: 'Flawless Finish',
+            value: 2,
+            tooltip: 'All 3 of a winning player\'s final darts count for a<br />'
+                    + 'kill or cleanse (stacks).'
+        },
+        bully: {
+            header: 'Bully',
+            value: 1,
+            tooltip: 'Kill and/or eat the same human twice in a game.'
+        }
+    },
     v5: {
         human: {
             header: 'Human Win',
