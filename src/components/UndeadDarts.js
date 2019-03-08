@@ -85,6 +85,9 @@ class UndeadDarts extends Component {
                   create={this.createNewSeason}
                 />
               </TableCell>
+              <TableCell>
+                <Button onClick={this.decrementGame} disabled={this.state.participants.length !== 1}>gamesplayed --</Button>
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>
@@ -172,6 +175,15 @@ class UndeadDarts extends Component {
         parseInt(row.gamesplayed, 10) + 1
       );
     })
+  }
+
+  decrementGame = () => {
+    let row = this.state.selectedSeasonStats.filter(x => x.name === this.state.participants[0])[0];
+    this.onCellChange(
+      'gamesplayed',
+      row,
+      parseInt(row.gamesplayed, 10) - 1
+    );
   }
 
   setSelectedSeason = (season) => {
