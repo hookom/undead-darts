@@ -39,13 +39,22 @@ var helpers = {
 
   getOrderedPlayerNames: (stats) => {
     let names = [];
-    stats.sort(function(a, b) { return b.totalPoints - a.totalPoints; })
+    stats.sort(this.playerSort)
       .forEach((player) => {
         if (player.name !== 'ZOMBIES') {
           names.push(player.name);
         }
       });
     return names;
+  },
+
+  playerSort: (a, b) => {
+    let hasMorePoints = b.totalPoints - a.totalPoints;
+    if (hasMorePoints) {
+      return hasMorePoints;
+    }
+
+    return b.gamesplayed - a.gamesplayed;
   }
 };
 

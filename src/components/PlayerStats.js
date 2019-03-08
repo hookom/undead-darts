@@ -5,6 +5,7 @@ import Button from 'material-ui/Button';
 import PlayerRow from './PlayerRow.js';
 import ColumnHeaders from './ColumnHeaders';
 import InputDialog from './InputDialog';
+import helpers from '../lib/helpers.js';
 
 import './PlayerStats.css';
 
@@ -30,7 +31,7 @@ class PlayerStats extends Component {
             <ColumnHeaders statversion={version}/>
             <tbody>
               {
-                this.props.stats.sort(function(a, b) { return b.totalPoints - a.totalPoints; })
+                this.props.stats.sort(helpers.playerSort)
                   .map((row, playerIndex) => {
                   if (row.name !== 'ZOMBIES') {
                     return (
