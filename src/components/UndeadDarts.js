@@ -112,14 +112,14 @@ class UndeadDarts extends Component {
     );
   }
 
-  onCellChange = (modifiedColumn, modifiedRow, newValue) => {
+  onCellChange = (modifiedColumn, modifiedRow, newValue, initValue) => {
     let newStats = this.state.allStatsWithTotals;
     newStats.filter(x => x.season === modifiedRow.season && x.name === modifiedRow.name)[0][modifiedColumn] = newValue;
 
     let changeDescription = modifiedRow.name
                             + ':' + modifiedRow.season
                             + ':' + modifiedColumn
-                            + ':' + newValue;
+                            + ':' + initValue + '-->' + newValue;
     let ts = moment().format('YYYY-MM-DD HH:mm:ss');
 
     controller.updateStat(

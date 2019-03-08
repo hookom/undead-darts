@@ -27,6 +27,7 @@ class PlayerRow extends Component {
   render() {
     let renderStyles = this.determineStyles();
     let outOfFirst = (this.props.kingPoints - this.props.row.totalPoints) * -1;
+    let renderedRow = Object.assign({}, this.props.row);
 
     return (
           <tr key={this.props.playerIndex}>
@@ -55,7 +56,7 @@ class PlayerRow extends Component {
                     disabled={this.props.row.season !== this.props.seasonInProgress}
                     value={this.props.row[columnName]}
                     debounceTimeout={300}
-                    onChange={(e) => this.props.onCellChange(columnName, this.props.row, e.target.value)}
+                    onChange={(e) => this.props.onCellChange(columnName, this.props.row, e.target.value, renderedRow[columnName])}
                   />
                 </td>
               );
