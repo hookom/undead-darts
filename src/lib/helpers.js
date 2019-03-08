@@ -51,12 +51,7 @@ var helpers = {
   },
 
   playerSort: (a, b) => {
-    let hasMorePoints = b.totalPoints - a.totalPoints;
-    if (hasMorePoints) {
-      return hasMorePoints;
-    }
-
-    return b.gamesplayed - a.gamesplayed;
+    return b.totalPoints - a.totalPoints;
   }
 };
 
