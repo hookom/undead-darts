@@ -28,8 +28,10 @@ var helpers = {
   },
 
   getKingTotal: (stats) => {
-      let highest = 0;
-      stats.forEach(player => {
+      let highest = stats[0].totalPoints;
+      stats
+        .filter(x => x.name !== 'ZOMBIES')
+        .forEach(player => {
           if (player.totalPoints > highest) {
               highest = player.totalPoints;
           }
