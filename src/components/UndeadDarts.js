@@ -68,7 +68,9 @@ class UndeadDarts extends Component {
           <TableBody>
             <TableRow>
               <TableCell>
-                <Button onClick={this.startGame} disabled={this.state.participants.length < 1}>Start</Button>
+                <Button
+                  onClick={this.startGame}
+                  disabled={this.state.participants.length < 1 || this.state.selectedSeason !== this.state.seasonInProgress}>Start</Button>
               </TableCell>
               <TableCell>
                 <ZombieInput
@@ -86,7 +88,9 @@ class UndeadDarts extends Component {
                 />
               </TableCell>
               <TableCell>
-                <Button onClick={this.decrementGame} disabled={this.state.participants.length !== 1}>gamesplayed --</Button>
+                <Button
+                  onClick={this.decrementGame}
+                  disabled={this.state.participants.length !== 1 || this.state.selectedSeason !== this.state.seasonInProgress}>gamesplayed --</Button>
               </TableCell>
             </TableRow>
           </TableBody>
