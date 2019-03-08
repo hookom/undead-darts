@@ -56,7 +56,10 @@ class PlayerRow extends Component {
                     disabled={this.props.row.season !== this.props.seasonInProgress}
                     value={this.props.row[columnName]}
                     debounceTimeout={300}
-                    onChange={(e) => this.props.onCellChange(columnName, this.props.row, e.target.value, renderedRow[columnName])}
+                    onChange={(e) => {
+                      this.props.onCellChange(columnName, this.props.row, e.target.value, renderedRow[columnName]);
+                      e.target.blur();
+                    }}
                   />
                 </td>
               );
